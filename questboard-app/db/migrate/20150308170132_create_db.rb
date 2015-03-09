@@ -46,7 +46,7 @@ class CreateDb < ActiveRecord::Migration
   		t.timestamps
   	end
 
-  	create_table :users, :quests do |t|
+  	create_table :users_quests do |t|
   		t.integer "assignor_id"
   		t.integer "assignee_id"
   		t.boolean "is_accepted"
@@ -57,7 +57,7 @@ class CreateDb < ActiveRecord::Migration
   	end
   	
    add_index :users,["user_name","email"]
-   add_index :tokens,["token_id"]
+   add_index :tokens,["key"]
   end
 
 end
