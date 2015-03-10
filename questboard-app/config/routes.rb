@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   # Routes for Quests
-  get '/quest' => 'quest#index', as: :quests
-  get '/quest/:id' => 'quest#show', as: :quest
-  get '/quest/new' => 'quest#new', as: :new_quest
-  get '/quest/edit/:id' => 'quest#edit', as: :edit_quest
-  post '/quest/edit/:id' => 'quest#update', as: :update_quest
-  post '/quest/new' => 'quest#create', as: :create_quest
-  delete '/quest/post/:id'=> 'quest#destroy', as: :delete_quest
+  get '/quests' => 'quests#index', as: :quests
+  get '/quests/:id' => 'quests#show', as: :quest
+  get '/quests/new' => 'quests#new', as: :new_quest
+  get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
+  post '/quests/edit/:id' => 'quests#update', as: :update_quest
+  post '/quests/new' => 'quests#create', as: :create_quest
+  delete '/quests/post/:id'=> 'quests#destroy', as: :delete_quest
 
 
 

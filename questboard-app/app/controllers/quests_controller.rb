@@ -22,7 +22,7 @@ class QuestsController < ApplicationController
 		flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
 		flash[:warning] << "Content cannot be left blank" if hash[:description].blank?
 		redirect_to edit_quest_path and return if flash[:warning].count > 0
-		Quest.find(params[:id]).update(:title => hash[:title], :description => hash[:description], :user_id => 1)
+		Quest.find(params[:id]).update(:title => hash[:title], :description => hash[:description], :is_completed => hash[:is_completed], :bounty => hash[:bounty], :due_date => hash[:due_date] )
 		redirect_to quest_path(params[:id])
 	end
 
