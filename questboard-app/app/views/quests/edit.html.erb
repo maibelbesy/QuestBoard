@@ -1,0 +1,10 @@
+
+
+<%= form_for :quest, :url => update_quest_path(params[:id]) do |f| %>
+        <%= f.text_field :title, :value => @quest.title, placeholder: "Enter quest title"%>
+         <%= f.text_area :description, :value => @quest.description, placeholder: "Enter post content" %>
+         <%= f.text_field :bounty, :value => @quest.bounty, placeholder: "Enter quest bounty"%>
+         <%= f.date_select :due_date, :order => [:day, :month, :year] %>
+         <%= f.check_box :is_completed %>
+         <%= f.submit "Save", class: "login-button", style: "margin-top: 0.5em;" %>
+    <% end %>
