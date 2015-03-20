@@ -1,6 +1,20 @@
 Rails.application.routes.draw do
 
+  # Routes for Quests
+  get '/quests' => 'quests#index', as: :quests
+  get '/quests/:id' => 'quests#show', as: :quest
+  get '/quests/new' => 'quests#new', as: :new_quest
+  get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
+  post '/quests/edit/:id' => 'quests#update', as: :update_quest
+  post '/quests/new' => 'quests#create', as: :create_quest
+  delete '/quests/post/:id'=> 'quests#destroy', as: :delete_quest
+
+
+
+
+
   delete 'quests/delete/:id' =>'quests#destroy'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

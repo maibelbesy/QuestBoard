@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+
+
   # DO NOT ALTER ANYTHING BELOW THIS LINE
 
   before_save { self.email = email.downcase if not self.email.blank?}
@@ -24,4 +26,5 @@ class User < ActiveRecord::Base
   validates_attachment_size :photo, :less_than => 5.megabytes
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/jpg']
   
+
 end
