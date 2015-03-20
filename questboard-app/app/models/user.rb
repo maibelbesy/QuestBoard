@@ -18,5 +18,4 @@ class User < ActiveRecord::Base
 	has_many :tasks, foreign_key: "user_id"
 
 	has_secure_password validations: false
-		
 end
