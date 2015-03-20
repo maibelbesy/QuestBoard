@@ -1,5 +1,5 @@
 class Quest < ActiveRecord::Base
 
-	has_many :tasks, foreign_key: "task_id", dependent: :destroy
+	has_many :tasks, foreign_key: "quests_id", dependent: :destroy
 
 end
