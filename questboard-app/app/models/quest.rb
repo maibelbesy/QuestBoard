@@ -1,6 +1,11 @@
+
 class Quest < ActiveRecord::Base
 
-	has_many :tasks, dependent: :destroy
+
+	
+
+	has_many :tasks, foreign_key: "quests_id", dependent: :destroy
+
 
 	def self.create_personal_quest(args)
 		quest = self.create(args)
@@ -8,3 +13,5 @@ class Quest < ActiveRecord::Base
 		# UsersQuest.create(:assignor_id => @current_user.id, :assignee_id => @current_user.id, :quest_id => quest.id)
 	end
 end
+
+
