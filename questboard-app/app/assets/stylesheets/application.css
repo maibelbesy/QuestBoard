@@ -80,16 +80,61 @@ a:visited {
     border: 1px soild;
 }
 
+/*ACCOUNT MANAGEMENT PAGES ----------------------------------------------------------*/
+
+.login-div{
+    width: 30%;
+/*    border: 1px solid;*/
+    text-align: center;
+    
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.login-input{
+    width: 99%;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    border-color: gray;
+    color: black;
+}
+
+.login-button{
+    width: 99%;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    border: none;
+    background-color: gray; /*rgba(255, 30, 30, 0.65);*/
+    cursor: pointer;
+    outline: none;
+    color: white;
+}
+
+#login-p{
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    /*color: white;*/
+}
+
 /*GENERAL AND TEST --------------------------------------------------------------*/
 
 .header-title{
-	font-family: 'Lato', sans-serif;
-	font-weight: 400;
-	margin-bottom: 2em;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    margin-bottom: 2em;
 }
 
 .label {
-	font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif;
   font-weight: 300;
   font-size: 24px;
   width: 30%;
@@ -128,4 +173,9 @@ a:visited {
     background-color: gray;/*rgba(255, 30, 30, 0.65);*/
     cursor: pointer;
     outline: none;
+}
+
+font {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
 }

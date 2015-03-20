@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/post/:id'=> 'quests#destroy', as: :delete_quest
 
+  get 'login'   => 'sessions#new'
   get 'signup' => 'sessions#register', as: :register
-  post 'signup' => 'sessions#register', as: :register_user
+  post 'signup' => 'sessions#register_user', as: :register_user
 
 
 
