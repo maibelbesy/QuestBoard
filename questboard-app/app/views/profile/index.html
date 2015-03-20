@@ -1,19 +1,10 @@
 <!doctype html>
-<html lang="en-US">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html">
-  <title>My Profile</title>
-  <meta name="author" content="Jake Rocheleau">
-</head>
- <div id="topbar">
-  <a></a>
-  </div>
+
 <body>
   <div id="w">
     <div id="content" class="clearfix">
       <%= image_tag("avatar.png", :alt => "avatar feed") %>
-      <h1>Mohamed El-Behairy</h1>
+      <h1><%= "#{@member.first_name} #{@member.last_name}" %></h1>
 
       <nav id="profiletabs">
         <ul class="clearfix">
