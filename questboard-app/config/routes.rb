@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'profile/index'
+  get 'users/:id' => 'profile#index'
+
 
   # Routes for Quests
   root 'quests#index'
@@ -16,6 +19,7 @@ Rails.application.routes.draw do
 
 
   delete 'quests/delete/:id' =>'quests#destroy'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
