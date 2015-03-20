@@ -2,8 +2,32 @@ Rails.application.routes.draw do
   get 'profile/index'
   get 'users/:id' => 'profile#index'
 
+
+  # Routes for Quests
+  root 'quests#index'
+
+  get '/quests' => 'quests#index', as: :quests
+  get '/quests/new' => 'quests#new', as: :new_quest
+  get '/quests/:id' => 'quests#show', as: :quest
+  get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
+  post '/quests/edit/:id' => 'quests#update', as: :update_quest
+  post '/quests/new' => 'quests#create', as: :create_quest
+  delete '/quests/post/:id'=> 'quests#destroy', as: :delete_quest
+
+
+
+
+
+  delete 'quests/delete/:id' =>'quests#destroy'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+
+  # Routes for the account web pages
+  get '/users/edit/:id' => 'account#edit', as: :user_edit
+  get '/users/:id' => 'account#show', as: :user
+  post '/users/edit/:id' => 'account#update', as: :user_update
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

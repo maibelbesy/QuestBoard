@@ -1,3 +1,4 @@
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -277,3 +278,136 @@ a:hover { text-decoration: underline; }
  
 html[xmlns] .clearfix { display: block; }
 * html .clearfix { height: 1%; }
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ html, body {
+    height: auto;
+}
+
+*{margin: 0}
+
+/*Navigation Bar -----------------------------------------------------------*/
+
+.header{
+    width: 100%;
+    height: 4em;
+    position: fixed;
+    top: 0em;
+    background-color: gray;
+    /*border-bottom: 2px solid;*/
+    /*border-color: rgba(255, 30, 30, 0.65);*/
+    z-index: 3;
+}
+
+.logo {
+    width: 90%;
+    text-indent: 5em;
+    font-size: 35px;
+    float: left;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*Everything Between the Navigation Bar and the Footer (TBA)*/
+
+.container-body{
+    width: 100%;
+    margin-top: 5em;
+    height: auto;
+}
+
+#canvas{
+    background-color: #2c343f;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    margin: 0em auto;
+    top: 0em;
+    left: 0em;
+}
+
+.container-container{
+    position: relative;
+    width: 60%;
+    height: 100%;
+    margin: 0em auto;
+    background-color: white;
+    z-index: 2;
+    border: 1px soild;
+}
+
+/*GENERAL AND TEST --------------------------------------------------------------*/
+
+.header-title{
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	margin-bottom: 2em;
+}
+
+.label {
+	font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  width: 30%;
+}
+
+.input{
+    width: 60%;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    border-color: gray;
+}
+
+.textarea{
+    width: 60%;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    border: none;
+    border-bottom: 1px solid;
+    border-color: gray;
+    outline: none;
+}
+
+.button{
+    width: 5em;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: gray;/*rgba(255, 30, 30, 0.65);*/
+    cursor: pointer;
+    outline: none;
+}
+
