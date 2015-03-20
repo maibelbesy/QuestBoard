@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
   # Routes for Quests
+  root 'quests#index'
+
   get '/quests' => 'quests#index', as: :quests
-  get '/quests/:id' => 'quests#show', as: :quest
   get '/quests/new' => 'quests#new', as: :new_quest
+  get '/quests/:id' => 'quests#show', as: :quest
   get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
   post '/quests/edit/:id' => 'quests#update', as: :update_quest
   post '/quests/new' => 'quests#create', as: :create_quest

@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>QuestboardApp</title>
+  <title>QuestBoard</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<div class="header">
+	<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">
+		<%= link_to "QuestBoard", root_path, class: "logo", style: "float: left; color: white" %>
+	</div>
+<%if false %>
+	<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">
+		<%= link_to "JCrew", root_path, class: "logo", style: "float: left" %>
+	</div>
+	<div style="float:right;height: 100%;right: 15em;position:relative">
+		<ul class="navbar-links">
+			<li style="float: left">
+				<%= link_to "Home", root_path, class: "navbar-link" %>
+			</li>
+			<li style="float: left">
+				<%= link_to "Blog", "/blog", class: "navbar-link" %>
+			</li>
+			<li style="float: left" id="test">
+				<%= link_to "Team", "/team", class: "navbar-link" %>
+			</li>
+			<li style="float: left">
+				<!-- <p class="navbar-link" id="user">Me</p> -->
+				<% if logged_in? %>
+					<p class="navbar-link" id="user"><%= @current_user.name %></p>
+				<% else %>
+					<!-- <p class="navbar-link" id="user">Log in</p> -->
+					<%= link_to "Log in", login_path, class: "navbar-link" %>
+				<% end %>
+			</li>
+		</ul>
+
+		<% if logged_in? %>
+			<div class="account-menu-div display-none">
+				<table class="account-menu">
+					<% if @current_user.is_admin %>
+						<tr class="account-menu-item">
+							<td><%= link_to "Add Blog Post", new_post_path %></td>
+						</tr>
+						<tr class="account-menu-item">
+							<td><%= link_to "Post Categories", categories_path %></td>
+						</tr>
+					<% end %>
+					<tr class="account-menu-item">
+						<td><%= link_to "Profile", user_path(@current_user.id) %></td>
+					</tr>
+					<tr class="account-menu-item">
+						<td><%= link_to "Log out", logout_path, method: :delete %></td>
+					</tr>
+				</table>
+			</div>
+		<% end %>
+		</div>
+<% end %>
+
+</div>
+
+<%#= yield %>
+<div class="container-body">
+  <div class="container-container" style="padding: 01em;background-color: transparent;">
+		<%= yield %>
+	</div>
+</div>
 
 </body>
 </html>
