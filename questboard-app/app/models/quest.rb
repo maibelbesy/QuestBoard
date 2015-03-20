@@ -2,8 +2,9 @@ class Quest < ActiveRecord::Base
 
 	has_many :tasks, dependent: :destroy
 
-	def create_personal_quest(args)
+	def self.create_personal_quest(args)
 		quest = self.create(args)
-		# Implement the join table record creation here
+		# TODO: Implement the join table record creation here
+		# UsersQuest.create(:assignor_id => @current_user.id, :assignee_id => @current_user.id, :quest_id => quest.id)
 	end
 end

@@ -1,6 +1,7 @@
 class QuestsController < ApplicationController
 
-	def index 
+	def index
+		# TODO: Find personal quests
 		@quests = Quest.all.order('due_date')
 	end
 
@@ -13,7 +14,7 @@ class QuestsController < ApplicationController
 	end
 
 	def create
-		Quest.create(params.require(:quest).permit(:title, :description, :due_date))
+		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date))
 		redirect_to quests_path
 	end
 
