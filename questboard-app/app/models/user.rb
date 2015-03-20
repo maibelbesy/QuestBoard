@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 
+
 	before_save { self.email = email.downcase if not self.email.blank?}
 
 	validates :first_name, presence: true, length: { maximum: 50 }

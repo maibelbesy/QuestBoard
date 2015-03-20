@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
   	end
  end
 
+
  def register
  end
 
@@ -28,6 +29,7 @@ class SessionsController < ApplicationController
       render 'register'
     end
   end
+
 
   def destroy
   	log_out

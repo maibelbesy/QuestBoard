@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  get 'sessions/new'
+
+   
+  post   'login'   => 'sessions#create' , as: :login_user
+  delete 'logout'  => 'sessions#destroy'
+
+
   get 'profile/index'
   get 'users/:id' => 'profile#index'
 
@@ -23,6 +31,7 @@ Rails.application.routes.draw do
 
 
   delete 'quests/delete/:id' =>'quests#destroy'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
