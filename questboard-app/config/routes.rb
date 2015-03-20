@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # Routes for Quests
   get '/quests' => 'quests#index', as: :quests
   get '/quests/:id' => 'quests#show', as: :quest
@@ -10,8 +11,17 @@ Rails.application.routes.draw do
 
 
 
+
+
+  delete 'quests/delete/:id' =>'quests#destroy'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+
+  # Routes for the account web pages
+  get '/users/edit/:id' => 'account#edit', as: :user_edit
+  get '/users/:id' => 'account#show', as: :user
+  post '/users/edit/:id' => 'account#update', as: :user_update
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
