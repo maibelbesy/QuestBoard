@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
    
   post   '/login'   => 'sessions#create' , as: :login_user
-  delete '/logout'  => 'sessions#destroy'
+  get '/logout'  => 'sessions#destroy', as: :logout_user
 
 
   get '/profile/index'
@@ -25,12 +25,6 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#login', as: :login
   get '/signup' => 'sessions#register', as: :register
   post '/signup' => 'sessions#register_user', as: :register_user
-
-
-
-
-
-  delete '/quests/delete/:id' =>'quests#destroy'
 
 
 

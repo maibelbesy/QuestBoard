@@ -2,4 +2,6 @@
 
 <% @quests.each do |quest| %>
 	<p class="label" style="margin-bottom: 0.5em;"><%= quest.title %></p>
+	<!-- <button>Delete</button> -->
+	<%= button_to "Delete", delete_quest_path(quest.id), method: :delete%>
 <% end %>
