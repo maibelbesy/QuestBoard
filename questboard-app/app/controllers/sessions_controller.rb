@@ -13,12 +13,12 @@ class SessionsController < ApplicationController
   	end
  end
 
- def register
+ def register_user
     hash = params[:register]
-    @user = User.new(:email => hash[:email], :name => hash[:name], :password => hash[:password])
+    @user = User.new(:email => hash[:email], :first_name => hash[:first_name], :password => hash[:password], :last_name => hash[:last_name])
     if @user.save
       log_in @user
-      redirect_to posts_path
+      redirect_to root_path
     else
       render 'register'
     end

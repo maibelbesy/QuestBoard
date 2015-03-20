@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/post/:id'=> 'quests#destroy', as: :delete_quest
 
+  get 'signup' => 'sessions#register', as: :register
+  post 'signup' => 'sessions#register', as: :register_user
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
