@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
    
-  post   'login'   => 'sessions#create' , as: :login_user
-  delete 'logout'  => 'sessions#destroy'
+  post   '/login'   => 'sessions#create' , as: :login_user
+  get '/logout'  => 'sessions#destroy', as: :logout_user
 
 
-  get 'profile/index'
-  get 'users/:id' => 'profile#index'
+  get '/profile/index'
+  get '/users/:id' => 'profile#index'
 
 
   # Routes for Quests
@@ -22,15 +22,9 @@ Rails.application.routes.draw do
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/post/:id'=> 'quests#destroy', as: :delete_quest
 
-  get 'login'   => 'sessions#new'
-  get 'signup' => 'sessions#register', as: :register
-  post 'signup' => 'sessions#register_user', as: :register_user
-
-
-
-
-
-  delete 'quests/delete/:id' =>'quests#destroy'
+  get '/login' => 'sessions#login', as: :login
+  get '/signup' => 'sessions#register', as: :register
+  post '/signup' => 'sessions#register_user', as: :register_user
 
 
 
