@@ -11,7 +11,7 @@
 <div class="login-div" style="margin: 0em auto">
     <%= form_for :register, :url => register_user_path do |f| %>
         <%= f.email_field :email, class: "login-input", placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-        <%= f.email_field :user_name, class: "login-input", placeholder: "Create a username", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
+        <%= f.email_field :username, class: "login-input", placeholder: "Create a username", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
         <%= f.password_field :password, class: "login-input", placeholder: "Create a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
         <%= f.text_field :first_name, class: "login-input", placeholder: "Enter your first name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
         <%= f.text_field :last_name, class: "login-input", placeholder: "Enter your last name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
@@ -23,5 +23,5 @@
         <%= f.submit "Register", class: "login-button", style: "margin-top: 0.5em;" %>
      <% end %>
      <br>
-     <p id="login-p">Already have an account? <%= link_to 'Log in', "login", style:"color: rgba(92,211,173, 0.65);text-decoration: underline" %></p>
+     <p id="login-p">Already have an account? <%= link_to 'Log in', "login", style:"text-decoration: underline" %></p>
 </div>

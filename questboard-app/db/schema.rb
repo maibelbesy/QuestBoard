@@ -11,75 +11,65 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320090355) do
-
-  create_table "profiles", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20150308170132) do
 
   create_table "quests", force: :cascade do |t|
-    t.string   "title",        null: false
-    t.text     "description"
-    t.boolean  "is_completed"
-    t.string   "bounty"
+    t.string   "title",                        null: false
+    t.text     "description",  default: ""
+    t.boolean  "is_completed", default: false
+    t.string   "bounty",       default: ""
     t.datetime "due_date"
     t.datetime "completed_at"
-    t.string   "status"
+    t.string   "status",       default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
-    t.boolean  "is_completed"
-    t.integer  "users_id"
-    t.integer  "quests_id"
+    t.boolean  "is_completed", default: false
+    t.integer  "user_id"
+    t.integer  "quest_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tasks", ["quests_id"], name: "index_tasks_on_quests_id"
-  add_index "tasks", ["users_id"], name: "index_tasks_on_users_id"
+  add_index "tasks", ["quest_id"], name: "index_tasks_on_quest_id"
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
 
   create_table "tokens", force: :cascade do |t|
     t.string   "key"
-    t.string   "token_type"
-    t.integer  "users_id"
+    t.string   "token_type", default: "access"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "tokens", ["key"], name: "index_tokens_on_key"
-  add_index "tokens", ["users_id"], name: "index_tokens_on_users_id"
+  add_index "tokens", ["user_id"], name: "index_tokens_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "user_name",       null: false
-    t.string   "email",           null: false
-    t.string   "password_digest", null: false
+    t.string   "username",                        null: false
+    t.string   "email",                           null: false
+    t.string   "password_digest",                 null: false
     t.boolean  "gender"
-    t.string   "photo"
-    t.boolean  "email_verified"
+    t.string   "photo",           default: ""
+    t.boolean  "email_verified",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
-  add_index "users", ["user_name"], name: "index_users_on_user_name"
+  add_index "users", ["username"], name: "index_users_on_username"
 
   create_table "users_quests", force: :cascade do |t|
     t.integer  "assignor_id"
     t.integer  "assignee_id"
     t.integer  "quest_id"
-    t.boolean  "is_accepted"
-    t.text     "review"
+    t.boolean  "is_accepted", default: false
+    t.text     "review",      default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
   end

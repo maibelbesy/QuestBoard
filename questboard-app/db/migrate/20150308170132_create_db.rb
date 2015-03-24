@@ -4,12 +4,12 @@ class CreateDb < ActiveRecord::Migration
     create_table :users do |t|
       t.string "first_name"
       t.string "last_name"
-      t.string "user_name", :null => false, index: true
+      t.string "username", :null => false, index: true
       t.string "email", :null => false, index: true
       t.string "password_digest", :null =>false
       t.boolean "gender"
-      t.string "photo"
-      t.boolean "email_verified"
+      t.string "photo", default: ""
+      t.boolean "email_verified", default: false
 
       t.timestamps
     end
@@ -17,21 +17,20 @@ class CreateDb < ActiveRecord::Migration
     create_table :tokens do |t|
       t.string "key", index: true
       # t.integer "user_id"
-      t.string "token_type"
-
-      t.belongs_to :users, index: true
+      t.string "token_type", default: "access"
+      t.belongs_to :user, index: true
 
       t.timestamps
     end
 
     create_table :quests do |t|
       t.string "title", :null => false
-      t.text "description"
-      t.boolean "is_completed"
-      t.string "bounty"
+      t.text "description", default: ""
+      t.boolean "is_completed", default: false
+      t.string "bounty", default: ""
       t.datetime "due_date"
       t.datetime "completed_at"
-      t.string "status"
+      t.string "status", default: ""
       # t.integer "user_id"
 
       t.timestamps
@@ -39,10 +38,10 @@ class CreateDb < ActiveRecord::Migration
 
     create_table :tasks do |t|
       t.string "title"
-      t.boolean "is_completed"
+      t.boolean "is_completed", default: false
       # t.integer "quest_id"
-      t.belongs_to :users, index: true
-      t.belongs_to :quests, index: true
+      t.belongs_to :user, index: true
+      t.belongs_to :quest, index: true
 
       t.timestamps
     end
@@ -51,8 +50,8 @@ class CreateDb < ActiveRecord::Migration
       t.integer "assignor_id"
       t.integer "assignee_id"
       t.integer "quest_id"
-      t.boolean "is_accepted"
-      t.text "review"
+      t.boolean "is_accepted", default: false
+      t.text "review", default: ""
 
       t.timestamps
     end

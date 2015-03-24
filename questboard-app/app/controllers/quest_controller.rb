@@ -1,6 +1,5 @@
 class QuestsController < ApplicationController
-
-
+	
 def delete
 end
 

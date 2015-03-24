@@ -14,13 +14,13 @@
  *= require_self
  */
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+*{
   margin: 0;
   padding: 0;
-  border: 0;
+  /*border: 0;*/
   font-size: 100%;
   font: inherit;
-  vertical-align: baseline;
+  /*vertical-align: baseline;*/
   outline: none;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
@@ -29,12 +29,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-html { overflow-y: scroll; }
+
+html { overflow-y: scroll; font-family: 'Lato', sans-serif;}
+
 body { 
-  background: #f0f0f0; 
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #f0f0f0;
+  /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
   color: #313131;
-  font-size: 62.5%; 
+  /*font-size: 62.5%;*/
   line-height: 1; 
 }
 
@@ -44,27 +48,27 @@ body {
 
 ::-webkit-input-placeholder { /* WebKit browsers */
   color: #ccc;
-  font-style: italic;
+  /*font-style: italic;*/
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
   color: #ccc;
-  font-style: italic;
+  /*font-style: italic;*/
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
   color: #ccc;
-  font-style: italic;
+  /*font-style: italic;*/
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
   color: #ccc !important;
-  font-style: italic;  
+  /*font-style: italic;  */
 }
 
-br { display: block; line-height: 2.2em; } 
+#w br { display: block; line-height: 2.2em; } 
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-ol, ul { list-style: none; }
+#w article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+#w ol, #w ul { list-style: none; }
 
-input, textarea { 
+#w input, #w textarea { 
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -76,10 +80,10 @@ input, textarea {
 
 blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
-strong { font-weight: bold; } 
+/*strong { font-weight: bold; } */
 
-table { border-collapse: collapse; border-spacing: 0; }
-img { border: 0; max-width: 100%; }
+#w table { border-collapse: collapse; border-spacing: 0; }
+#w img { border: 0; max-width: 100%; }
 
 #topbar {
   background: #4f4a41;
@@ -104,7 +108,7 @@ img { border: 0; max-width: 100%; }
 }
 
 /** typography **/
-h1 {
+#w h1 {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 2.5em;
   line-height: 1.5em;
@@ -117,8 +121,8 @@ h1 {
 	white-space: nowrap;
 	text-align: center;
 }
-h1:before,
-h1:after {
+#w h1:before,
+#w h1:after {
   content: "";
   position: relative;
   display: inline-block;
@@ -127,22 +131,22 @@ h1:after {
   vertical-align: middle;
   background: #f0f0f0;
 }
-h1:before {    
+#w h1:before {    
   left: -.5em;
   margin: 0 0 0 -50%;
 }
-h1:after {    
+#w h1:after {    
   left: .5em;
   margin: 0 -50% 0 0;
 }
-h1 > span {
+#w h1 > span {
   display: inline-block;
   vertical-align: middle;
   white-space: normal;
 }
 
 
-h2 {
+#w h2 {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 2.1em;
   line-height: 1.4em;
@@ -156,7 +160,7 @@ h2 {
 	text-align: center;
 }
 
-p {
+#w p {
   display: block;
   font-size: 1.4em;
   line-height: 1.55em;
@@ -164,8 +168,8 @@ p {
   color: #555;
 }
 
-a { color: #5a9352; text-decoration: none; }
-a:hover { text-decoration: underline; }
+#w a { color: #5a9352; text-decoration: none; }
+#w a:hover { text-decoration: underline; }
 
 .center { display: block; text-align: center; }
 
@@ -176,6 +180,7 @@ a:hover { text-decoration: underline; }
   margin: 0 auto;
   padding-top: 30px;
   padding-bottom: 45px;
+  font-size: 62.5%;
 }
 
 #content {
@@ -322,6 +327,39 @@ html[xmlns] .clearfix { display: block; }
     font-weight: 300;
 }
 
+.navbar-links{
+    list-style-type: none;
+    position: relative;
+    top: 30%;
+    right: 10%;
+    height: 50%;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    -webkit-user-select: none;
+    color: white;
+}
+
+.navbar-link{
+/*        color: white;*/
+    min-width: 4em;
+    max-width: 14em;
+/*        width: auto;*/
+/*        margin-top: 1em;*/
+    text-align: center;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 1.5em;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar-link:visited{
+    text-decoration: none;
+    color: inherit;
+}
+
 a{
     text-decoration: none;
     color: inherit;
@@ -330,6 +368,10 @@ a{
 a:visited {
     text-decoration: none;
     color: inherit;
+}
+
+.header:hover a {
+  text-decoration: none;
 }
 
 /*Everything Between the Navigation Bar and the Footer (TBA)*/
@@ -403,9 +445,14 @@ a:visited {
     font-weight: 300;
     font-size: 20px;
     /*color: white;*/
+    color: gray;
 }
 
 /*GENERAL AND TEST --------------------------------------------------------------*/
+
+header {
+  font-size: 30px;
+}
 
 .header-title{
     font-family: 'Lato', sans-serif;
@@ -414,7 +461,7 @@ a:visited {
 }
 
 .label {
-    font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: 300;
   font-size: 24px;
   width: 30%;
@@ -429,6 +476,7 @@ a:visited {
     border: none;
     border-bottom: 1px solid;
     border-color: gray;
+    background: #f0f0f0;
 }
 
 .textarea{
@@ -440,6 +488,7 @@ a:visited {
     border-bottom: 1px solid;
     border-color: gray;
     outline: none;
+    background: #f0f0f0;
 }
 
 .button{

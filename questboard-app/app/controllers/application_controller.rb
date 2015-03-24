@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
 private
   def authorize_user
-  	redirect_to login_path and return if !logged_in? && request.path != "/login"
+  	redirect_to login_path and return if !logged_in? && (request.path != "/login" && request.path != "/signup")
+  	current_user
   end
 end
