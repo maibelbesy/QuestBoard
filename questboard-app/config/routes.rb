@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   # get '/users/:id' => 'account#show', as: :user
   post '/users/edit/:id' => 'account#update', as: :user_update
 
+  resources :users
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

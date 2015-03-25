@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
 	validates :password, length: { minimum: 6 }, :on => :create
 
+	validates_confirmation_of :password
+
 	# validates :gender, :in => %w( m f )
 
 	has_many :tasks, foreign_key: "user_id"
