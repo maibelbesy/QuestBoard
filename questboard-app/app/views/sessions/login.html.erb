@@ -1,0 +1,13 @@
+<% if flash[:warning] && flash[:warning].count > 0 %>
+    <div class="warning", style="background-color: transparent; color: rgba(92,211,173, 0.65);"><%= safe_join(flash[:warning], "<br>".html_safe) %></div>
+    <br>
+<% end %>
+<div class="login-div" style="margin: 0em auto">
+    <%= form_for :sessions, :url => login_user_path do |f| %>
+    	<%= f.email_field :email, class: "login-input", placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
+    	<%= f.password_field :password, class: "login-input", placeholder: "Enter your password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
+    	<%= f.submit "Log in", class: "login-button", style: "margin-top: 0.5em;" %>
+  	<% end %>
+  	<br>
+  	<p id="login-p">New User? <%= link_to 'Register', register_url, style:"text-decoration: underline" %></p>
+</div>

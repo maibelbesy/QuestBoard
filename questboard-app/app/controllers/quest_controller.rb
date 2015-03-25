@@ -1,6 +1,5 @@
-class QuestController < ApplicationController
-
-
+class QuestsController < ApplicationController
+	
 def delete
 end
 
@@ -18,4 +17,5 @@ def destroy
 	 flash[:notice] = "Quest wasn't deleted."
 end
 
+end
 end
