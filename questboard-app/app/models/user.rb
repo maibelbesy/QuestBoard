@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
 
 	validates :password, length: { minimum: 6 }, :on => :create
+
 	validates_confirmation_of :password
 
 	# validates :gender, :in => %w( m f )
