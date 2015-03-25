@@ -47,11 +47,19 @@ class CreateDb < ActiveRecord::Migration
     end
 
     create_table :users_quests do |t|
-      t.integer "assignor_id"
-      t.integer "assignee_id"
-      t.integer "quest_id"
+      t.integer "assignor_id", index: true
+      t.integer "assignee_id", index: true
+      t.integer "quest_id", index: true
       t.boolean "is_accepted", default: false
       t.text "review", default: ""
+
+      t.timestamps
+    end
+
+    create_table :connections do |t|
+      t.integer "user_id", index: true
+      t.integer "connection_id", index: true
+      t.integer "frequency", default: 0
 
       t.timestamps
     end

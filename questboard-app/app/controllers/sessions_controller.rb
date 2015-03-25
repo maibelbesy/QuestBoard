@@ -1,8 +1,10 @@
 class SessionsController < ApplicationController
+  before_action :redirect_user, except: [:destroy]
+
   def new
   end
 
- def create
+  def create
   	user = User.find_by(:email => params[:sessions][:email].downcase)
    	if user && user.authenticate(params[:sessions][:password])
      log_in user
@@ -11,18 +13,14 @@ class SessionsController < ApplicationController
      flash.now[:danger] = 'Invalid email/password combination'
      render 'new'
   	end
- end
+  end
 
 
- def register
- end
+  def register
+  end
 
- def register_user
-    hash = params[:register]
-    gender = true if hash[:male] == "1"
-    gender = false if hash[:female] == "1"
-    @user = User.new(:email => hash[:email], :first_name => hash[:first_name], :password => hash[:password], :last_name => hash[:last_name], :username => hash[:username], :gender => gender)
-    # @user = User.new(hash.require(:quest).permit(:email, :first_name, :last_name, :username, :gender))
+  def register_user
+    @user = User.new(params.require(:register).permit(:email, :password, :first_name, :last_name, :username, :gender))
     if @user.save
       log_in @user
       redirect_to root_path
@@ -31,9 +29,13 @@ class SessionsController < ApplicationController
     end
   end
 
-
   def destroy
   	log_out
-    redirect_to root_url
+    redirect_to root_path
+  end
+
+  private 
+  def redirect_user
+    redirect_to root_path and return if logged_in?
   end
 end

@@ -13,13 +13,15 @@
         <%= f.email_field :email, class: "login-input", placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
         <%= f.text_field :username, class: "login-input", placeholder: "Create a username", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
         <%= f.password_field :password, class: "login-input", placeholder: "Create a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-        <%= f.text_field :first_name, class: "login-input", placeholder: "Enter your first name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-        <%= f.text_field :last_name, class: "login-input", placeholder: "Enter your last name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-        <%= f.check_box :male %>
-        <font style="margin-right: 0.5em">Male</font>
-        <br>
-        <%= f.check_box :female %>
+        <p><%= f.text_field :first_name, class: "login-input", placeholder: "Enter your first name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
+        <%= f.text_field :last_name, class: "login-input", placeholder: "Enter your last name", style: "float:left;background-color: transparent;margin-top: 0.5em;margin-bottom:0.5em;" %></p>
+        <%#= f.check_box :male %>
+        <br><br>
+        <%= f.radio_button :gender, false %>
         <font style="margin-right: 0.5em">Female</font>
+        <%= f.radio_button :gender, true %>
+        <font style="margin-right: 0.5em">Male</font>
+        <%#= f.check_box :female %>
         <%= f.submit "Register", class: "login-button", style: "margin-top: 0.5em;" %>
      <% end %>
      <br>
