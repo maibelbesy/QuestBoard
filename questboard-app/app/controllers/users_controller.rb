@@ -11,7 +11,6 @@ class UsersController < ApplicationController
 		 @user = User.new
 	end
 
-
   def edit
     @user = User.find(params[:id])
   end
@@ -29,7 +28,8 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    user = User.find_by_email(current_user.email).try(:authenticate, params[:current_password])
+    if  user && @user.update_attributes(user_params)
        flash[:success] = "Profile updated"
        redirect_to @user
     else
@@ -41,6 +41,8 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password,
-
+                                   :password_confirmation)
     end
+    
+    
 end
