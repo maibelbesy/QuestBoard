@@ -2,9 +2,16 @@ class QuestsController < ApplicationController
 
 	def index
 		# TODO: Find personal quests
-		quests = UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).pluck(:quest_id)
+		quests = UsersQuest.where(:assignor_id => @current_user.id).pluck(:quest_id)
 		@quests = Quest.where(:id => quests).order('due_date')
 	end
+
+	def pending_quests
+		quests = UsersQuest.where(:assignee_id => @current_user.id).pluck(:quest_id)
+		@quests = Quest.where(:id => quests).order('due_date')
+
+	end
+
 
 	def show
 		@quest = Quest.find(params[:id])
@@ -15,7 +22,11 @@ class QuestsController < ApplicationController
 	end
 
 	def create
-		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date), @current_user)
+		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
+		hash[:assign_to] = params[:quest][:assign_to]
+		puts params[:quest][:assign_to]
+		Quest.create_general_quest(hash, @current_user)
+
 		redirect_to quests_path
 	end
 
@@ -30,7 +41,7 @@ class QuestsController < ApplicationController
 		# flash[:warning] << "Content cannot be left blank" if hash[:description].blank?
 		redirect_to edit_quest_path and return if flash[:warning].count > 0
 		# Quest.find(params[:id]).update(:title => hash[:title], :description => hash[:description], :is_completed => hash[:is_completed], :bounty => hash[:bounty], :due_date => hash[:due_date] )
-		Quest.update(params[:id], params.require(:quest).permit(:title, :description, :due_date))
+		Quest.update(params[:id], params.require(:quest).permit(:title, :description, :due_date, :bounty, :assign_to))
 		redirect_to quests_path
 	end
 

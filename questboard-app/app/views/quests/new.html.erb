@@ -13,6 +13,14 @@
 				<td><%= f.text_area :description, placeholder: "Enter quest description", class: "textarea", style: "width:100%;resize: vertical;" %></td>
 			</tr>
 			<tr style="padding-bottom: 1em">
+			<td><font class="label">Assign to: </font></td>	
+			<td style="width:80%;"><%= f.text_field :assign_to, placeholder: "Who do you want to assign the Quest to?", class: "input", style: "width:100%" %></td>
+			</tr>
+			<tr style="padding-bottom: 1em">
+			<td><font class="label">Bounty: </font></td>	
+			<td style="width:80%;"><%= f.text_field :bounty, placeholder: "Bounty", class: "input", style: "width:100%" %></td>
+			</tr>
+			<tr style="padding-bottom: 1em">
 				<td><font class="label">Due date: </font></td>
 				<td><%= f.date_select :due_date, :order => [:day, :month, :year] %></td>
 			</tr>
