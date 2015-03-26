@@ -21,11 +21,13 @@ Rails.application.routes.draw do
 
   get '/quests' => 'quests#index', as: :quests
   get '/quests/new' => 'quests#new', as: :new_quest
+  get '/quests/pending_quests' => 'quests#pending_quests', as: :pending_quests
   get '/quests/:id' => 'quests#show', as: :quest
   get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
   post '/quests/edit/:id' => 'quests#update', as: :update_quest
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
+  
 
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
