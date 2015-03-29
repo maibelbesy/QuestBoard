@@ -13,6 +13,17 @@
 
 ActiveRecord::Schema.define(version: 20150308170132) do
 
+  create_table "connections", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "connection_id"
+    t.integer  "frequency",     default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "connections", ["connection_id"], name: "index_connections_on_connection_id"
+  add_index "connections", ["user_id"], name: "index_connections_on_user_id"
+
   create_table "quests", force: :cascade do |t|
     t.string   "title",                        null: false
     t.text     "description",  default: ""
@@ -74,6 +85,9 @@ ActiveRecord::Schema.define(version: 20150308170132) do
     t.datetime "updated_at"
   end
 
+  add_index "users_quests", ["assignee_id"], name: "index_users_quests_on_assignee_id"
   add_index "users_quests", ["assignor_id", "assignee_id", "quest_id"], name: "index_users_quests_on_assignor_id_and_assignee_id_and_quest_id"
+  add_index "users_quests", ["assignor_id"], name: "index_users_quests_on_assignor_id"
+  add_index "users_quests", ["quest_id"], name: "index_users_quests_on_quest_id"
 
 end
