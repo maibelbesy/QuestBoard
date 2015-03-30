@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20150308170132) do
     t.integer  "assignee_id"
     t.integer  "quest_id"
     t.boolean  "is_accepted", default: false
+    t.boolean  "is_rejected", default: false
     t.text     "review",      default: ""
     t.datetime "created_at"
     t.datetime "updated_at"

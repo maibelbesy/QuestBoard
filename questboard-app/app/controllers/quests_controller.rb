@@ -7,19 +7,44 @@ class QuestsController < ApplicationController
 	end
 
 	def pending_quests
-		quests = UsersQuest.where(:assignee_id => @current_user.id).pluck(:quest_id)
+		quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).pluck(:quest_id)
 		@quests = Quest.where(:id => quests).order('due_date')
+		by_me_quests = UsersQuest.where(:assignor_id => @current_user.id,:is_accepted => false,:is_rejected =>false).pluck(:quest_id)
+		@by_me_quests = Quest.where(:id => by_me_quests).order('due_date')
+	end
 
+	def general_quests
+		quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).pluck(:quest_id)
+		@quests = Quest.where(:id => quests).order('due_date')
 	end
 
 
 	def show
-		@quest = Quest.find(params[:id])
+		@user_quest = UsersQuest.find(params[:id])
+		@assignor_id = UsersQuest.find(params[:id]).assignor_id
+		@assignee_id = UsersQuest.find(params[:id]).assignee_id
+		@is_accepted = UsersQuest.find(params[:id]).is_accepted 
+		@is_rejected = UsersQuest.find(params[:id]).is_rejected 
+		@name = User.find(@user_quest.assignee_id)
+		@quest = Quest.find(@user_quest)
+
+
 	end
 
 	def new
 		# @quest = Quest.new
 	end
+
+	def accept
+		UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
+		redirect_to quests_path
+	end
+
+	def reject
+		UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
+		redirect_to quests_path
+	end
+
 
 	def create
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
