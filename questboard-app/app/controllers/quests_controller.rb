@@ -15,7 +15,7 @@ class QuestsController < ApplicationController
 	end
 
 	def create
-		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date), @current_user)
+		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :reminder, :remind_to), @current_user)
 		redirect_to quests_path
 	end
 
@@ -53,4 +53,5 @@ def destroy
 	# Quest.delete_all(:id => params[:id])
 	redirect_to quests_path
 	end
+	
 end

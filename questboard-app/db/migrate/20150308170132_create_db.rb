@@ -31,6 +31,8 @@ class CreateDb < ActiveRecord::Migration
       t.datetime "due_date"
       t.datetime "completed_at"
       t.string "status", default: ""
+      t.datetime "reminder"
+      t.boolean "remind_to", default: false
       # t.integer "user_id"
 
       t.timestamps

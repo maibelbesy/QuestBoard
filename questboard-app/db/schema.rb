@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308170132) do
+ActiveRecord::Schema.define(version: 20150329192330) do
 
   create_table "connections", force: :cascade do |t|
     t.integer  "user_id"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20150308170132) do
     t.datetime "due_date"
     t.datetime "completed_at"
     t.string   "status",       default: ""
+    t.datetime "reminder"
+    t.boolean  "remind_to",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
