@@ -5,7 +5,8 @@ class Quest < ActiveRecord::Base
 		quest = self.create(args)
 		UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id)
 	end
-	require 'net/smtp'
+
+require 'net/smtp'
 def send_email(to,opts={})
   opts[:server]      ||= 'localhost'
   opts[:from]        ||= 'email@example.com'
@@ -25,11 +26,14 @@ END_OF_MESSAGE
     smtp.send_message msg, opts[:from], to
   end
  end
- def reminder 
- 	@quests=Quest.all
-    @quests.each do |q|
+ def reminders 
+ 	  quests=Quest.all
+    quests.each do |q|
+    #userQuest=UsersQuest.find_by_quest_id(q.id)
+    userQuest=UsersQuest.where(:quest_id => q.id).pluck(:assignee_id)
+    user=User.find(userQuest)
     if (q.remind_to == true && DateTime.now == q.reminder)
-   	send_email q.email, :body => "please finish your task asap"
+   	send_email user.email, :body => "please finish your task asap"
     q.remind_to=false
    end 
  end

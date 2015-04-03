@@ -9,7 +9,7 @@
 #
 every 1.minute do
    #command "/usr/bin/some_great_command"
-   runner "Quest.reminder"
+   runner "Quest.reminders"
   # rake "some:great:rake:task"
  end
 #
