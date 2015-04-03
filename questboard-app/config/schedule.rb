@@ -5,12 +5,17 @@
 
 # Example:
 #
-# set :output, "/path/to/my/cron_log.log"
+#set :output, "/path/to/my/cron_log.log"
 #
 every 1.minute do
    #command "/usr/bin/some_great_command"
    runner "Quest.reminders"
   # rake "some:great:rake:task"
+ end
+ every 1.minutes do
+  
+   runner "Quest.addinDB"
+  
  end
 #
 # every 4.days do

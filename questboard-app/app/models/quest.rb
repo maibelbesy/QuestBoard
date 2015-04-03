@@ -40,22 +40,28 @@ class Quest < ActiveRecord::Base
 end
  require 'mandrill' 
  def send_email 
-m = Mandrill::API.new
+m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
 message = {  
  :subject=> "Hello from the Mandrill API",  
  :from_name=> "QuestBoard",  
  :text=>"Hi message, how are you?",  
  :to=>[  
    {  
-     :email=> @user.email,  
+     :email=> "nesreen.mouti@gmail.com", 
+     :type=>"to", 
      :name=> @user.first_name  
    }  
  ],  
  :html=>"<html><h1>Hi <strong>message</strong>, how are you?</h1></html>",  
  :from_email=>"QuestBoard@yourdomain.com"  
 }  
-sending = m.messages.send message  
+async = false
+    ip_pool = "Main Pool"
+    send_at = "example send_at"
+sending = m.messages.send message , async, ip_pool, send_at 
 puts sending
 end
+def addinDB
+  User.create(:first_name=>"whenevergem",:username=> "whenever",:email=> "dkfjdf@gmail.com",:password_digest=>"123453234")
 end
- 
+ end

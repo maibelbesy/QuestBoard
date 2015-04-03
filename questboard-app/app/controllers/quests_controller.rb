@@ -48,7 +48,7 @@ def destroy
 		#flash should be implemented in the view
 		# flash[:notice] = "Quest is Deleted."
 	# else
-		# flash[:notice] = "Quest wasn't deleted."
+		# flash[:notice] = "Quest wasn't deeted."
 	end
 	# Quest.delete_all(:id => params[:id])
 	redirect_to quests_path
