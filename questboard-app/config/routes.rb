@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   post '/quests/edit/:id' => 'quests#update', as: :update_quest
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
-
+get '/test'=> 'quests#test' ,as: :test_quest
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
   # get '/users/:id' => 'account#show', as: :user

@@ -12,9 +12,9 @@ every 1.minute do
    runner "Quest.reminders"
   # rake "some:great:rake:task"
  end
- every 1.minutes do
+ every 1.minute do
   
-   runner "Quest.addinDB"
+   runner "Quest.addinDB" , :environment=>'development'
   
  end
 #

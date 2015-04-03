@@ -26,14 +26,14 @@ class Quest < ActiveRecord::Base
   #  smtp.send_message msg, opts[:from], to
   #end
  #end
- def reminders 
+ def self.reminders 
     @quests=Quest.all
     @quests.each do |q|
     #userQuest=UsersQuest.find_by_quest_id(q.id)
     @userQuest=UsersQuest.where(:quest_id => q.id).pluck(:assignee_id)
     @user=User.find(userQuest)
     if (q.remind_to == true && DateTime.now == q.reminder)
-    send_email #@user.email, :body => "please finish your task asap"
+    #send_email #@user.email, :body => "please finish your task asap"
     q.remind_to=false
    end 
  end
@@ -61,7 +61,7 @@ async = false
 sending = m.messages.send message , async, ip_pool, send_at 
 puts sending
 end
-def addinDB
+def self.addinDB
   User.create(:first_name=>"whenevergem",:username=> "whenever",:email=> "dkfjdf@gmail.com",:password_digest=>"123453234")
 end
  end

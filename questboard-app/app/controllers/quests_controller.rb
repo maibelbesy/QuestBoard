@@ -36,7 +36,29 @@ class QuestsController < ApplicationController
 
 # def delete
 # end
-
+require 'mandrill' 
+def test
+m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
+message = {  
+ :subject=> "Hello from the Mandrill API",  
+ :from_name=> "QuestBoard",  
+ :text=>"Hi message, how are you?",  
+ :to=>[  
+   {  
+     :email=> "nesreen.mouti@gmail.com", 
+     :type=>"to", 
+     :name=> "nes" 
+   }  
+ ],  
+ :html=>"<html><h1>Hi <strong>message</strong>, how are you?</h1></html>",  
+ :from_email=>"QuestBoard@yourdomain.com"  
+}  
+async = false
+    ip_pool = "Main Pool"
+    send_at = "example send_at"
+sending = m.messages.send message #, async, ip_pool, send_at 
+puts sending
+	end
 def destroy
 	@Uquest = UsersQuest.find_by_quest_id(params[:id])
 	# @currentU_id is the current user id (session)
