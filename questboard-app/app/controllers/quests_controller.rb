@@ -16,7 +16,7 @@ class QuestsController < ApplicationController
 
 	def create
 		#Reminder.create(params.require(:quest).permit(:quest_id=>  ,:user_id=>  @current_user, :reminder)
-		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :remind_to), @current_user, params[:quest][:reminder])
+		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :remind_to), @current_user, params.require(:quest).permit(:reminder))
 		redirect_to quests_path
 
 	end
@@ -36,29 +36,6 @@ class QuestsController < ApplicationController
 		redirect_to quests_path
 	end
 
-# def delete
-# end
-require 'mandrill' 
-def test
-m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
-message = {  
- :subject=> "Hello from the Mandrill API",  
- :from_name=> "QuestBoard",  
- :text=>"Hi message, how are you?",  
- :to=>[  
-   {  
-     :email=> "nesreen.mouti@gmail.com", 
-     :type=>"to", 
-     :name=> "nes" 
-   }  
- ],  
- :html=>"<html><h1>Hi <strong>message</strong>, how are you?</h1></html>",  
- :from_email=>"QuestBoard@yourdomain.com"  
-}  
-
-sending = m.messages.send message  
-puts sending
-	end
 def destroy
 	@Uquest = UsersQuest.find_by_quest_id(params[:id])
 	# @currentU_id is the current user id (session)
@@ -67,6 +44,7 @@ def destroy
 		UsersQuest.delete_all(:quest_id => params[:id])
 		Quest.delete_all(:id => params[:id])
 		Task.delete_all(:quest_id => params[:id])
+		Reminder.delete_all(:quest_id => params[:id])
 		#flash should be implemented in the view
 		# flash[:notice] = "Quest is Deleted."
 	# else
@@ -77,3 +55,4 @@ def destroy
 	end
 	
 end
+

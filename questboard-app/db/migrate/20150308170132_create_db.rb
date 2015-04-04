@@ -31,7 +31,7 @@ class CreateDb < ActiveRecord::Migration
       t.datetime "due_date"
       t.datetime "completed_at"
       t.string "status", default: ""
-      
+   
       t.boolean "remind_to", default: false
       # t.integer "user_id"
 
@@ -67,7 +67,7 @@ class CreateDb < ActiveRecord::Migration
     end
 
     create_table :reminders do |t|
-     t.datetime "reminder"
+         t.datetime "reminder"
       t.belongs_to :user, index: true
       t.belongs_to :quest, index: true
       t.timestamps
