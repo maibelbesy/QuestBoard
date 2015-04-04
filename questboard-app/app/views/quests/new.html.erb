@@ -22,7 +22,8 @@
         	<% #if :remind_to ==true %>
 			<tr style="padding-bottom: 1em">
 				<td><font class="label">Reminder: </font></td>
-				<td><%= f.date_select :reminder, :order => [:day, :month, :year] %></td>
+				<td><%= f.date_select :reminder, :order => [:day, :month, :year] %> <%= f.time_select :reminder, :order => [:time] %></td>
+				
 			</tr>
 			<% #end %>
 			<%# remind button: if radio button true button appears%>

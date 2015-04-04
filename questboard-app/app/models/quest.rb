@@ -26,42 +26,36 @@ class Quest < ActiveRecord::Base
   #  smtp.send_message msg, opts[:from], to
   #end
  #end
+ require 'mandrill' 
  def self.reminders 
     @quests=Quest.all
     @quests.each do |q|
-    #userQuest=UsersQuest.find_by_quest_id(q.id)
+    ##@Quest=UsersQuest.find_by_quest_id(q.id)
     @userQuest=UsersQuest.where(:quest_id => q.id).pluck(:assignee_id)
     @user=User.find(userQuest)
     if (q.remind_to == true && DateTime.now == q.reminder)
+     q.remind_to=false
+      m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
+      message = {  
+      :subject=> "Hello from the Mandrill API11",  
+      :from_name=> "QuestBoard",  
+      :text=>"Hello",  
+      :to=>[  
+      {  
+      :email=> "nesreen.mouti@gmail.com", 
+      :type=>"to", 
+      :name=> @user.first_name 
+      }  
+    ],  
+      :html=>"<html><h1>Hi #{q.title} deadline is on<strong>#{q.due_date} </strong></h1></html>",  
+      :from_email=>"QuestBoard@yourdomain.com"  
+  }  
+
+      sending = m.messages.send message  
+      puts sending
     #send_email #@user.email, :body => "please finish your task asap"
-    q.remind_to=false
-   end 
- end
-end
- require 'mandrill' 
- def send_email 
-m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
-message = {  
- :subject=> "Hello from the Mandrill API",  
- :from_name=> "QuestBoard",  
- :text=>"Hi message, how are you?",  
- :to=>[  
-   {  
-     :email=> "nesreen.mouti@gmail.com", 
-     :type=>"to", 
-     :name=> @user.first_name  
-   }  
- ],  
- :html=>"<html><h1>Hi <strong>message</strong>, how are you?</h1></html>",  
- :from_email=>"QuestBoard@yourdomain.com"  
-}  
-async = false
-    ip_pool = "Main Pool"
-    send_at = "example send_at"
-sending = m.messages.send message , async, ip_pool, send_at 
-puts sending
-end
-def self.addinDB
-  User.create(:first_name=>"whenevergem",:username=> "whenever",:email=> "dkfjdf@gmail.com",:password_digest=>"123453234")
-end
+     end 
+   end
+  end
+
  end
