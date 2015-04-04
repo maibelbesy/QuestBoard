@@ -2,7 +2,7 @@
 
 <%# if false %>
 <div>
-	<%= form_for :quest, :url => create_quest_path do |f| %>
+	<%= form_for :quest, :url => create_quest_path, html: { multipart: true } do |f| %>
 		<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;">
 			<tr style="padding-bottom: 1em">
 				<td><font class="label" style="width:20%;">Title: </font></td>
@@ -11,7 +11,7 @@
 			<tr style="padding-bottom: 1em">
 				<td><font class="label">Description: </font></td>
 				<td><%= f.text_area :description, placeholder: "Enter quest description", class: "textarea", style: "width:100%;resize: vertical;" %></td>
-			</tr>
+			
 			<tr style="padding-bottom: 1em">
 			<td><font class="label">Assign to: </font></td>	
 			<td style="width:80%;"><%= f.text_field :assign_to, placeholder: "Who do you want to assign the Quest to?", class: "input", style: "width:100%" %></td>
@@ -24,6 +24,16 @@
 				<td><font class="label">Due date: </font></td>
 				<td><%= f.date_select :due_date, :order => [:day, :month, :year] %></td>
 			</tr>
+			<tr style="padding-bottom: 1em">
+				<td><font class="label">Add images: </font></td>
+				<td><%= file_field_tag "photos[]", type: :file, multiple: true %></td>
+			</tr>
+			<tr style="padding-bottom: 1em">
+				<td><font class="label">Add Youtube Videos: </font></td>
+				<td style="width:80%;"><%= f.text_field :url, placeholder: "Video url", class: "input", style: "width:100%" %></td>
+			</tr>
+
+
 			<tr><td></td><td colspan="1"><%= f.submit "Create", class: "login-button", class: "button", style: "float: right" %></td></tr>
 		</table>
 	<% end %>

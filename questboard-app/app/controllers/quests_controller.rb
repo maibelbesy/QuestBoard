@@ -27,6 +27,10 @@ class QuestsController < ApplicationController
 		@is_rejected = UsersQuest.find(params[:id]).is_rejected 
 		@name = User.find(@user_quest.assignee_id)
 		@quest = Quest.find(@user_quest)
+		@photos = @quest.quest_images
+		@video = QuestVideo.find_by_quest_id(@quest.id).url.split('/').last
+
+		
 
 
 	end
@@ -50,8 +54,17 @@ class QuestsController < ApplicationController
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
 		hash[:assign_to] = params[:quest][:assign_to]
 		puts params[:quest][:assign_to]
-		Quest.create_general_quest(hash, @current_user)
+		 
+		quest = Quest.create_general_quest(hash, @current_user)
+		@quest = Quest.find(quest.quest_id)
+     	 if params[:photos]
+        #===== The magic is here ;)
+        params[:photos].each { |photo|
+          @quest.quest_images.create(:photo => photo)
 
+        }
+      	end
+    	 @quest.quest_videos.create(:url => params[:quest][:url])
 		redirect_to quests_path
 	end
 
