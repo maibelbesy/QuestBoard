@@ -32,11 +32,21 @@ ActiveRecord::Schema.define(version: 20150329192330) do
     t.datetime "due_date"
     t.datetime "completed_at"
     t.string   "status",       default: ""
-    t.datetime "reminder"
     t.boolean  "remind_to",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "reminders", force: :cascade do |t|
+    t.datetime "reminder"
+    t.integer  "user_id"
+    t.integer  "quest_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reminders", ["quest_id"], name: "index_reminders_on_quest_id"
+  add_index "reminders", ["user_id"], name: "index_reminders_on_user_id"
 
   create_table "tasks", force: :cascade do |t|
     t.string   "title"

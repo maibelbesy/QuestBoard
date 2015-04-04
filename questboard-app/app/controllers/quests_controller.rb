@@ -15,8 +15,10 @@ class QuestsController < ApplicationController
 	end
 
 	def create
-		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :reminder, :remind_to), @current_user)
+		#Reminder.create(params.require(:quest).permit(:quest_id=>  ,:user_id=>  @current_user, :reminder)
+		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :remind_to), @current_user, params[:quest][:reminder])
 		redirect_to quests_path
+
 	end
 
 	def edit
