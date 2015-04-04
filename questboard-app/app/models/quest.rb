@@ -33,7 +33,7 @@ class Quest < ActiveRecord::Base
     ##@Quest=UsersQuest.find_by_quest_id(q.id)
     @userQuest=UsersQuest.where(:quest_id => q.id).pluck(:assignee_id)
     @user=User.find(userQuest)
-    if (q.remind_to == true && DateTime.now == q.reminder)
+    if (q.remind_to == true && DateTime.strftime("%d-%m-%Y %H:%M") == q.reminder..strftime("%d-%m-%Y %H:%M"))
      q.remind_to=false
       m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
       message = {  
