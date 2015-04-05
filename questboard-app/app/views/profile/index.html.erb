@@ -5,7 +5,7 @@
 
     <nav id="profiletabs">
       <ul class="clearfix">
-        <li><a href="#MyBoard">About</a></li>
+        <li><a href="#About">About</a></li>
         <li><a href="#Connections">Connections</a></li>
         <li><a href="#Reviews">Reviews</a></li>
         <li><a href="#Performance">Performance</a></li>
@@ -14,7 +14,7 @@
     </nav>
     
     
-    <section id="MyBoard">
+    <section id="About">
 
       <p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
 
@@ -23,26 +23,29 @@
       <p class="setting"><span>Username: </span><%=@member.username%></p> 
 
       <% if @member.gender %>
+
         <p class="setting"><span>Gender: </span><%= "male" %></p>
+
       <% else %>
+
         <p class="setting"><span>Gender: </span><%= "female" %></p>
                
       <%end %>
    
     </section>
     
-    <section id="MyBoard" class="hidden">
-      <p>Most recent actions:</p>
+    <section id="Reviews" class="clearfix">
       
-      <p class="MyBoard">@10:15PM - Submitted a news article</p>
-      
-      <p class="MyBoard">@9:50PM - Submitted a news article</p>
-      
-      <p class="MyBoard">@8:15PM - Posted a comment</p>
-      
-      <p class="MyBoard">@4:30PM - Added <strong>someusername</strong> as a friend</p>
-      
-      <p class="MyBoard">@12:30PM - Submitted a news article</p>
+      <% users_quests = Review.all %>
+
+       <% categories.each do |review| %>
+
+        <%= form_for :review, :url => create_review_path do |c| %>
+
+        <%= c.text_field :name, placeholder: 'Add Review', style: "color: white;font-size:16px;width:40%;color:black" %>
+
+        <% end %>
+
     </section>
     
     <section id="Connections" class="hidden">
