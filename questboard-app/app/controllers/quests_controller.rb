@@ -14,7 +14,7 @@ class QuestsController < ApplicationController
 	end
 
 	def general_quests
-		quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).pluck(:quest_id)
+		quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user).pluck(:quest_id)
 		@quests = Quest.where(:id => quests).order('due_date')
 	end
 

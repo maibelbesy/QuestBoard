@@ -4,14 +4,12 @@ class Quest < ActiveRecord::Base
 	accepts_nested_attributes_for :quest_images, :reject_if => lambda { |t| t['quest_image'].nil? }
 	
 	has_many :quest_videos , :dependent => :destroy
-	def self.create_personal_quest(args, user)
-		quest = self.create(args)
-		UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id)
-	end
-
+	
 	def self.create_general_quest(args, user)
 		if args[:assign_to].blank?
-			Quest.create_personal_quest(args.execpt(:assign_to),user)
+			args.delete :assign_to
+			quest = self.create(args)
+			UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true)
 
 		else
 			quest = self.create(args.except(:assign_to))
