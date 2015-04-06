@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <title>QuestBoard</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
@@ -12,13 +13,21 @@
 
   <% if (request.path != "/login" && request.path != "/signup") %>
     <div class="header">
-    	<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">
+    	<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">     
     		<%= link_to "QuestBoard", root_path, class: "logo", style: "float: left; color: white" %>
     	</div>
       <div style="float:right;height: 100%;right: 15em;position:relative">
         <ul class="navbar-links">
           <li style="float: left">
-            <%= link_to "Board", root_path, class: "navbar-link" %>
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Boards
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/">My Quests</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/general_quests">General Quests</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/pending_quests">Pending Quests</a></li>
+          <li role="presentation" class="divider"></li>
+          
+        </ul>
           </li>
           <li style="float: left">
             <%= link_to @current_user.first_name, user_path(@current_user.id), class: "navbar-link" %>
@@ -61,5 +70,7 @@
   		<%= yield %>
   	</div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </body>
 </html>

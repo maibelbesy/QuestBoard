@@ -24,10 +24,16 @@
 				<td><font class="label">Description: </font></td>
 				<td><%= f.text_area :description, placeholder: @quest.description, class: "textarea", style: "width:100%;resize: vertical;" %></td>
 			</tr>
+			
+			<tr style="padding-bottom: 1em">	
+			<td><font class="label">Bounty: </font></td>	
+			<td style="width:80%;"><%= f.text_field :bounty,placeholder: @quest.bounty, class: "input", style: "width:100%" %></td>
+			</tr>
 			<tr style="padding-bottom: 1em;">
 				<td><font class="label">Due date: </font></td>
 				<td><%= f.date_select :due_date, :order => [:day, :month, :year], value: @quest.due_date %></td>
 			</tr>
+			<%= f.file_field :image %>	
 			<tr><td></td><td colspan="1"><%= f.submit "Save", class: "login-button", class: "button", style: "float: right" %></td></tr>
 		</table>
 	<% end %>
