@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
 
 	def show
-		 @user = User.find(params[:id])
+    @member = User.find(params[:id])
+    conn = Connection.where(:user_id => @current_user.id).pluck(:connection_id)
+    user = Connection.where(:connection_id => @current_user.id).pluck(:user_id)
+    all = user + conn
+    @connections = User.where(:id => all)
 	end
 
 	def list

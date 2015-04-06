@@ -13,9 +13,11 @@
       </ul>
     </nav>
     
+    
     <section id="MyBoard">
-      <p class="setting"><span>E-mail Address: </span> <%=@member.email%></p>
-      
+
+      <p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
+
       <p class="setting"><span>Full Name: </span><%= "#{@member.first_name} #{@member.last_name}" %></p>
       
       <p class="setting"><span>Username: </span><%=@member.username%></p> 
@@ -24,6 +26,7 @@
         <p class="setting"><span>Gender: </span><%= "male" %></p>
       <% else %>
         <p class="setting"><span>Gender: </span><%= "female" %></p>
+               
       <%end %>
    
     </section>
@@ -43,15 +46,22 @@
     </section>
     
     <section id="Connections" class="hidden">
-      <p>My Connections:</p>
+        <% @connections.each do |connection| %>
+          <p class="setting"><%=connection.username%> </p>
+        <% end %>
       
       <ul id="friendslist" class="clearfix">
       </ul>
     </section>
     
     <section id="settings" class="hidden">
+   
+    <% if logged_in? && @current_user.id == @member.id %>
+		<div style="">
+		<%= button_to "Edit Profile", edit_user_path(current_user), class: "delete-post", style: "float:right;margin-right: 1em;", method: :get %>
+		</div>
+	<% end %> 
       <p>Edit your user settings:</p>
-      
       <p class="setting"><span>E-mail Address </span> lolno@gmail.com</p>
       
       <p class="setting"><span>Language </span> English(US)</p>

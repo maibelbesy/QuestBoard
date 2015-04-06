@@ -41,7 +41,9 @@ class QuestsController < ApplicationController
 
 	def accept
 		UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
-		redirect_to quests_path
+		@assignor_id = Connections.find_or_initialize_by(:user_id => params[:id])
+		@assignor_id.frequency += 1
+		# Connection.where("user_id = ? Or connection_id = ?" @current_user,@current_user)
 	end
 
 	def reject
@@ -53,8 +55,7 @@ class QuestsController < ApplicationController
 	def create
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
 		hash[:assign_to] = params[:quest][:assign_to]
-		puts params[:quest][:assign_to]
-		 
+		puts params[:quest][:assign_to] 
 		quest = Quest.create_general_quest(hash, @current_user)
 		@quest = Quest.find(quest.quest_id)
      	 if params[:photos]
