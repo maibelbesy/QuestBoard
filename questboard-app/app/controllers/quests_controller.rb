@@ -29,7 +29,7 @@ class QuestsController < ApplicationController
 		@quest = Quest.find(@user_quest)
 		@photos = @quest.quest_images
 		@video = QuestVideo.find_by_quest_id(@quest.id).url.split('/').last
-
+		@tasks = @quest.tasks
 		
 
 

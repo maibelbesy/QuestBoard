@@ -40,6 +40,12 @@ Rails.application.routes.draw do
   # get '/users/:id' => 'account#show', as: :user
   post '/users/edit/:id' => 'account#update', as: :user_update
 
+  # Routes for tasks
+  get '/quests/task/:id' => 'task#index', as: :task
+  get '/quests/task/add/:id' => 'task#create', as: :create_task
+  post '/quests/task/add/:id' => 'task#create_task', as: :add_task
+  delete '/quests/task/:id' => 'task#destroy', as: :delete_task
+  
   resources :users
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
