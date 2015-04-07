@@ -30,19 +30,15 @@
     	</div>
       <div style="float:right;height: 100%;right: 15em;position:relative">
         <ul class="navbar-links">
-        <li style="float: left">
-
-
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Boards
-            <span class="caret"></span></button>
+          <li style="float: left">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" style="margin-right: 0.3em">Boards<span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="/">My Quests</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/general_quests">General Quests</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/pending_quests">Pending Quests</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= root_path %>">My Quests</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= general_quests_path %>">General Quests</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= pending_quests_path %>">Pending Quests</a></li>
               <li role="presentation" class="divider"></li>
             </ul>
           </li>
-
           <li style="float: left">
             <% unread = User.unread_notifications_count @current_user %>
             <% notifs = "Notifications" %>
@@ -51,7 +47,6 @@
             <% end %>
             <%= link_to "#{notifs}", notifications_path, class: "navbar-link notifs-label" %>
           </li>
-
           <li style="float: left">
             <%= link_to @current_user.first_name, user_path(@current_user.id), class: "navbar-link" %>
           </li>
@@ -59,6 +54,9 @@
             <%= link_to "Log out", logout_user_path, class: "navbar-link" %>
           </li>
         </ul>
+      </div>
+    </div>
+  <% end %>
 
     <%#= yield %>
     <div class="container-body">
@@ -73,7 +71,3 @@
 
   </body>
 </html>
-
-
-
-
