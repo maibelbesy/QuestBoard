@@ -27,6 +27,9 @@ gem 'bcrypt'
 
 gem 'tzinfo-data'
 
+gem 'paperclip'
+gem 'aws-sdk'
+
 # Use ActiveModel has_secure_password
 
 gem 'faye-rails'
