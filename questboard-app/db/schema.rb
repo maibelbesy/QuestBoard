@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329192330) do
+ActiveRecord::Schema.define(version: 20150308170132) do
 
   create_table "connections", force: :cascade do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150329192330) do
     t.datetime "due_date"
     t.datetime "completed_at"
     t.string   "status",       default: ""
+    t.string   "gid"
     t.boolean  "remind_to",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -74,12 +75,17 @@ ActiveRecord::Schema.define(version: 20150329192330) do
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "username",                        null: false
-    t.string   "email",                           null: false
-    t.string   "password_digest",                 null: false
+    t.string   "username",                            null: false
+    t.string   "email",                               null: false
+    t.string   "password_digest",                     null: false
     t.boolean  "gender"
-    t.string   "photo",           default: ""
-    t.boolean  "email_verified",  default: false
+    t.string   "photo",               default: ""
+    t.boolean  "email_verified",      default: false
+    t.string   "provider"
+    t.string   "guid"
+    t.string   "oauth_token"
+    t.string   "oauth_refresh_token"
+    t.datetime "oauth_expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

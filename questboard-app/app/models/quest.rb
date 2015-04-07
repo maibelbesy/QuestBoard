@@ -1,12 +1,17 @@
 class Quest < ActiveRecord::Base
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
+  include UsersHelper
 
   def self.create_personal_quest(args, user , reminderD)
     quest = self.create(args)
     UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id)
     if (quest.remind_to==true)
-    Reminder.create(:user_id=>user.id, :quest_id=> quest.id, :reminder=> self.date_convert(reminderD))
-end
+      Reminder.create(:user_id=>user.id, :quest_id=> quest.id, :reminder=> self.date_convert(reminderD))
+    end
+    if not user.google_connected?
+      self.add_calendar_event quest, user
+    end
+
   end
 
   def self.date_convert (reminderD)
@@ -50,5 +55,48 @@ end
     end
   end
 
- end
+require 'pp'
+def self.add_calendar_event (quest, user)
+  client = Google::APIClient.new
+  client.authorization.access_token = user.fresh_token
+  service = client.discovered_api('calendar', 'v3')
+  event = {'summary' => quest.title,'start' => {'date' => "#{quest.due_date.to_date}"},'end' => {'date' => "#{quest.due_date.to_date}"}}
+  result = client.execute(:api_method => service.events.insert,
+                        :parameters => {'calendarId' => 'primary'},
+                        :body => JSON.dump(event),
+                        :headers => {'Content-Type' => 'application/json'})
+  data = JSON.parse(result.body)
+  pp quest.due_date.to_date
+  quest.gid = data["id"]
+  quest.save
+  pp data
+  end
+
+  def self.delete_calendar_event (quest, user)
+  client = Google::APIClient.new
+  client.authorization.access_token = user.fresh_token
+  service = client.discovered_api('calendar', 'v3')
+  result = client.execute(:api_method => service.events.delete,
+                        :parameters => {'calendarId' => 'primary', 'eventId' => quest.gid})
+  end
+
+  def self.update_calendar_event (quest, user)
+  client = Google::APIClient.new
+  client.authorization.access_token = user.fresh_token
+  service = client.discovered_api('calendar', 'v3')
+  result = client.execute(:api_method => service.events.get,
+                        :parameters => {'calendarId' => 'primary', 'eventId' => quest.gid})
+  event = result.data
+  pp "TEST #{event.start.date}"
+  event.summary = quest.title
+  event.start.date = quest.due_date.to_date.to_s
+  event.end.date = quest.due_date.to_date.to_s
+  
+  result = client.execute(:api_method => service.events.update,
+                        :parameters => {'calendarId' => 'primary', 'eventId' => quest.gid},
+                        :body_object => event,
+                        :headers => {'Content-Type' => 'application/json'})
+  
+  end
+end
 

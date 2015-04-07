@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :redirect_user, except: [:destroy]
+  before_action :redirect_user, except: [:destroy, :google_create]
 
   def new
   end
@@ -15,6 +15,24 @@ class SessionsController < ApplicationController
   	end
   end
 
+  def google_create
+    user = User.from_omniauth(env["omniauth.auth"], @current_user)
+    #@auth = request.env["omniauth.auth"]
+    # leh hna request.env wl tnia env bs? i was checking 7aga  i copied it from the link we r using, I know bs leh fi far2? :D
+    #da kan my qs 2 mins ago thats why i wanted to follow one place let's check el user.rb lw nafs el 7agat are accessed
+    #Use the token from the data to request a list of calendars
+    #@token = @auth["credentials"]["token"]
+    #client = Google::APIClient.new
+    #client.authorization.access_token = @token
+    #service = client.discovered_api('calendar', 'v3')
+    #@result = client.execute(
+     # :api_method => service.calendar_list.list,
+      #:parameters => {},
+      #:headers => {'Content-Type' => 'application/json'})
+    puts "TEST #{request.env["omniauth.auth"]["credentials"]}"  
+
+    redirect_to user_path(@current_user.id)
+  end
 
   def register
   end

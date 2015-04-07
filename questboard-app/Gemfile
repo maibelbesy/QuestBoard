@@ -25,6 +25,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'whenever', :require => false
 gem 'bcrypt'
 gem 'mandrill-api', '~> 1.0.53'
+gem 'omniauth', '~> 1.2.2'
+gem 'google-api-client', '>= 0.8', :require => 'google/api_client' 
+gem "omniauth-google-oauth2"
+
 gem 'tzinfo-data'
 
 # Use ActiveModel has_secure_password
