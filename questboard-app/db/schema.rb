@@ -42,17 +42,6 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "connections", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "connection_id"
-    t.integer  "frequency",     default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "connections", ["connection_id"], name: "index_connections_on_connection_id"
-  add_index "connections", ["user_id"], name: "index_connections_on_user_id"
-
   create_table "quests", force: :cascade do |t|
     t.string   "title",                        null: false
     t.text     "description",  default: ""
