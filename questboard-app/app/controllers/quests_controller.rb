@@ -35,6 +35,23 @@ class QuestsController < ApplicationController
 
 	end
 
+	def review
+		#TODO On Event (done Quest)
+		# @user_to_review = UsersQuest.find(params[:id]).review
+		@user_quest = UsersQuest.find(params[:id])
+		
+
+	    #redirect_to quests_path
+
+	end
+
+	def add_review
+		#@user_quest = UsersQuest.find(params[:id])
+		UsersQuest.update(params[:id], params.require(:quest).permit(:review))
+		redirect_to quests_path
+	end
+
+
 	def new
 		# @quest = Quest.new
 	end

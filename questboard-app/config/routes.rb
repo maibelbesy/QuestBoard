@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
   
+  get '/quests/review/:id' => 'quests#review', as: :review_quest
+  post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
 
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
