@@ -17,6 +17,11 @@ class User < ActiveRecord::Base
 	# validates :gender, :in => %w( m f )
 
 	has_many :tasks, foreign_key: "user_id"
+	has_many :notifications
 
   has_secure_password validations: false
+
+  def self.unread_notifications_count(user)
+  	Notification.where(:user_id => user.id, :is_seen => false).count
+  end
 end

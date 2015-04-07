@@ -2,7 +2,7 @@
 
 <%# if false %>
 <div>
-	<%= form_for :quest, :url => create_quest_path do |f| %>
+	<%= form_for :quest, :url => create_quest_path, remote: true do |f| %>
 		<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;">
 			<tr style="padding-bottom: 1em">
 				<td><font class="label" style="width:20%;">Title: </font></td>

@@ -64,6 +64,14 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :notifications do |t|
+      t.string "title", default: "Untitled notification"
+      t.boolean "is_seen", default: false
+      t.belongs_to :user, index: true
+
+      t.timestamps
+    end
+
 
     add_index :users_quests, ["assignor_id", "assignee_id", "quest_id"]
     # add_index :users,["email"]

@@ -7,11 +7,12 @@
 <div>
 	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
 		<% @quests.each do |quest| %>
-			<tr style="padding-bottom: 1em">
+			<tr style="padding-bottom: 1em; height: 3em;" class="quest" id="<%= quest.id %>">
 				<!-- <td><font class="label" style="width:20%;">Title: </font></td> -->
 				<!-- <td><p class="label" style="margin-bottom: 0.5em;"><%= quest.title %></p></td> -->
-				<td><%= link_to "#{quest.title}", edit_quest_path(quest.id), class: "label", style: "margin-bottom: 0.5em;" %></td>
-				<td style=""><%= button_to "X", delete_quest_path(quest.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
+				<td style="width: 60%;border-bottom: 1px solid;"><%= link_to "#{quest.title}", edit_quest_path(quest.id), class: "label", style: "margin-bottom: 0.5em;" %></td>
+				<!-- <td style="width: 30%"><%= button_to "X", delete_quest_path(quest.id), method: :delete, class: "button", style: "width: 20%;left: 50%;margin: 0 auto; position: relative;" %></p></td> -->
+				<td style="width: 30%;border-bottom: 1px solid;"><%= link_to "-", delete_quest_path(quest.id), method: :delete, class: "circular-button", style: "display: none;float: right;color: white;background-color: rgb(255, 72, 72); width: 25px; height: 25px;line-height: 25px; font-size: 25px;", id: "del-#{quest.id}" %></p></td>
 			</tr>
 		<% end %>
 	</table>

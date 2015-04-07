@@ -1,0 +1,18 @@
+// publisher = client.publish('/notifs/1', {
+//   message : '<%= @options[:message] %>',
+//   count: '<%= @options[:count] %>'
+// });
+
+// publisher.then(function() {
+//   // OK
+//   $(window.location.replace('<%= @redirect_url %>'));
+// }, function(error) {
+//   // NOT OK, redirect
+//   $(window.location.replace('<%= @redirect_url %>'));
+// });
+
+publishNotification('<%= @options[:channel] %>', {
+  message : '<%= @options[:message] %>',
+  count: '<%= @options[:count] %>',
+  type : '<%= @options[:type].downcase %>'
+}, '<%= @options[:redirect] %>');

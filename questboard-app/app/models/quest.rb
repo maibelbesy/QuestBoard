@@ -4,6 +4,11 @@ class Quest < ActiveRecord::Base
 	def self.create_personal_quest(args, user)
 		quest = self.create(args)
 		UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id)
+		quest
+	end
+
+	def self.add_demo
+		Quest.create(:title => "Demo")
 	end
 end
 

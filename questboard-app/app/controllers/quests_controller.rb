@@ -1,4 +1,5 @@
 class QuestsController < ApplicationController
+	require 'eventmachine'
 
 	def index
 		# TODO: Find personal quests
@@ -15,8 +16,13 @@ class QuestsController < ApplicationController
 	end
 
 	def create
-		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date), @current_user)
-		redirect_to quests_path
+		respond_to do |format|
+			@quest = Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date), @current_user)
+			notif = Notification.create(:user_id => 1)
+			@options = {:channel => "/notifs/#{notif.user_id}", :message => "#{notif.title}", :count => User.unread_notifications_count(User.first), :redirect => quests_path, :type => "general"}
+			format.html {redirect_to quests_path}
+			format.js
+		end
 	end
 
 	def edit

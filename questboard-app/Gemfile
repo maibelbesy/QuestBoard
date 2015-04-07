@@ -29,6 +29,10 @@ gem 'tzinfo-data'
 
 # Use ActiveModel has_secure_password
 
+gem 'faye-rails'
+gem 'thin'
+gem 'jquery-turbolinks'
+# gem 'whenever', :require => false
 
 # Use Unicorn as the app server
 # gem 'unicorn'

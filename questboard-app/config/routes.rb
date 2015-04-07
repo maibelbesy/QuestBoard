@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
 
+  # Routes for Notifications
+  get '/notifications' => 'notifications#index', as: :notifications
+
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
   # get '/users/:id' => 'account#show', as: :user

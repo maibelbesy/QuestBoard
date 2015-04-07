@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   before_action :redirect_user, except: [:destroy]
 
-  def new
+  def login
   end
 
   def create
