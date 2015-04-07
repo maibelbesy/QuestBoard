@@ -12,38 +12,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20150331171642) do
-<<<<<<< HEAD
-
-  create_table "connections", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "connection_id"
-    t.integer  "frequency",     default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "connections", ["connection_id"], name: "index_connections_on_connection_id"
-  add_index "connections", ["user_id"], name: "index_connections_on_user_id"
-
-  create_table "quest_images", force: :cascade do |t|
-    t.string   "caption"
-    t.integer  "quest_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-  end
-
-  create_table "quest_videos", force: :cascade do |t|
-    t.string   "url"
-    t.integer  "quest_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-=======
->>>>>>> b8ed61ed23b66fc0569b8bce38270f0b9f48ac82
 
   create_table "connections", force: :cascade do |t|
     t.integer  "user_id"

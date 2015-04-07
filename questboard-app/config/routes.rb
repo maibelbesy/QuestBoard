@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
 
-  get '/users/:id' => 'profile#index', as: :user
 
 
   # Routes for Quests
@@ -35,11 +34,11 @@ Rails.application.routes.draw do
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
 
   # Routes for the account web pages
-  get '/users/edit/:id' => 'account#edit', as: :user_edit
-  # get '/users/:id' => 'account#show', as: :user
-  post '/users/edit/:id' => 'account#update', as: :user_update
+  get '/users/edit/:id' => 'users#edit', as: :edit_user
+  get '/users/:id' => 'users#show', as: :user
+  post '/users/edit/:id' => 'users#update', as: :user_update
 
-  resources :users
+  # resources :users
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
 	def show
-		 @user = User.find(params[:id])
+		 @member = User.find(params[:id])
+     @reviews = UsersQuest.where(:assignee_id => @current_user.id)
 	end
 
 	def list

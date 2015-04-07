@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <title>QuestBoard</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -24,13 +25,8 @@
         <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="/">My Quests</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/general_quests">General Quests</a></li>
-<<<<<<< HEAD
+
           <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/pending_quests">Pending Quests</a></li>
-          <li role="presentation" class="divider"></li>
-          
-=======
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/pending_quests">Pending Quests</a></li>           
->>>>>>> b8ed61ed23b66fc0569b8bce38270f0b9f48ac82
         </ul>
           </li>
           <li style="float: left">
@@ -74,10 +70,5 @@
   		<%= yield %>
   	</div>
   </div>
-<<<<<<< HEAD
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-=======
->>>>>>> b8ed61ed23b66fc0569b8bce38270f0b9f48ac82
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </body>
 </html>
