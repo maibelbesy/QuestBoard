@@ -18,7 +18,7 @@ class QuestsController < ApplicationController
 		@quests = Quest.where(:id => quests).order('due_date')
 	end
 
-
+	#Shows all information about a Quest. 
 	def show
 		@user_quest = UsersQuest.find(params[:id])
 		@assignor_id = UsersQuest.find(params[:id]).assignor_id
@@ -35,6 +35,7 @@ class QuestsController < ApplicationController
 
 	end
 
+	#Shows the Review related to certain Quest.
 	def review
 		#TODO On Event (done Quest)
 		# @user_to_review = UsersQuest.find(params[:id]).review
@@ -44,7 +45,7 @@ class QuestsController < ApplicationController
 	    #redirect_to quests_path
 
 	end
-
+	#Gives the User the option to write a review on a certain Quest.
 	def add_review
 		#@user_quest = UsersQuest.find(params[:id])
 		UsersQuest.update(params[:id], params.require(:quest).permit(:review))
@@ -66,7 +67,7 @@ class QuestsController < ApplicationController
 		redirect_to quests_path
 	end
 
-
+	#A User can create the Quest with a title, description, deadline, bounty and assign the Quest to another User.
 	def create
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
 		hash[:assign_to] = params[:quest][:assign_to]
