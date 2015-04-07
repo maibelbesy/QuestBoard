@@ -10,6 +10,11 @@ class CreateDb < ActiveRecord::Migration
       t.boolean "gender"
       t.string "photo", default: ""
       t.boolean "email_verified", default: false
+      t.string "provider"
+      t.string "guid"
+      t.string "oauth_token"
+      t.string "oauth_refresh_token"
+      t.datetime "oauth_expires_at"
 
       t.timestamps
     end
@@ -31,6 +36,8 @@ class CreateDb < ActiveRecord::Migration
       t.datetime "due_date"
       t.datetime "completed_at"
       t.string "status", default: ""
+      t.string "gid"
+      t.boolean "remind_to", default: false
       # t.integer "user_id"
 
       t.timestamps
@@ -73,6 +80,12 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :reminders do |t|
+         t.datetime "reminder"
+      t.belongs_to :user, index: true
+      t.belongs_to :quest, index: true
+      t.timestamps
+    end
 
     add_index :users_quests, ["assignor_id", "assignee_id", "quest_id"]
     # add_index :users,["email"]
