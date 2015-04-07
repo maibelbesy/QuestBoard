@@ -2,6 +2,7 @@ class Quest < ActiveRecord::Base
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
   include UsersHelper
 
+  #checks if the user is connected to a google account then it adds the event to his calendar
   def self.create_personal_quest(args, user , reminderD)
     quest = self.create(args)
     UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id)
@@ -14,6 +15,7 @@ class Quest < ActiveRecord::Base
 
   end
 
+  # changes the hash value of the date ,that is returned from datetime_select and combines the date.
   def self.date_convert (reminderD)
     DateTime.new(reminderD["reminder(1i)"].to_i, 
                         reminderD["reminder(2i)"].to_i,
@@ -22,6 +24,7 @@ class Quest < ActiveRecord::Base
                         reminderD["reminder(5i)"].to_i)
   end
 
+  # if the user sets a reminder then an email,that includes the task's name and its due date.
   require 'mandrill'
   def self.reminders 
     @reminders_all = Reminder.all
@@ -55,6 +58,8 @@ class Quest < ActiveRecord::Base
     end
   end
 
+#refreshes the token and creates a calendar event by calling the calendar api and 
+#saves the event id into quest table
 require 'pp'
 def self.add_calendar_event (quest, user)
   client = Google::APIClient.new
@@ -72,6 +77,7 @@ def self.add_calendar_event (quest, user)
   pp data
   end
 
+  #deletes an event (quest) from the calendar 
   def self.delete_calendar_event (quest, user)
   client = Google::APIClient.new
   client.authorization.access_token = user.fresh_token
@@ -80,6 +86,7 @@ def self.add_calendar_event (quest, user)
                         :parameters => {'calendarId' => 'primary', 'eventId' => quest.gid})
   end
 
+  #updates an event (quest) in the calendar 
   def self.update_calendar_event (quest, user)
   client = Google::APIClient.new
   client.authorization.access_token = user.fresh_token

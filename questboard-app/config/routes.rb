@@ -33,9 +33,10 @@ Rails.application.routes.draw do
 
   resources :users
 
+  #Routes for the call back function, will be routed to sessions controller
   get 'auth/:provider/callback' => 'sessions#google_create', as: :google_signin
-  # get 'auth/:provider/callback', to: redirect('http://www.google.com'), as: :google_signin
-  get 'auth/failure', to: redirect('http://www.google.com')
+  # auth authentication fails it redirects to my quests
+  get 'auth/failure' => 'quests#index'
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

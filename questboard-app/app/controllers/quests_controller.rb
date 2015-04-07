@@ -16,9 +16,6 @@ class QuestsController < ApplicationController
 
 	def create
 		Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :remind_to), @current_user, params.require(:quest).permit(:reminder))
-		# user = User.last
-		# puts "CONNECTED #{user.google_connected?}"
-		# puts "TOKEN #{user.fresh_token}"
 		redirect_to quests_path
 	end
 
@@ -27,13 +24,13 @@ class QuestsController < ApplicationController
 
 	end
 
+	# checks if there is an event already then it updates the calendar
 	def update
 		hash = params[:quest]
 		flash[:warning] = []
 		flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
 		# flash[:warning] << "Content cannot be left blank" if hash[:description].blank?
 		redirect_to edit_quest_path and return if flash[:warning].count > 0
-		# Quest.find(params[:id]).update(:title => hash[:title], :description => hash[:description], :is_completed => hash[:is_completed], :bounty => hash[:bounty], :due_date => hash[:due_date] )
 		Quest.update(params[:id], params.require(:quest).permit(:title, :description, :due_date))
 		quest = Quest.find_by_id(params[:id])
 		if not quest.gid.blank?
@@ -42,9 +39,11 @@ class QuestsController < ApplicationController
 		redirect_to quests_path
 	end
 
-def destroy
-	@Uquest = UsersQuest.find_by_quest_id(params[:id])
-	if(@Uquest.assignor_id == @current_user.id)
+	# Deletes all the quests for all tables
+	# checks if there is an event already then it updates the calendar
+	def destroy
+		@Uquest = UsersQuest.find_by_quest_id(params[:id])
+		if(@Uquest.assignor_id == @current_user.id)
 		quest = Quest.find_by_id(params[:id])
 		if not quest.gid.blank?
 			Quest.delete_calendar_event quest, @current_user
