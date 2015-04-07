@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="https://apis.google.com/js/client:platform.js" async defer></script>
-		<title>QuestBoard</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
-		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-		<%= csrf_meta_tags %>
-	</head>
-	<body>
+  <head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <title>QuestBoard</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
 
-		<% if (request.path != "/login" && request.path != "/signup") %>
-		<div class="header">
-			<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">
-				<%= link_to "QuestBoard", root_path, class: "logo", style: "float: left; color: white" %>
-			</div>
-			<div style="float:right;height: 100%;right: 15em;position:relative">
-				<ul class="navbar-links">
-					<li style="float: left">
-						<%= link_to "Board", root_path, class: "navbar-link" %>
-					</li>
-					<li style="float: left">
-						<%= link_to @current_user.first_name, user_path(@current_user.id), class: "navbar-link" %>
-					</li>
-					<li style="float: left">
-						<%= link_to "Log out", logout_user_path, class: "navbar-link" %>
-					</li>
-				</ul>
-
+  <% if (request.path != "/login" && request.path != "/signup") %>
+    <div class="header">
+    	<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">     
+    		<%= link_to "QuestBoard", root_path, class: "logo", style: "float: left; color: white" %>
+    	</div>
+      <div style="float:right;height: 100%;right: 15em;position:relative">
+        <ul class="navbar-links">
+          <li style="float: left">
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Boards
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/">My Quests</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/general_quests">General Quests</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/pending_quests">Pending Quests</a></li>
+          <li role="presentation" class="divider"></li>
+          
+        </ul>
+          </li>
+          <li style="float: left">
+            <%= link_to @current_user.first_name, user_path(@current_user.id), class: "navbar-link" %>
+          </li>
+          <li style="float: left">
+            <%= link_to "Log out", logout_user_path, class: "navbar-link" %>
+          </li>
+        </ul>
 				<% if false %>
 				<% if logged_in? %>
 				<div class="account-menu-div display-none">
@@ -55,11 +62,40 @@
 		</div>
 		<% end %>
 
-		<%#= yield %>
-		<div class="container-body">
-			<div class="container-container" style="padding: 01em;background-color: transparent;">
-				<%= yield %>
-			</div>
-		</div>
-	</body>
+        <% if false %>
+          <% if logged_in? %>
+            <div class="account-menu-div display-none">
+              <table class="account-menu">
+                <% if @current_user.is_admin %>
+                  <tr class="account-menu-item">
+                    <td><%= link_to "Add Blog Post", new_post_path %></td>
+                  </tr>
+                  <tr class="account-menu-item">
+                    <td><%= link_to "Post Categories", categories_path %></td>
+                  </tr>
+                <% end %>
+                <tr class="account-menu-item">
+                  <td><%= link_to "Profile", user_path(@current_user.id) %></td>
+                </tr>
+                <tr class="account-menu-item">
+                  <td><%= link_to "Log out", logout_path, method: :delete %></td>
+                </tr>
+              </table>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%#= yield %>
+  <div class="container-body">
+    <div class="container-container" style="padding: 01em;background-color: transparent;">
+  		<%= yield %>
+  	</div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+
 </html>

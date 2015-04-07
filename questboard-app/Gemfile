@@ -30,6 +30,9 @@ gem "omniauth-google-oauth2"
 
 gem 'tzinfo-data'
 
+gem 'paperclip'
+gem 'aws-sdk'
+
 # Use ActiveModel has_secure_password
 
 # Use Unicorn as the app server
