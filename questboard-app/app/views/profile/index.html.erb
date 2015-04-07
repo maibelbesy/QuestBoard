@@ -19,14 +19,15 @@
       <p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
 
       <p class="setting"><span>Full Name: </span><%= "#{@member.first_name} #{@member.last_name}" %></p>
+
+      <p class="setting"><span>Points: </span><%=@member.points%></p>
       
       <p class="setting"><span>Username: </span><%=@member.username%></p> 
 
       <% if @member.gender %>
         <p class="setting"><span>Gender: </span><%= "male" %></p>
       <% else %>
-        <p class="setting"><span>Gender: </span><%= "female" %></p>
-               
+        <p class="setting"><span>Gender: </span><%= "female" %></p>               
       <%end %>
    
     </section>

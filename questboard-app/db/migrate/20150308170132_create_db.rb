@@ -10,7 +10,7 @@ class CreateDb < ActiveRecord::Migration
       t.boolean "gender"
       t.string "photo", default: ""
       t.boolean "email_verified", default: false
-
+      t.integer "points", default: 0
       t.timestamps
     end
   

@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.boolean  "gender"
     t.string   "photo",           default: ""
     t.boolean  "email_verified",  default: false
+    t.integer  "points",          default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

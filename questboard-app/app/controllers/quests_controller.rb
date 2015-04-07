@@ -89,6 +89,9 @@ def status
     if (params[:string] == "Done")
     quest.is_completed=true
     quest.save
+    user = User.find(@current_user.id)
+    user.points += 10
+    user.save
     end
     redirect_to quests_path
   end
