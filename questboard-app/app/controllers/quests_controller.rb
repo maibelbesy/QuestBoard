@@ -37,30 +37,38 @@ class QuestsController < ApplicationController
 	end
 
 	def accept
-		UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
-		redirect_to quests_path
+		respond_to do |format|
+			user_quest = UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
+			# redirect_to quests_path
+			notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title}")
+			@options = {:channel => "/notifs/#{user_quest.assignor_id}",
+								:message => notif.title,
+								:count => "#{User.unread_notifications_count @current_user}", :redirect => quests_path}
+			format.html {redirect_to quests_path}
+			format.js
+		end
 	end
 
 	def reject
-		UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
-		redirect_to quests_path
+		respond_to do |format|
+			user_quest = UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
+			# redirect_to quests_path
+			notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has rejected your assigned quest: #{Quest.find(params[:id]).title}")
+			@options = {:channel => "/notifs/#{user_quest.assignor_id}",
+								:message => notif.title,
+								:count => "#{User.unread_notifications_count @current_user}", :redirect => quests_path}
+			format.html {redirect_to quests_path}
+			format.js
+		end
 	end
 
 
 	def create
-		# respond_to do |format|
-		# 	@quest = Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date), @current_user)
-		# 	notif = Notification.create(:user_id => 1)
-		# 	@options = {:channel => "/notifs/#{notif.user_id}", :message => "#{notif.title}", :count => User.unread_notifications_count(User.first), :redirect => quests_path, :type => "general"}
-		# 	format.html {redirect_to quests_path}
-		# 	format.js
-		# end
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
 		hash[:assign_to] = params[:quest][:assign_to]
-		puts params[:quest][:assign_to]
 
-		quest = Quest.create_general_quest(hash, @current_user)
-		@quest = Quest.find(quest.quest_id)
+		@quest = Quest.create_general_quest(hash, @current_user)
+		# @quest = Quest.find(quest.quest_id)
 		if params[:photos]
 			#===== The magic is here ;)
 			params[:photos].each { |photo|
@@ -69,7 +77,21 @@ class QuestsController < ApplicationController
 			}
 		end
 		@quest.quest_videos.create(:url => params[:quest][:url])
-		redirect_to quests_path
+		# redirect_to quests_path
+		if not hash[:assign_to].blank?
+			respond_to do |format|
+				user_quest = UsersQuest.find_by(:quest_id => @quest.id)
+				notif = Notification.create(:user_id => user_quest.assignee_id, 
+					:title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
+				@options = {:channel => "/notifs/#{user_quest.assignee_id}",
+									:message => notif.title,
+									:count => "#{User.unread_notifications_count User.find_by(:id => user_quest.assignee_id)}", :redirect => quests_path}
+				format.html {redirect_to quests_path}
+				format.js
+			end
+		else
+			redirect_to quests_path
+		end
 	end
 
 	def edit

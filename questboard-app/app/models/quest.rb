@@ -15,6 +15,7 @@ class Quest < ActiveRecord::Base
 			id = User.find_by(:username => args[:assign_to]).id
 			UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
 		end
+		quest
 	end 
 	
 	def self.create_personal_quest(args, user)
