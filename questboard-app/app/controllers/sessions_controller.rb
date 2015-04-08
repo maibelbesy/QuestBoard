@@ -1,20 +1,30 @@
 class SessionsController < ApplicationController
-  before_action :redirect_user, except: [:destroy]
+
+  before_action :redirect_user, except: [:destroy, :google_create]
 
   def new
   end
 
-  def create
-  	user = User.find_by(:email => params[:sessions][:email].downcase)
-   	if user && user.authenticate(params[:sessions][:password])
-     log_in user
-     redirect_to root_path
-  	 else
-     flash.now[:danger] = 'Invalid email/password combination'
-     render 'new'
-  	end
+  def login
   end
 
+  def create
+    user = User.find_by(:email => params[:sessions][:email].downcase)
+    if user && user.authenticate(params[:sessions][:password])
+      log_in user
+      redirect_to root_path
+    else
+      flash.now[:danger] = 'Invalid email/password combination'
+      render 'login'
+    end
+
+  end
+
+  def google_create
+    user = User.from_omniauth(env["omniauth.auth"], @current_user)
+    puts "TEST #{request.env["omniauth.auth"]["credentials"]}"  
+    redirect_to user_path(@current_user.id)
+  end
 
   def register
   end
@@ -30,11 +40,11 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-  	log_out
+    log_out
     redirect_to root_path
   end
 
-  private 
+  private
   def redirect_user
     redirect_to root_path and return if logged_in?
   end

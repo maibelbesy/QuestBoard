@@ -1,8 +1,12 @@
+
+ <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
 <header class="header-title">Create a new Quest</header>
 
 <%# if false %>
 <div>
-	<%= form_for :quest, :url => create_quest_path, html: { multipart: true } do |f| %>
+	<%= form_for :quest, :url => create_quest_path, :remote => true, html: { multipart: true } do |f| %>
 		<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;">
 			<tr style="padding-bottom: 1em">
 				<td><font class="label" style="width:20%;">Title: </font></td>
@@ -36,10 +40,9 @@
 				<td><font class="label">Add Youtube Videos: </font></td>
 				<td style="width:80%;"><%= f.text_field :url, placeholder: "Video url", class: "input", style: "width:100%" %></td>
 			</tr>
-
-
 			<tr><td></td><td colspan="1"><%= f.submit "Create", class: "login-button", class: "button", style: "float: right" %></td></tr>
 		</table>
+
 	<% end %>
 </div>
-<%# end %>
+<% # end %>

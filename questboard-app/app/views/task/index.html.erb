@@ -2,13 +2,14 @@
 <div>
 	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
 		<% @tasks.each do |task| %>
-			<tr style="padding-bottom: 1em">
-	
-				<td><%= link_to "#{task.title}", task_path(task.id), class: "label", style: "margin-bottom: 0.5em;" %></td>
-				<%if task.user == @current_user.id%>
-				<td style=""><%= button_to "X", delete_task_path(task.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
-				<%end%>
-			</tr>
-		<% end %>
-	</table>
+
+   <tr style="padding-bottom: 1em">
+    <td><%= link_to "#{task.title}", task_path(task.id), class: "label", style: "margin-bottom: 0.5em;" %></td>
+    <%if task.user == @current_user.id%>
+    <td style=""><%= button_to "X", delete_task_path(task.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
+    <%end%>
+  </tr>
+  <% end %>
+</table>
+
 </div>

@@ -18,5 +18,4 @@ class TaskController < ApplicationController
 		redirect_to quests_path
 		
 	end
-
 end

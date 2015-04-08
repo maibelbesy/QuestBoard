@@ -116,10 +116,10 @@ blockquote:before, blockquote:after, q:before, q:after { content: ''; content: n
   margin-bottom: 20px;
   padding: .1em 0;
   color: #444;
-	position: relative;
-	overflow: hidden;
-	white-space: nowrap;
-	text-align: center;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
 }
 #w h1:before,
 #w h1:after {
@@ -154,10 +154,10 @@ blockquote:before, blockquote:after, q:before, q:after { content: ''; content: n
   margin-bottom: 20px;
   padding: .1em 0;
   color: #444;
-	position: relative;
-	overflow: hidden;
-	white-space: nowrap;
-	text-align: center;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
 }
 
 #w p {
@@ -448,6 +448,33 @@ a:visited {
     color: gray;
 }
 
+/*NOTIFICATIONS -----------------------------------------------------------------*/
+
+.notifs {
+    width: 20em;
+    /*height: 5em;*/
+    height: auto;
+    border-radius: 10px;
+    font-weight: 300;
+    background-color: gray;
+    position: fixed;
+    bottom: 1em;
+    left: 3em;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    overflow: auto;
+    opacity: 0;
+}
+
+.notifs-message {
+  font-size: 16px;
+}
+
+.notifs-label {
+  
+}
+
 /*GENERAL AND TEST --------------------------------------------------------------*/
 
 header {
@@ -512,15 +539,18 @@ header {
   height: 50px;
   border-radius: 50px;
   font-size: 40px;
-  /*color: white;*/
   line-height: 50px;
   text-align: center;
   background: gray;
 }
 
+.display-none {
+    display: none;
+}
 
 font {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
+
 
