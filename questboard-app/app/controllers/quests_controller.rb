@@ -81,9 +81,13 @@ class QuestsController < ApplicationController
 	end
 
 	def accept
+
 		respond_to do |format|
 			user_quest = UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
 			# redirect_to quests_path
+      @assignor_id = Connections.find_or_initialize_by(:user_id => params[:id])
+      @assignor_id.frequency += 1
+      @assignor_id.save
 			notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title}")
 			@options = {:channel => "/notifs/#{user_quest.assignor_id}",
 								:message => notif.title,
@@ -91,6 +95,8 @@ class QuestsController < ApplicationController
 			format.html {redirect_to quests_path}
 			format.js
 		end
+		
+		# Connection.where("user_id = ? Or connection_id = ?" @current_user,@current_user)
 	end
 
 	def reject
@@ -115,8 +121,7 @@ class QuestsController < ApplicationController
 	def create
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
 		hash[:assign_to] = params[:quest][:assign_to]
-		puts params[:quest][:assign_to]
-		 
+		puts params[:quest][:assign_to] 
 		quest = Quest.create_general_quest(hash, @current_user)
 		@quest = Quest.find(quest.quest_id)
     if params[:photos]
