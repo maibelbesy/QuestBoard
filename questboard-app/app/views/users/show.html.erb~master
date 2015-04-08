@@ -29,10 +29,9 @@
       <% else %>
         <p class="setting"><span>Gender: </span><%= "female" %></p>               
       <%end %>
-   
-    </section>
 
-    <%= link_to "Connect to Google+", "/auth/google_oauth2", id: "sign_in" %>
+      <%= link_to "Connect to Google+", "/auth/google_oauth2", id: "sign_in" %>
+    </section>
     
     <section id="Reviews" class="hidden">
    <% @reviews.each do |review| %>
@@ -52,10 +51,10 @@
     <section id="settings" class="hidden">
    
     <% if logged_in? && @current_user.id == @member.id %>
-    <div style="">
-    <%= button_to "Edit Profile", edit_user_path(current_user), class: "delete-post", style: "float:right;margin-right: 1em;", method: :get %>
-    </div>
-  <% end %> 
+		<div style="">
+		<%= button_to "Edit Profile", edit_user_path(current_user), class: "delete-post", style: "float:right;margin-right: 1em;", method: :get %>
+		</div>
+	<% end %> 
       <p>Edit your user settings:</p>
       <p class="setting"><span>E-mail Address </span> lolno@gmail.com</p>
       
@@ -71,18 +70,18 @@
 
 </div><!-- @end #w -->
 <script type="text/javascript">
-  $(function() {
-  $('#profiletabs ul li a').on('click', function(e) {
-  e.preventDefault();
-  var newcontent=$(this).attr('href');
-  $('#profiletabs ul li a').removeClass('sel');
-  $(this).addClass('sel');
-  $('#content section').each(function() {
-  if(!$(this).hasClass('hidden')) {
-  $(this).addClass('hidden');
-  }
-  });
-  $(newcontent).removeClass('hidden');
-  });
-  });
+	$(function() {
+	$('#profiletabs ul li a').on('click', function(e) {
+	e.preventDefault();
+	var newcontent=$(this).attr('href');
+	$('#profiletabs ul li a').removeClass('sel');
+	$(this).addClass('sel');
+	$('#content section').each(function() {
+	if(!$(this).hasClass('hidden')) {
+	$(this).addClass('hidden');
+	}
+	});
+	$(newcontent).removeClass('hidden');
+	});
+	});
 </script>
