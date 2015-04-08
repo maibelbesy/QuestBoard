@@ -1,22 +1,44 @@
 class Quest < ActiveRecord::Base
 
+
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
   has_many :quest_images, :dependent => :destroy
   accepts_nested_attributes_for :quest_images, :reject_if => lambda { |t| t['quest_image'].nil? }
   has_many :quest_videos , :dependent => :destroy
   include UsersHelper
 
-  def self.create_personal_quest(args, user , reminderD)
-    quest = self.create(args)
-    UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id)
+  # def self.create_personal_quest(args, user , reminderD)
+  #   quest = self.create(args)
+  #   UsersQuest.create(:assignor_id => user.id, :assignee_id => user.id, :quest_id => quest.id,:reminder=> self.date_convert(reminderD))
+  #   if (quest.remind_to==true)
+  #     Reminder.create(:user_id=>user.id, :quest_id=> quest.id, )
+  #   end
+  #   if not user.google_connected?
+  #   self.add_calendar_event quest, user
+  #   end
+
+  # end
+
+  def self.create_general_quest(args, user,reminderD)
+    if args[:assign_to].blank?
+      args.delete :assign_to
+      quest = self.create(args)
+      UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true,:reminder=> self.date_convert(reminderD))
+
+    else
+      quest = self.create(args.except(:assign_to))
+      id = User.find_by(:username => args[:assign_to]).id
+      UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
+      
+    end
     if (quest.remind_to==true)
-      Reminder.create(:user_id=>user.id, :quest_id=> quest.id, :reminder=> self.date_convert(reminderD))
+      Reminder.create(:user_id=>user.id, :quest_id=> quest.id, )
     end
     if not user.google_connected?
     self.add_calendar_event quest, user
     end
-
-  end
+    #add my code
+  end 
 
   def self.date_convert (reminderD)
     DateTime.new(reminderD["reminder(1i)"].to_i,
@@ -61,34 +83,7 @@ class Quest < ActiveRecord::Base
   end
 
   require 'pp'	
-	def self.create_general_quest(args, user)
-		if args[:assign_to].blank?
-			args.delete :assign_to
-			quest = self.create(args)
-			UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true)
-
-		else
-			quest = self.create(args.except(:assign_to))
-			id = User.find_by(:username => args[:assign_to]).id
-			UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
-			
-		end
-	end 
-
-	def self.create_general_quest(args, user)
-		if args[:assign_to].blank?
-			args.delete :assign_to
-			quest = self.create(args)
-			UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true)
-
-		else
-			quest = self.create(args.except(:assign_to))
-			id = User.find_by(:username => args[:assign_to]).id
-			UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
-			
-		end
-	end 
-
+	
   def self.add_calendar_event (quest, user)
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token
