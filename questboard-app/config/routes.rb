@@ -14,11 +14,6 @@ Rails.application.routes.draw do
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
 
-
-
-  # get '/users/:id' => 'profile#index', as: :user
-
-
   get '/streamer' => 'streamer#index', as: :streamer
   get 'get_messages' => 'streamer#get_messages'
   get 'publish' => 'streamer#publish'

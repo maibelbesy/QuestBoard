@@ -29,7 +29,8 @@
       <% else %>
         <p class="setting"><span>Gender: </span><%= "female" %></p>               
       <%end %>
-   
+
+      <%= link_to "Connect to Google+", "/auth/google_oauth2", id: "sign_in" %>
     </section>
     
     <section id="Reviews" class="hidden">
