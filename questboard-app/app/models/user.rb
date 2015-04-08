@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 
-	validates :password, length: { minimum: 6 }, :on => :create
-	validates_confirmation_of :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, :on => :create
+  validates_confirmation_of :password, length: { minimum: 6 }
   has_many :tasks, foreign_key: "user_id"
   has_many :notifications
   has_secure_password validations: false
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
 
   def self.unread_notifications_count(user)
-  	Notification.where(:user_id => user.id, :is_seen => false).count
+    Notification.where(:user_id => user.id, :is_seen => false).count
   end
 
   def self.from_omniauth(auth, users)
@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
       :headers => {'Content-Type' => 'application/json'})
     data = JSON.parse(result.body)
     messages = data['messages']
+    return if messages == nil
     messages.each do |message|
       self.assign_quest user, message["id"]
       # pp message[:id]

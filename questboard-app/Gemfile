@@ -69,6 +69,7 @@ gem 'pubnub', :github => 'pubnub/ruby', :branch => 'master'
 gem 'haml'
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
                              :github => 'anjlab/bootstrap-rails'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
 end

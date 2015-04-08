@@ -14,11 +14,6 @@ Rails.application.routes.draw do
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
 
-
-
-  # get '/users/:id' => 'profile#index', as: :user
-
-  # Routes for chat
   get '/streamer' => 'streamer#index', as: :streamer
   get 'get_messages' => 'streamer#get_messages'
   get 'publish' => 'streamer#publish'
@@ -178,6 +173,12 @@ Rails.application.routes.draw do
   # Example resource route within a namespace:
   #   namespace :admin do
   #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
+
+end
+ontroller
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end

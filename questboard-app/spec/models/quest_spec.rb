@@ -15,16 +15,4 @@ it "Reminds User of Quest's Deadline" do
 			
 		end
 	end
-it "Delete event from Calendar" do
-	quest = Quest.create( :title => "Test Quest Reminder" , :description => "Remind me ")
-	put :destroy 
-	quest.gid.should be_nil
-
-end
-	
-it "Add event to Calendar" do
-quest = Quest.create( :title => "Test Quest Reminder" , :description => "Remind me ")
-quest.guid.should_not be_nil
-	
-end
 end
