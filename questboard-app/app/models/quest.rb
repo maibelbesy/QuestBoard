@@ -1,4 +1,6 @@
 class Quest < ActiveRecord::Base
+  require 'mandrill'
+
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
   has_many :quest_images, :dependent => :destroy
   accepts_nested_attributes_for :quest_images, :reject_if => lambda { |t| t['quest_image'].nil? }
@@ -18,10 +20,11 @@ class Quest < ActiveRecord::Base
       end
     else
       quest = self.create(args.except(:assign_to))
-      id = User.find_by(:username => args[:assign_to]).id
+      users = User.find_by(:username => args[:assign_to])
+      id = users.id if users != nil
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
     end
-    quest
+    return quest
   end
 
   # def self.create_personal_quest(args, user)
@@ -40,6 +43,25 @@ class Quest < ActiveRecord::Base
   #     self.add_calendar_event quest, user
   #   end
   # end
+  require 'pp'
+  def self.assign_non_user(assignor, quest, assignee)
+    pp "IDDDDDD________ #{quest.id}"
+    m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
+        message = {
+          :subject=> "[QuestBoard] Task Assignment",
+          :from_name=> "QuestBoard",
+          :text => "Hi #{assignee},\r\n\r\n#{assignor.first_name} #{assignor.last_name} assigned you a [quest #{quest.id}] on QuestBoard\r\ntitle: #{quest.title}\r\ndescription: #{quest.description}\r\ndue date: #{quest.due_date}\r\n\r\nTo view this quest, register for QuestBoard at http://localhost:3000/signup and connect your account with Google+.\r\n\r\nRegards,\r\nThe team",
+          :to=>[
+            {
+              :email=> "#{assignee}",
+              :type=>"to",
+              :name=> "#{assignee}"
+            }
+          ],
+          :from_email=>"team@questboard.com"
+        }
+        sending = m.messages.send message
+  end
 
   def self.date_convert (reminderD)
     DateTime.new(reminderD["reminder(1i)"].to_i,
@@ -49,7 +71,6 @@ class Quest < ActiveRecord::Base
     reminderD["reminder(5i)"].to_i)
   end
 
-  require 'mandrill'
   def self.reminders
     @reminders_all = Reminder.all
     date = DateTime.now.utc.strftime("%d-%m-%Y %H:%M")
