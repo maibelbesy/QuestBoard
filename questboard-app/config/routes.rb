@@ -26,13 +26,17 @@ Rails.application.routes.draw do
   post '/quests/edit/:id' => 'quests#update', as: :update_quest
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
-
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
   # get '/users/:id' => 'account#show', as: :user
   post '/users/edit/:id' => 'account#update', as: :user_update
 
   resources :users
+
+  #Routes for the call back function, will be routed to sessions controller
+  get 'auth/:provider/callback' => 'sessions#google_create', as: :google_signin
+  # auth authentication fails it redirects to my quests
+  get 'auth/failure' => 'quests#index'
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

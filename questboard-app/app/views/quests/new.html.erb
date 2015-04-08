@@ -15,7 +15,17 @@
 			<tr style="padding-bottom: 1em">
 				<td><font class="label">Due date: </font></td>
 				<td><%= f.date_select :due_date, :order => [:day, :month, :year] %></td>
+			</tr> 
+			<%# remind button: if radio button true button appears%>
+			<%= f.radio_button :remind_to, true %>
+        	<font style="margin-right: 0.5em">Remind Me</font>
+        	<% #if :remind_to ==true %>
+			<tr style="padding-bottom: 1em">
+				<td><font class="label">Reminder: </font></td>
+				<td><%= f.datetime_select :reminder,:ampm => true, :minute_step => 1, :order => [:day, :month, :year] %> 
 			</tr>
+			<% #end %>
+			<%# remind button: if radio button true button appears%>
 			<tr><td></td><td colspan="1"><%= f.submit "Create", class: "login-button", class: "button", style: "float: right" %></td></tr>
 		</table>
 	<% end %>
