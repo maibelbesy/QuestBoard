@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
+
   before_action :redirect_user, except: [:destroy, :google_create]
+
+  def new
+  end
 
   def login
   end
@@ -13,22 +17,12 @@ class SessionsController < ApplicationController
       flash.now[:danger] = 'Invalid email/password combination'
       render 'login'
     end
+
   end
 
   def google_create
     user = User.from_omniauth(env["omniauth.auth"], @current_user)
-    #@auth = request.env["omniauth.auth"]
-    #Use the token from the data to request a list of calendars
-    #@token = @auth["credentials"]["token"]
-    #client = Google::APIClient.new
-    #client.authorization.access_token = @token
-    #service = client.discovered_api('calendar', 'v3')
-    #@result = client.execute(
-     # :api_method => service.calendar_list.list,
-      #:parameters => {},
-      #:headers => {'Content-Type' => 'application/json'})
     puts "TEST #{request.env["omniauth.auth"]["credentials"]}"  
-
     redirect_to user_path(@current_user.id)
   end
 

@@ -15,7 +15,7 @@ class CreateDb < ActiveRecord::Migration
       t.string "oauth_token"
       t.string "oauth_refresh_token"
       t.datetime "oauth_expires_at"
-
+      t.integer "points", default: 0
       t.timestamps
     end
   
@@ -38,6 +38,8 @@ class CreateDb < ActiveRecord::Migration
       t.string "status", default: ""
       t.string "gid"
       t.boolean "remind_to", default: false
+      t.integer "bounty_points", default: 0
+
       # t.integer "user_id"
 
       t.timestamps
@@ -72,6 +74,13 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :reminders do |t|
+      t.datetime "reminder"
+      t.belongs_to :user, index: true
+      t.belongs_to :quest, index: true
+      t.timestamps
+    end
+
     create_table :notifications do |t|
       t.string "title", default: "Untitled notification"
       t.boolean "is_seen", default: false
@@ -80,12 +89,6 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :reminders do |t|
-         t.datetime "reminder"
-      t.belongs_to :user, index: true
-      t.belongs_to :quest, index: true
-      t.timestamps
-    end
 
     add_index :users_quests, ["assignor_id", "assignee_id", "quest_id"]
     # add_index :users,["email"]
