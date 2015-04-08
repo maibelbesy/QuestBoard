@@ -16,7 +16,10 @@ Rails.application.routes.draw do
 
   get '/users/:id' => 'profile#index', as: :user
 
-
+  get '/streamer' => 'streamer#index', as: :streamer
+  get 'get_messages' => 'streamer#get_messages'
+  get 'publish' => 'streamer#publish'
+  
   # Routes for Quests
 
   get '/quests' => 'quests#index', as: :quests
