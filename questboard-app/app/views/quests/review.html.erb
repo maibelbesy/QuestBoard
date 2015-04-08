@@ -1,0 +1,7 @@
+
+<%= form_for :quest, :url => review_quest_path(params[:id]) do |f| %>
+
+<font class="label">Review: </font>
+				<%= f.text_area :review, placeholder: "Enter Review about the person", class: "textarea", style: "width:100%;resize: vertical;" %>
+				<div><%= button_to "Submit", add_review_quest_path(params[:id]), method: :post, class: "button", style: "width: 20%;float:right;" %></div>
+<% end %>
