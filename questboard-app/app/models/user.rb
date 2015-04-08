@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
       :headers => {'Content-Type' => 'application/json'})
     data = JSON.parse(result.body)
     messages = data['messages']
+    return if messages == nil
     messages.each do |message|
       self.assign_quest user, message["id"]
       # pp message[:id]
