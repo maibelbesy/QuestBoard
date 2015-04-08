@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
 
-  get '/users/:id' => 'profile#index', as: :user
 
 
   # get '/users/:id' => 'profile#index', as: :user
@@ -41,17 +40,18 @@ Rails.application.routes.draw do
   
   get '/quests/review/:id' => 'quests#review', as: :review_quest
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
+
   
 
   # Routes for Notifications
   get '/notifications' => 'notifications#index', as: :notifications
 
   # Routes for the account web pages
-  get '/users/edit/:id' => 'account#edit', as: :edit_user
+  
   get '/users/:id' => 'users#show', as: :user
-  post '/users/edit/:id' => 'account#update', as: :user_update
+  get '/users/edit/:id' => 'users#edit', as: :edit_user
+  post '/users/edit/:id' => 'users#update', as: :user_update
 
-<<<<<<< HEAD
   # Routes for tasks
   get '/quests/task/:id' => 'task#index', as: :task
   get '/quests/task/add/:id' => 'task#create', as: :create_task
@@ -123,7 +123,11 @@ Rails.application.routes.draw do
 #     # (app/controllers/admin/products_controller.rb)
 #     resources :products
 #   end
-=======
+
+
+  # Routes for the account web pages
+  
+
   # resources :users
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
@@ -176,5 +180,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
->>>>>>> c49e7a8936895f73c3233e90e600097304bd0aa9
+
 end

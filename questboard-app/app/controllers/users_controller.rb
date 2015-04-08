@@ -1,7 +1,4 @@
 class UsersController < ApplicationController
-  def show
-    @user = User.find(params[:id])
-  end
 
 	def show
     @member = User.find(params[:id])
@@ -9,12 +6,13 @@ class UsersController < ApplicationController
     user = Connection.where(:connection_id => @current_user.id).pluck(:user_id)
     all = user + conn
     @connections = User.where(:id => all)
+    @member = User.find(params[:id])
+    @reviews = UsersQuest.where(:assignee_id => @current_user.id)
 	end
 
 	def list
 	end
-
-
+  
   def new
     @user = User.new
   end
