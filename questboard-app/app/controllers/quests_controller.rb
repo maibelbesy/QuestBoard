@@ -127,10 +127,16 @@ class QuestsController < ApplicationController
 			@options = {:channel => "/notifs/#{user_quest.assignor_id}",
 								:message => notif.title,
 								:count => "#{User.unread_notifications_count @current_user}", :redirect => quests_path}
+                
+      @assignor_id = Connection.find_by("user_id = ? OR connection_id = ?", user_quest.assignor_id, user_quest.assignee_id)
+      if @assignee_id == nil
+        @assignee_id = Connection.create(:user_id => user_quest.assignor_id, :connection_id => user_quest.assignee_id)
+      end
+      @assignor_id.frequency += 1
+      @assignor_id.save
 			format.html {redirect_to quests_path}
 			format.js
 		end
-		
 		# Connection.where("user_id = ? Or connection_id = ?" @current_user,@current_user)
 	end
 
