@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   
   # Routes for Quests
 
-  get '/quests' => 'quests#index', as: :quests
+  get '/' => 'quests#index', as: :quests
 
   get '/quests/new' => 'quests#new', as: :new_quest
   get '/quests/pending_quests' => 'quests#pending_quests', as: :pending_quests
