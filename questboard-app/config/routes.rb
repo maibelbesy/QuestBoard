@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   get '/logout'  => 'sessions#destroy', as: :logout_user
   get '/users/:id' => 'profile#index', as: :user
 
+  get '/streamer' => 'streamer#index', as: :streamer
+  get 'get_messages' => 'streamer#get_messages'
+  get 'publish' => 'streamer#publish'
+  
   # Routes for Quests
 
   get '/quests' => 'quests#index', as: :quests
@@ -22,7 +26,7 @@ Rails.application.routes.draw do
   get '/quests/new' => 'quests#new', as: :new_quest
   get '/quests/pending_quests' => 'quests#pending_quests', as: :pending_quests
   get '/quests/general_quests' => 'quests#general_quests', as: :general_quests
-  get '/quests/:id' => 'quests#show', as: :quest
+  # get '/quests/:id' => 'quests#show', as: :quest
   get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
   post '/quests/accept/:id' => 'quests#accept', as: :accept_quest
   post '/quests/reject/:id' => 'quests#reject', as: :reject_quest

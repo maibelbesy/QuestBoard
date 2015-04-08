@@ -1,7 +1,5 @@
 class QuestsController < ApplicationController
 
-	require 'eventmachine'
-
   def index
     # TODO: Find personal quests
     quests = UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).pluck(:quest_id)
@@ -46,7 +44,7 @@ class QuestsController < ApplicationController
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
-def pending_quests
+  def pending_quests
     quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).pluck(:quest_id)
     @quests = Quest.where(:id => quests).order('due_date')
     by_me_quests = UsersQuest.where(:assignor_id => @current_user.id,:is_accepted => false,:is_rejected =>false).pluck(:quest_id)
@@ -121,28 +119,27 @@ def pending_quests
 		 
 		quest = Quest.create_general_quest(hash, @current_user)
 		@quest = Quest.find(quest.quest_id)
-     	 if params[:photos]
-        #===== The magic is here ;)
-        params[:photos].each { |photo|
-          @quest.quest_images.create(:photo => photo)
-        }
-      	end
+    if params[:photos]
+      #===== The magic is here ;)
+      params[:photos].each { |photo|
+        @quest.quest_images.create(:photo => photo)
+      }
+    end
+    @quest.quest_videos.create(:url => params[:quest][:url])
+    if not hash[:assign_to].blank?
+      respond_to do |format|
+        user_quest = UsersQuest.find_by(:quest_id => @quest.id)
+        notif = Notification.create(:user_id => user_quest.assignee_id, 
+        :title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
+        @options = {:channel => "/notifs/#{user_quest.assignee_id}",
+        :message => notif.title,
+        :count => "#{User.unread_notifications_count User.find_by(:id => user_quest.assignee_id)}", :redirect => quests_path}
+        format.html {redirect_to quests_path}
+        format.js
       end
-    	 @quest.quest_videos.create(:url => params[:quest][:url])
-		  if not hash[:assign_to].blank?
-			respond_to do |format|
-				user_quest = UsersQuest.find_by(:quest_id => @quest.id)
-				notif = Notification.create(:user_id => user_quest.assignee_id, 
-					:title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
-				@options = {:channel => "/notifs/#{user_quest.assignee_id}",
-									:message => notif.title,
-									:count => "#{User.unread_notifications_count User.find_by(:id => user_quest.assignee_id)}", :redirect => quests_path}
-				format.html {redirect_to quests_path}
-				format.js
-			end
-		else
-			redirect_to quests_path
-		end  
+    else
+      redirect_to quests_path
+    end  
   end
 
 
@@ -161,7 +158,7 @@ def pending_quests
     redirect_to quests_path
   end
 
-def status
+  def status
     quest = Quest.find(params[:id])
     quest.update(:status=> params[:string])
     #update status in the db when it is done
@@ -170,6 +167,6 @@ def status
     quest.save
     end
     redirect_to quests_path
-end
+  end
 
 end

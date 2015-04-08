@@ -20,8 +20,10 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+
 gem 'whenever', :require => false
+
+
 gem 'bcrypt'
 gem 'mandrill-api', '~> 1.0.53'
 gem 'omniauth', '~> 1.2.2'
@@ -42,7 +44,7 @@ gem 'aws-sdk'
 gem 'faye-rails'
 gem 'thin'
 gem 'jquery-turbolinks'
-# gem 'whenever', :require => false
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -61,3 +63,12 @@ group :development, :test do
 
 end
 
+gem 'pubnub', :github => 'pubnub/ruby', :branch => 'master'
+gem 'haml'
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                              :github => 'anjlab/bootstrap-rails'
+
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
+end
