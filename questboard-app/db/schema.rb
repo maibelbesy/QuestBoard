@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -62,18 +61,18 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   end
 
   create_table "quests", force: :cascade do |t|
-    t.string   "title",                        null: false
-    t.text     "description",  default: ""
-    t.boolean  "is_completed", default: false
-    t.string   "bounty",       default: ""
+    t.string   "title",                         null: false
+    t.text     "description",   default: ""
+    t.boolean  "is_completed",  default: false
+    t.string   "bounty",        default: ""
     t.datetime "due_date"
     t.datetime "completed_at"
-    t.string   "status",       default: ""
+    t.string   "status",        default: ""
     t.string   "gid"
-    t.boolean  "remind_to",    default: false
+    t.boolean  "remind_to",     default: false
+    t.integer  "bounty_points", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "bounty_points", default: 0
   end
 
   create_table "reminders", force: :cascade do |t|
@@ -127,7 +126,6 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.integer  "points",              default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
@@ -149,8 +147,4 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   add_index "users_quests", ["assignor_id"], name: "index_users_quests_on_assignor_id"
   add_index "users_quests", ["quest_id"], name: "index_users_quests_on_quest_id"
 
-
-
- 
 end
-

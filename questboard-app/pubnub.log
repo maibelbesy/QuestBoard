@@ -8283,3 +8283,181 @@ D, [2015-04-08T16:55:07.548776 #10591] DEBUG -- pubnub: Setting default values
 D, [2015-04-08T16:55:07.548863 #10591] DEBUG -- pubnub: 
 
 Created new Pubnub::Client instance
+D, [2015-04-08T20:27:44.200456 #12345] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-08T20:27:44.200678 #12345] DEBUG -- pubnub: Setting default values
+D, [2015-04-08T20:27:44.200762 #12345] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-04-08T20:27:53.511432 #12361] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-08T20:27:53.511629 #12361] DEBUG -- pubnub: Setting default values
+D, [2015-04-08T20:27:53.511714 #12361] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-04-08T20:28:22.445273 #12361] DEBUG -- pubnub: Event#initialize | Initialized Pubnub::Subscribe
+D, [2015-04-08T20:28:22.445420 #12361] DEBUG -- pubnub: Created event Pubnub::Subscribe
+D, [2015-04-08T20:28:22.445488 #12361] DEBUG -- pubnub: Pubnub::Client#update_timetoken | Current timetoken is eq 0
+D, [2015-04-08T20:28:22.445546 #12361] DEBUG -- pubnub: SubscribeEvent#fire
+D, [2015-04-08T20:28:22.445599 #12361] DEBUG -- pubnub: SubscribeEvent#fire async
+D, [2015-04-08T20:28:22.445662 #12361] DEBUG -- pubnub: Channel: ["pubnub_chat"]
+D, [2015-04-08T20:28:22.445931 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | starting EM in new thread
+D, [2015-04-08T20:28:22.445991 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | We're running on thin
+D, [2015-04-08T20:28:22.446047 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | EM already running
+D, [2015-04-08T20:28:23.047487 #12361] DEBUG -- pubnub: Async subscription running
+D, [2015-04-08T20:28:23.047588 #12361] DEBUG -- pubnub: origin: pubsub.pubnub.com
+D, [2015-04-08T20:28:23.047629 #12361] DEBUG -- pubnub: timetoken: 0
+D, [2015-04-08T20:28:23.081563 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:28:23.082779 #12361] DEBUG -- pubnub: Event#start_event | tt: 0; ctt 0
+D, [2015-04-08T20:28:23.083026 #12361] DEBUG -- pubnub: Pubnub::Subscribe#uri http://pubsub.pubnub.com/subscribe/demo/pubnub_chat/0/0?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:28:25.400577 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:28:25.400767 #12361] DEBUG -- pubnub: Subscribe#format_envelopes
+D, [2015-04-08T20:28:25.404061 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Response parsed
+D, [2015-04-08T20:28:25.404146 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Timetoken
+D, [2015-04-08T20:28:25.404327 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | envelopes created
+D, [2015-04-08T20:28:25.404412 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:28:25.404496 #12361] DEBUG -- pubnub: Response: [[],"14285177050668783"]
+D, [2015-04-08T20:28:25.404562 #12361] DEBUG -- pubnub: Event#update_app_timetoken
+D, [2015-04-08T20:28:25.404651 #12361] DEBUG -- pubnub: Pubnub::Client#update_timetoken | Current timetoken is eq 14285177050668783
+D, [2015-04-08T20:28:25.404718 #12361] DEBUG -- pubnub: Updated timetoken to 14285177050668783
+D, [2015-04-08T20:28:25.404797 #12361] DEBUG -- pubnub: Event#fire_callbacks async
+D, [2015-04-08T20:28:25.404866 #12361] DEBUG -- pubnub: We can send next request now
+D, [2015-04-08T20:28:25.432498 #12361] DEBUG -- pubnub: Async subscription running
+D, [2015-04-08T20:28:25.432695 #12361] DEBUG -- pubnub: origin: pubsub.pubnub.com
+D, [2015-04-08T20:28:25.432829 #12361] DEBUG -- pubnub: timetoken: 14285177050668783
+D, [2015-04-08T20:28:25.433126 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:28:25.433252 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285177050668783; ctt 14285177050668783
+D, [2015-04-08T20:28:25.433428 #12361] DEBUG -- pubnub: Pubnub::Subscribe#uri http://pubsub.pubnub.com/subscribe/demo/pubnub_chat/0/14285177050668783?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:29:44.955908 #12361] DEBUG -- pubnub: Event#initialize | Initialized Pubnub::Publish
+D, [2015-04-08T20:29:44.956291 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22hi%20all%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+I, [2015-04-08T20:29:44.956560 #12361]  INFO -- pubnub: Bytesize: 187
+D, [2015-04-08T20:29:44.957185 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22hi%20all%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+I, [2015-04-08T20:29:44.957444 #12361]  INFO -- pubnub: Length:   187
+D, [2015-04-08T20:29:44.958582 #12361] DEBUG -- pubnub: Created event Pubnub::Publish
+D, [2015-04-08T20:29:44.958700 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire
+D, [2015-04-08T20:29:44.958746 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Adding event to async_events
+D, [2015-04-08T20:29:44.958786 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Starting railgun
+D, [2015-04-08T20:29:44.958829 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | starting EM in new thread
+D, [2015-04-08T20:29:44.958869 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | We're running on thin
+D, [2015-04-08T20:29:44.958954 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | EM already running
+D, [2015-04-08T20:29:44.958995 #12361] DEBUG -- Pubnub: Pubnub::Client#start_railgun | Initializing railgun
+D, [2015-04-08T20:29:44.970254 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire
+D, [2015-04-08T20:29:44.970407 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Event already on list!
+D, [2015-04-08T20:29:44.970487 #12361] DEBUG -- pubnub: Pubnub::Event#fire
+D, [2015-04-08T20:29:44.970532 #12361] DEBUG -- pubnub: Event#fire
+D, [2015-04-08T20:29:44.970662 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:29:44.970712 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285177050668783; ctt 14285177050668783
+D, [2015-04-08T20:29:44.970963 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22hi%20all%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:29:45.385832 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:29:45.386128 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:29:45.386213 #12361] DEBUG -- pubnub: Response: [1,"Sent","14285177853468296"]
+D, [2015-04-08T20:29:45.386288 #12361] DEBUG -- pubnub: Firing callbacks
+D, [2015-04-08T20:29:45.405591 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:29:45.405787 #12361] DEBUG -- pubnub: Subscribe#format_envelopes
+D, [2015-04-08T20:29:45.405964 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Response parsed
+D, [2015-04-08T20:29:45.406095 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Not timetoken update
+D, [2015-04-08T20:29:45.406234 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Channel pubnub_chat created
+D, [2015-04-08T20:29:45.406392 #12361] DEBUG -- pubnub: [[{"author"=>"Mo", "message"=>"hi all"}], "14285177853468746"]
+D, [2015-04-08T20:29:45.406639 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Envelopes created
+D, [2015-04-08T20:29:45.406714 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | envelopes created
+D, [2015-04-08T20:29:45.406777 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:29:45.406863 #12361] DEBUG -- pubnub: Response: [[{"author":"Mo","message":"hi all"}],"14285177853468746"]
+D, [2015-04-08T20:29:45.406975 #12361] DEBUG -- pubnub: Event#update_app_timetoken
+D, [2015-04-08T20:29:45.407065 #12361] DEBUG -- pubnub: Pubnub::Client#update_timetoken | Current timetoken is eq 14285177853468746
+D, [2015-04-08T20:29:45.407158 #12361] DEBUG -- pubnub: Updated timetoken to 14285177853468746
+D, [2015-04-08T20:29:45.407238 #12361] DEBUG -- pubnub: Event#fire_callbacks async
+D, [2015-04-08T20:29:45.643693 #12361] DEBUG -- pubnub: Async subscription running
+D, [2015-04-08T20:29:45.643828 #12361] DEBUG -- pubnub: origin: pubsub.pubnub.com
+D, [2015-04-08T20:29:45.643876 #12361] DEBUG -- pubnub: timetoken: 14285177853468746
+D, [2015-04-08T20:29:45.644506 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:29:45.645172 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285177853468746; ctt 14285177853468746
+D, [2015-04-08T20:29:45.645351 #12361] DEBUG -- pubnub: Pubnub::Subscribe#uri http://pubsub.pubnub.com/subscribe/demo/pubnub_chat/0/14285177853468746?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:29:45.649990 #12361] DEBUG -- pubnub: We can send next request now
+D, [2015-04-08T20:29:51.792859 #12361] DEBUG -- pubnub: Event#initialize | Initialized Pubnub::Publish
+D, [2015-04-08T20:29:51.793360 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22cool%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+I, [2015-04-08T20:29:51.793626 #12361]  INFO -- pubnub: Bytesize: 183
+D, [2015-04-08T20:29:51.794032 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22cool%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+I, [2015-04-08T20:29:51.794475 #12361]  INFO -- pubnub: Length:   183
+D, [2015-04-08T20:29:51.794615 #12361] DEBUG -- pubnub: Created event Pubnub::Publish
+D, [2015-04-08T20:29:51.794658 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire
+D, [2015-04-08T20:29:51.794776 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Adding event to async_events
+D, [2015-04-08T20:29:51.794819 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Starting railgun
+D, [2015-04-08T20:29:51.794926 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | starting EM in new thread
+D, [2015-04-08T20:29:51.794994 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | We're running on thin
+D, [2015-04-08T20:29:51.795526 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | EM already running
+D, [2015-04-08T20:29:51.795855 #12361] DEBUG -- pubnub: Pubnub::Client#start_railgun | Railgun already initialized
+D, [2015-04-08T20:29:51.799124 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire
+D, [2015-04-08T20:29:51.806034 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Event already on list!
+D, [2015-04-08T20:29:51.806397 #12361] DEBUG -- pubnub: Pubnub::Event#fire
+D, [2015-04-08T20:29:51.806517 #12361] DEBUG -- pubnub: Event#fire
+D, [2015-04-08T20:29:51.806584 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:29:51.806629 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285177853468746; ctt 14285177853468746
+D, [2015-04-08T20:29:51.806854 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22cool%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:29:52.135950 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:29:52.136695 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:29:52.136942 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:29:52.137065 #12361] DEBUG -- pubnub: Subscribe#format_envelopes
+D, [2015-04-08T20:29:52.137192 #12361] DEBUG -- pubnub: Response: [1,"Sent","14285177921022885"]
+D, [2015-04-08T20:29:52.137338 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Response parsed
+D, [2015-04-08T20:29:52.137450 #12361] DEBUG -- pubnub: Firing callbacks
+D, [2015-04-08T20:29:52.137547 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Not timetoken update
+D, [2015-04-08T20:29:52.137707 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Channel pubnub_chat created
+D, [2015-04-08T20:29:52.137889 #12361] DEBUG -- pubnub: [[{"author"=>"Mo", "message"=>"cool"}], "14285177921023201"]
+D, [2015-04-08T20:29:52.138014 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Envelopes created
+D, [2015-04-08T20:29:52.138082 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | envelopes created
+D, [2015-04-08T20:29:52.138142 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:29:52.138210 #12361] DEBUG -- pubnub: Response: [[{"author":"Mo","message":"cool"}],"14285177921023201"]
+D, [2015-04-08T20:29:52.138280 #12361] DEBUG -- pubnub: Event#update_app_timetoken
+D, [2015-04-08T20:29:52.138360 #12361] DEBUG -- pubnub: Pubnub::Client#update_timetoken | Current timetoken is eq 14285177921023201
+D, [2015-04-08T20:29:52.138477 #12361] DEBUG -- pubnub: Updated timetoken to 14285177921023201
+D, [2015-04-08T20:29:52.138602 #12361] DEBUG -- pubnub: Event#fire_callbacks async
+D, [2015-04-08T20:29:52.370371 #12361] DEBUG -- pubnub: Async subscription running
+D, [2015-04-08T20:29:52.370762 #12361] DEBUG -- pubnub: origin: pubsub.pubnub.com
+D, [2015-04-08T20:29:52.370830 #12361] DEBUG -- pubnub: timetoken: 14285177921023201
+D, [2015-04-08T20:29:52.370982 #12361] DEBUG -- pubnub: We can send next request now
+D, [2015-04-08T20:29:52.371049 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:29:52.371122 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285177921023201; ctt 14285177921023201
+D, [2015-04-08T20:29:52.371233 #12361] DEBUG -- pubnub: Pubnub::Subscribe#uri http://pubsub.pubnub.com/subscribe/demo/pubnub_chat/0/14285177921023201?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:30:19.182398 #12361] DEBUG -- pubnub: Event#initialize | Initialized Pubnub::Publish
+D, [2015-04-08T20:30:19.182780 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22finally%20%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+I, [2015-04-08T20:30:19.183145 #12361]  INFO -- pubnub: Bytesize: 189
+D, [2015-04-08T20:30:19.183354 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22finally%20%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+I, [2015-04-08T20:30:19.183599 #12361]  INFO -- pubnub: Length:   189
+D, [2015-04-08T20:30:19.183696 #12361] DEBUG -- pubnub: Created event Pubnub::Publish
+D, [2015-04-08T20:30:19.183738 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire
+D, [2015-04-08T20:30:19.183777 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Adding event to async_events
+D, [2015-04-08T20:30:19.183816 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Starting railgun
+D, [2015-04-08T20:30:19.183858 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | starting EM in new thread
+D, [2015-04-08T20:30:19.183900 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | We're running on thin
+D, [2015-04-08T20:30:19.183945 #12361] DEBUG -- pubnub: Pubnub::Client#start_event_machine | EM already running
+D, [2015-04-08T20:30:19.184006 #12361] DEBUG -- pubnub: Pubnub::Client#start_railgun | Railgun already initialized
+D, [2015-04-08T20:30:19.185982 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire
+D, [2015-04-08T20:30:19.186088 #12361] DEBUG -- pubnub: Pubnub::SingleEvent#fire | Event already on list!
+D, [2015-04-08T20:30:19.186130 #12361] DEBUG -- pubnub: Pubnub::Event#fire
+D, [2015-04-08T20:30:19.186181 #12361] DEBUG -- pubnub: Event#fire
+D, [2015-04-08T20:30:19.186239 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:30:19.186283 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285177921023201; ctt 14285177921023201
+D, [2015-04-08T20:30:19.186537 #12361] DEBUG -- pubnub: Pubnub::Publish#uri http://pubsub.pubnub.com/publish/demo/demo/0/pubnub_chat/0/%7B%22author%22%3A%22Mo%22%2C%22message%22%3A%22finally%20%22%7D?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:30:19.692884 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:30:19.693512 #12361] DEBUG -- pubnub: Event#handle_response
+D, [2015-04-08T20:30:19.693621 #12361] DEBUG -- pubnub: Subscribe#format_envelopes
+D, [2015-04-08T20:30:19.693885 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:30:19.694049 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Response parsed
+D, [2015-04-08T20:30:19.694158 #12361] DEBUG -- pubnub: Response: [1,"Sent","14285178196616570"]
+D, [2015-04-08T20:30:19.694265 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Not timetoken update
+D, [2015-04-08T20:30:19.694382 #12361] DEBUG -- pubnub: Firing callbacks
+D, [2015-04-08T20:30:19.694533 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Channel pubnub_chat created
+D, [2015-04-08T20:30:19.694752 #12361] DEBUG -- pubnub: [[{"author"=>"Mo", "message"=>"finally "}], "14285178196616852"]
+D, [2015-04-08T20:30:19.694904 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | Envelopes created
+D, [2015-04-08T20:30:19.694973 #12361] DEBUG -- pubnub: Subscribe#format_envelopes | envelopes created
+D, [2015-04-08T20:30:19.695034 #12361] DEBUG -- pubnub: Event#add_common_data_to_envelopes
+D, [2015-04-08T20:30:19.695127 #12361] DEBUG -- pubnub: Response: [[{"author":"Mo","message":"finally "}],"14285178196616852"]
+D, [2015-04-08T20:30:19.695193 #12361] DEBUG -- pubnub: Event#update_app_timetoken
+D, [2015-04-08T20:30:19.695275 #12361] DEBUG -- pubnub: Pubnub::Client#update_timetoken | Current timetoken is eq 14285178196616852
+D, [2015-04-08T20:30:19.695339 #12361] DEBUG -- pubnub: Updated timetoken to 14285178196616852
+D, [2015-04-08T20:30:19.695408 #12361] DEBUG -- pubnub: Event#fire_callbacks async
+D, [2015-04-08T20:30:19.939048 #12361] DEBUG -- pubnub: Async subscription running
+D, [2015-04-08T20:30:19.939366 #12361] DEBUG -- pubnub: origin: pubsub.pubnub.com
+D, [2015-04-08T20:30:19.939437 #12361] DEBUG -- pubnub: timetoken: 14285178196616852
+D, [2015-04-08T20:30:19.940275 #12361] DEBUG -- pubnub: Event#start_event | sending request
+D, [2015-04-08T20:30:19.940376 #12361] DEBUG -- pubnub: Event#start_event | tt: 14285178196616852; ctt 14285178196616852
+D, [2015-04-08T20:30:19.940571 #12361] DEBUG -- pubnub: Pubnub::Subscribe#uri http://pubsub.pubnub.com/subscribe/demo/pubnub_chat/0/14285178196616852?pnsdk=PubNub-Ruby/3.7.1&uuid=0c8db6f2-ac35-4dc4-b1d3-63571bfb506c
+D, [2015-04-08T20:30:19.941088 #12361] DEBUG -- pubnub: We can send next request now

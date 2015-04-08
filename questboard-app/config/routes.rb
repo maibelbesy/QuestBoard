@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   # get '/users/:id' => 'profile#index', as: :user
 
-
+  # Routes for chat
   get '/streamer' => 'streamer#index', as: :streamer
   get 'get_messages' => 'streamer#get_messages'
   get 'publish' => 'streamer#publish'

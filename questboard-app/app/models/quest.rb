@@ -127,6 +127,6 @@ class Quest < ActiveRecord::Base
     :headers => {'Content-Type' => 'application/json'})
 
   end
-end
+
 
 end
