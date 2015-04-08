@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
 
   def google_create
     user = User.from_omniauth(env["omniauth.auth"], @current_user)
+    puts "TEST #{request.env["omniauth.auth"]["credentials"]}"  
     redirect_to user_path(@current_user.id)
   end
 

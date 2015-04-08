@@ -89,6 +89,7 @@ class CreateDb < ActiveRecord::Migration
       t.timestamps
     end
 
+
     add_index :users_quests, ["assignor_id", "assignee_id", "quest_id"]
     # add_index :users,["email"]
     # add_index :tokens,["key"]

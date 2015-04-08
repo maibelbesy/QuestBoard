@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   post '/quests/edit/:id' => 'quests#update', as: :update_quest
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
+
   
   get '/quests/review/:id' => 'quests#review', as: :review_quest
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest

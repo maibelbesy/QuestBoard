@@ -157,21 +157,41 @@ class QuestsController < ApplicationController
 		#@user_quest = UsersQuest.find(params[:id])
 		UsersQuest.update(params[:id], params.require(:quest).permit(:review))
   end
-
+  
 	#A User can create the Quest with a title, description, deadline, bounty and assign the Quest to another User.
 	def create
-		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty, :bounty_points)
-		hash[:assign_to] = params[:quest][:assign_to]
-		puts params[:quest][:assign_to] 
+  hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
+  hash[:assign_to] = params[:quest][:assign_to]
+  respond_to do |format|
     if not params[:quest][:assign_to].blank?
-      user = User.find_by(:username => params[:quest][:assign_to])
-      if  user == nil
-        flash[:notice] = 'No assinee with this user name'
-        redirect_to create_quest_path and return 
+      if params[:quest][:assign_to] =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+        user = User.find_by(:email => params[:quest][:assign_to])
+        if user == nil
+          if params[:quest][:assign_to] =~ /^\S+@gmail.com$/
+            non_user = true
+          else
+            flash[:notice] = 'No assinee with this email'
+            format.html {redirect_to create_quest_path and return}
+            @options = {:redirect => create_quest_path}
+            format.js
+            return
+          end
+        end
+      else
+        user = User.find_by(:username => params[:quest][:assign_to])
+        if  user == nil
+          flash[:notice] = 'No assinee with this username'
+          # redirect_to create_quest_path and return 
+          format.html {redirect_to create_quest_path and return}
+          @options = {:redirect => create_quest_path}
+          format.js
+          return
+        end
       end
     end
-		quest = Quest.create_general_quest(hash, @current_user, params.require(:quest).permit(:reminder))
-		@quest = Quest.find(quest.id)
+    @quest = Quest.create_general_quest(hash, @current_user, params.require(:quest).permit(:reminder))
+    Quest.assign_non_user @current_user, @quest, params[:quest][:assign_to] if non_user == true
+    # @quest = Quest.find(quest.quest_id)
     if params[:photos]
       #===== The magic is here ;)
       params[:photos].each { |photo|
@@ -179,21 +199,30 @@ class QuestsController < ApplicationController
       }
     end
     @quest.quest_videos.create(:url => params[:quest][:url])
-    if not hash[:assign_to].blank?
-      respond_to do |format|
+    # redirect_to quests_path
+    if not hash[:assign_to].blank? 
         user_quest = UsersQuest.find_by(:quest_id => @quest.id)
+        notif_user = User.find_by(:id => user_quest.assignee_id)
+        if notif_user == nil
+          format.html {redirect_to quests_path}
+          @options = {:redirect => quests_path}
+          format.js
+          return
+        end
         notif = Notification.create(:user_id => user_quest.assignee_id, 
-        :title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
+          :title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
         @options = {:channel => "/notifs/#{user_quest.assignee_id}",
-        :message => notif.title,
-        :count => "#{User.unread_notifications_count User.find_by(:id => user_quest.assignee_id)}", :redirect => quests_path}
+                  :message => notif.title,
+                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quests_path}
         format.html {redirect_to quests_path}
         format.js
-      end
     else
-      redirect_to quests_path
-    end  
+      @options = {:redirect => quests_path}
+      format.html {redirect_to quests_path}
+      format.js
+    end
   end
+end
 
 
   def update
@@ -224,3 +253,6 @@ class QuestsController < ApplicationController
     end
   end 
 end 
+	
+end
+
