@@ -1,4 +1,4 @@
-sclass QuestsController < ApplicationController
+class QuestsController < ApplicationController
 
   def index
     # TODO: Find personal quests

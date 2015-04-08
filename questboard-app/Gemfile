@@ -63,10 +63,10 @@ group :development, :test do
 
 end
 
-gem 'pubnub', :github => 'pubnub/ruby', :branch => 'master'
-gem 'haml'
-gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
-                              :github => 'anjlab/bootstrap-rails'
+# gem 'pubnub', :github => 'pubnub/ruby', :branch => 'master'
+# gem 'haml'
+# gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+#                               :github => 'anjlab/bootstrap-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -62,8 +62,4 @@ function quitClient(client) {
   }
 };
 
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require streamer
 
