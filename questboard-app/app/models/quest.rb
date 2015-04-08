@@ -129,4 +129,4 @@ class Quest < ActiveRecord::Base
   end
 end
 
-end
+
