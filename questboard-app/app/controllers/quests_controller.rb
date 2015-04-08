@@ -40,9 +40,14 @@ class QuestsController < ApplicationController
 	end
 
 	def accept
-		UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
-		@assignor_id = Connections.find_or_initialize_by(:user_id => params[:id])
-		@assignor_id.frequency += 1
+		user = UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
+		@assignor_id = Connection.find_by("user_id = ? OR connection_id = ?", user.assignor_id, user.assignee_id)
+		if @assignee_id == nil
+			@assignee_id = Connection.create(:user_id => user.assignor_id, :connection_id => user.assignee_id)
+		end
+			@assignor_id.frequency += 1
+			@assignor_id.save
+			redirect_to quests_path
 		# Connection.where("user_id = ? Or connection_id = ?" @current_user,@current_user)
 	end
 

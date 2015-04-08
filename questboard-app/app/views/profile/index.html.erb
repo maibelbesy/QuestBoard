@@ -5,16 +5,20 @@
 
     <nav id="profiletabs">
       <ul class="clearfix">
-        <li><a href="#MyBoard">About</a></li>
+        <li><a href="#About">About</a></li>
         <li><a href="#Connections">Connections</a></li>
         <li><a href="#Reviews">Reviews</a></li>
-        <li><a href="#Performance">Performance</a></li>
-        <li><a href="#settings">Settings</a></li>
       </ul>
     </nav>
     
     
-    <section id="MyBoard">
+    <section id="About">
+
+       <% if logged_in? && @current_user.id == @member.id %>
+    <div style="">
+    <%= button_to "Edit Profile", edit_user_path(current_user), class: "delete-post", style: "float:right;margin-right: 1em;", method: :get %>
+    </div>
+  <% end %> 
 
       <p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
 
@@ -45,35 +49,13 @@
       <p class="MyBoard">@12:30PM - Submitted a news article</p>
     </section>
     
-    <section id="Connections" class="hidden">
+    <section id="Connections">
         <% @connections.each do |connection| %>
-          <p class="setting"><%=connection.username%> </p>
+          <p class="setting"><%=connection.email%> </p>
         <% end %>
-      
-      <ul id="friendslist" class="clearfix">
-      </ul>
-    </section>
-    
-    <section id="settings" class="hidden">
-   
-    <% if logged_in? && @current_user.id == @member.id %>
-		<div style="">
-		<%= button_to "Edit Profile", edit_user_path(current_user), class: "delete-post", style: "float:right;margin-right: 1em;", method: :get %>
-		</div>
-	<% end %> 
-      <p>Edit your user settings:</p>
-      <p class="setting"><span>E-mail Address </span> lolno@gmail.com</p>
-      
-      <p class="setting"><span>Language </span> English(US)</p>
-      
-      <p class="setting"><span>Profile Status </span> Public</p>
-      
-      <p class="setting"><span>Update Frequency </span> Weekly</p>
-      
-      <p class="setting"><span>Connected Accounts </span> None</p>
-    </section>
+  
   </div><!-- @end #content -->
-</div><!-- @end #w -->
+</div>
 <script type="text/javascript">
 $(function(){
   $('#profiletabs ul li a').on('click', function(e){
@@ -91,3 +73,5 @@ $(function(){
   });
 });
 </script>
+
+
