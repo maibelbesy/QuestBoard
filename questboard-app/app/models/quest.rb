@@ -77,7 +77,7 @@ class Quest < ActiveRecord::Base
 
 
 
-end
+
 
 
   def self.add_calendar_event (quest, user)

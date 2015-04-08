@@ -10,9 +10,16 @@ class QuestsController < ApplicationController
     # @quest = Quest.new
   end
 
+  # def create
+  #   Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :remind_to), @current_user, params.require(:quest).permit(:reminder))
+  #   # user = User.last
+  #   # puts "CONNECTED #{user.google_connected?}"
+  #   # puts "TOKEN #{user.fresh_token}"
+  #   redirect_to quests_path
+  # end
+
   def edit
     @quest = Quest.find(params[:id])
-
   end
 
   def update
@@ -41,7 +48,6 @@ class QuestsController < ApplicationController
       Quest.delete_all(:id => params[:id])
       Task.delete_all(:quest_id => params[:id])
       Reminder.delete_all(:quest_id => params[:id])
-    
     end
     redirect_to quests_path
   end
@@ -98,12 +104,9 @@ class QuestsController < ApplicationController
       #===== The magic is here ;)
       params[:photos].each { |photo|
         @quest.quest_images.create(:photo => photo)
-
       }
-    end
+    end 
     @quest.quest_videos.create(:url => params[:quest][:url])
     redirect_to quests_path
-  end
-
+  end 
 end
-
