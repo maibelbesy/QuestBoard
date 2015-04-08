@@ -34,6 +34,9 @@ Rails.application.routes.draw do
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
   
 
+  # Routes for Notifications
+  get '/notifications' => 'notifications#index', as: :notifications
+
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
   # get '/users/:id' => 'account#show', as: :user

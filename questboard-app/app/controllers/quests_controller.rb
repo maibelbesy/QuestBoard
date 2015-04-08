@@ -1,4 +1,5 @@
 class QuestsController < ApplicationController
+	require 'eventmachine'
 
   def index
     # TODO: Find personal quests
@@ -51,25 +52,13 @@ class QuestsController < ApplicationController
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
-  #accept quest
-  def accept
-    UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
-    redirect_to quests_path
-  end
-
-  #reject quest
-  def reject
-    UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
-    redirect_to quests_path
-  end
-
 	#Shows all information about a Quest. 
-	def show
+  def show
 		@user_quest = UsersQuest.find(params[:id])
 		@assignor_id = UsersQuest.find(params[:id]).assignor_id
 		@assignee_id = UsersQuest.find(params[:id]).assignee_id
-		@is_accepted = UsersQuest.find(params[:id]).is_accepted 
-		@is_rejected = UsersQuest.find(params[:id]).is_rejected 
+		@is_accepted = UsersQuest.find(params[:id]).is_accepted
+		@is_rejected = UsersQuest.find(params[:id]).is_rejected
 		@name = User.find(@user_quest.assignee_id)
 		@quest = Quest.find(@user_quest)
 		@photos = @quest.quest_images
@@ -83,6 +72,32 @@ class QuestsController < ApplicationController
 		# @user_to_review = UsersQuest.find(params[:id]).review
 		@user_quest = UsersQuest.find(params[:id])
 	 #redirect_to quests_path
+	end
+
+	def accept
+		respond_to do |format|
+			user_quest = UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
+			# redirect_to quests_path
+			notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title}")
+			@options = {:channel => "/notifs/#{user_quest.assignor_id}",
+								:message => notif.title,
+								:count => "#{User.unread_notifications_count @current_user}", :redirect => quests_path}
+			format.html {redirect_to quests_path}
+			format.js
+		end
+	end
+
+	def reject
+		respond_to do |format|
+			user_quest = UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
+			# redirect_to quests_path
+			notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has rejected your assigned quest: #{Quest.find(params[:id]).title}")
+			@options = {:channel => "/notifs/#{user_quest.assignor_id}",
+								:message => notif.title,
+								:count => "#{User.unread_notifications_count @current_user}", :redirect => quests_path}
+			format.html {redirect_to quests_path}
+			format.js
+		end
 	end
 	#Gives the User the option to write a review on a certain Quest.
 	def add_review
@@ -106,6 +121,21 @@ class QuestsController < ApplicationController
       	end
       end
     	 @quest.quest_videos.create(:url => params[:quest][:url])
+
+		if not hash[:assign_to].blank?
+			respond_to do |format|
+				user_quest = UsersQuest.find_by(:quest_id => @quest.id)
+				notif = Notification.create(:user_id => user_quest.assignee_id, 
+					:title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
+				@options = {:channel => "/notifs/#{user_quest.assignee_id}",
+									:message => notif.title,
+									:count => "#{User.unread_notifications_count User.find_by(:id => user_quest.assignee_id)}", :redirect => quests_path}
+				format.html {redirect_to quests_path}
+				format.js
+			end
+		else
+			redirect_to quests_path
+		end  
       end
       
   def update
@@ -122,6 +152,6 @@ class QuestsController < ApplicationController
     end
     redirect_to quests_path
   end
-	
+
 end
 

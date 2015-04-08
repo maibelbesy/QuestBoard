@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <title>QuestBoard</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -11,6 +12,17 @@
   </head>
   <body>
 
+    <script>
+      var client;
+      <% if logged_in? %>
+          $( window ).load(function() {
+            client = initFayeClient();
+            subscribeForNotifications('/notifs/<%= @current_user.id %>');
+          });
+      <% else %>
+        quitClient(client);
+      <% end %>
+    </script>
   <% if (request.path != "/login" && request.path != "/signup") %>
     <div class="header">
     	<div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">     
@@ -19,17 +31,20 @@
       <div style="float:right;height: 100%;right: 15em;position:relative">
         <ul class="navbar-links">
           <li style="float: left">
-            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Boards
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="/">My Quests</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/general_quests">General Quests</a></li>
-
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="/quests/pending_quests">Pending Quests</a></li>
-          <li role="presentation" class="divider"></li>
-          
-
-        </ul>
+            <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown" style="margin-right: 0.3em">Boards<span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= root_path %>">My Quests</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= general_quests_path %>">General Quests</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= pending_quests_path %>">Pending Quests</a></li>
+            </ul>
+          </li>
+          <li style="float: left">
+            <% unread = User.unread_notifications_count @current_user %>
+            <% notifs = "Notifications" %>
+            <% if unread > 0 %>
+            <% notifs += " [#{unread}]" %>
+            <% end %>
+            <%= link_to "#{notifs}", notifications_path, class: "navbar-link notifs-label" %>
           </li>
           <li style="float: left">
             <%= link_to @current_user.first_name, user_path(@current_user.id), class: "navbar-link" %>
@@ -38,6 +53,7 @@
             <%= link_to "Log out", logout_user_path, class: "navbar-link" %>
           </li>
         </ul>
+
 				<% if false %>
 				<% if logged_in? %>
 				<div class="account-menu-div display-none">
@@ -72,6 +88,15 @@
   </div>
 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+      </div>
+    </div>
+  <% end %>
+
+    <%#= yield %>
+    <div class="notifs display-none">
+      <p class="notifs-message"></p>
+    </div>
+
   </body>
 
 </html>

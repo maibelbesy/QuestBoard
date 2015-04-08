@@ -83,7 +83,6 @@ class Quest < ActiveRecord::Base
   end
 
   require 'pp'	
-	
   def self.add_calendar_event (quest, user)
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token
@@ -126,6 +125,5 @@ class Quest < ActiveRecord::Base
     :headers => {'Content-Type' => 'application/json'})
 
   end
-
 end
 

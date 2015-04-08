@@ -73,9 +73,17 @@ class CreateDb < ActiveRecord::Migration
     end
 
     create_table :reminders do |t|
-         t.datetime "reminder"
+      t.datetime "reminder"
       t.belongs_to :user, index: true
       t.belongs_to :quest, index: true
+      t.timestamps
+    end
+
+    create_table :notifications do |t|
+      t.string "title", default: "Untitled notification"
+      t.boolean "is_seen", default: false
+      t.belongs_to :user, index: true
+
       t.timestamps
     end
 

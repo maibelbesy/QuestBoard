@@ -11,12 +11,11 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
 
 	validates :password, length: { minimum: 6 }, :on => :create
-
-  validates_confirmation_of :password, length: { minimum: 6 }
-
+	validates_confirmation_of :password, length: { minimum: 6 }
   has_many :tasks, foreign_key: "user_id"
-
+  has_many :notifications
   has_secure_password validations: false
+  
 
   def self.from_omniauth(auth, users)
 
@@ -63,6 +62,10 @@ class User < ActiveRecord::Base
 
   def google_connected?
     guid.blank?
+  end
+
+  def self.unread_notifications_count(user)
+  	Notification.where(:user_id => user.id, :is_seen => false).count
   end
 
 end
