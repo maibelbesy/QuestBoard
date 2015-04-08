@@ -58,7 +58,6 @@ class CreateDb < ActiveRecord::Migration
       t.integer "assignee_id", index: true
       t.integer "quest_id", index: true
       t.boolean "is_accepted", default: false
-      t.boolean "is_rejected", default: false
       t.text "review", default: ""
 
       t.timestamps
