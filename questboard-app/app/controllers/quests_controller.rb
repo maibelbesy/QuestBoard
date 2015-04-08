@@ -114,7 +114,7 @@ class QuestsController < ApplicationController
 		end
 		redirect_to quests_path
 	end
-
+  
 	def accept
 
 		respond_to do |format|
@@ -163,6 +163,13 @@ class QuestsController < ApplicationController
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty, :bounty_points)
 		hash[:assign_to] = params[:quest][:assign_to]
 		puts params[:quest][:assign_to] 
+    if not params[:quest][:assign_to].blank?
+      user = User.find_by(:username => params[:quest][:assign_to])
+      if  user == nil
+        flash[:notice] = 'No assinee with this user name'
+        redirect_to create_quest_path and return 
+      end
+    end
 		quest = Quest.create_general_quest(hash, @current_user, params.require(:quest).permit(:reminder))
 		@quest = Quest.find(quest.id)
     if params[:photos]
@@ -215,7 +222,5 @@ class QuestsController < ApplicationController
     user.points += 10
     user.save
     end
-    redirect_to quests_path
-  end
-
-end
+  end 
+end 

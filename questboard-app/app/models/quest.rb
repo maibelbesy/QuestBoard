@@ -1,11 +1,11 @@
 class Quest < ActiveRecord::Base
 
-
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
   has_many :quest_images, :dependent => :destroy
   accepts_nested_attributes_for :quest_images, :reject_if => lambda { |t| t['quest_image'].nil? }
+
   has_many :quest_videos , :dependent => :destroy
-  include UsersHelper
+   include UsersHelper
 
   # def self.create_personal_quest(args, user , reminderD)
   #   quest = self.create(args)
@@ -126,4 +126,5 @@ class Quest < ActiveRecord::Base
 
   end
 end
+
 end

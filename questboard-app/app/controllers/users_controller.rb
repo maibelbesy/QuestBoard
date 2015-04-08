@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def index
+    @users = User.all
+  end
+
 	def show
     @member = User.find(params[:id])
     conn = Connection.where(:user_id => @current_user.id).pluck(:connection_id)
