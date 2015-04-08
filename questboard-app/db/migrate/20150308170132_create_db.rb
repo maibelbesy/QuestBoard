@@ -10,6 +10,7 @@ class CreateDb < ActiveRecord::Migration
       t.boolean "gender"
       t.string "photo", default: ""
       t.boolean "email_verified", default: false
+      t.integer "total_points", default: 0
 
       t.timestamps
     end
@@ -31,6 +32,7 @@ class CreateDb < ActiveRecord::Migration
       t.datetime "due_date"
       t.datetime "completed_at"
       t.string "status", default: ""
+      t.integer "bounty_points", default: 0
       # t.integer "user_id"
 
       t.timestamps

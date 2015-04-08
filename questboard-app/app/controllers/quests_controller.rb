@@ -49,6 +49,33 @@ class QuestsController < ApplicationController
 	def add_review
 		#@user_quest = UsersQuest.find(params[:id])
 		UsersQuest.update(params[:id], params.require(:quest).permit(:review))
+		quest = Quest.find(params[:id])
+
+		if params[:quest][:points] == "1"
+			puts "hiiii"
+			quest.bounty_points += 10
+			quest.save
+		end
+		if params[:quest][:points] == "2"
+			puts "hiiii"
+			quest.bounty_points += 20
+			quest.save
+		end
+		if params[:quest][:points] == "3"
+			puts "hiiii"
+			quest.bounty_points += 30
+			quest.save
+		end
+		if params[:quest][:points] == "4"
+			puts "hiiii"
+			quest.bounty_points += 40
+			quest.save
+		end
+		if params[:quest][:points] == "5"
+			puts "hiiii"
+			quest.bounty_points += 50
+			quest.save
+		end
 		redirect_to quests_path
 	end
 
@@ -69,12 +96,14 @@ class QuestsController < ApplicationController
 
 	#A User can create the Quest with a title, description, deadline, bounty and assign the Quest to another User.
 	def create
-		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
+		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty, :bounty_points)
 		hash[:assign_to] = params[:quest][:assign_to]
 		puts params[:quest][:assign_to]
-		 
+		 puts params
 		quest = Quest.create_general_quest(hash, @current_user)
 		@quest = Quest.find(quest.quest_id)
+     	 
+
      	 if params[:photos]
         #===== The magic is here ;)
         params[:photos].each { |photo|
