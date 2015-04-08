@@ -13,7 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150331171642) do
 
-
   create_table "connections", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "connection_id"
@@ -32,7 +31,6 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
 
   create_table "notifications", force: :cascade do |t|
     t.string   "title",      default: "Untitled notification"
@@ -124,7 +122,7 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.string   "oauth_token"
     t.string   "oauth_refresh_token"
     t.datetime "oauth_expires_at"
-    t.integer  "points",          default: 0
+    t.integer  "points",              default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

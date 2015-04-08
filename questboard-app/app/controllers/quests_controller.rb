@@ -122,8 +122,8 @@ class QuestsController < ApplicationController
 		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
 		hash[:assign_to] = params[:quest][:assign_to]
 		puts params[:quest][:assign_to] 
-		quest = Quest.create_general_quest(hash, @current_user)
-		@quest = Quest.find(quest.quest_id)
+		quest = Quest.create_general_quest(hash, @current_user, params.require(:quest).permit(:reminder))
+		@quest = Quest.find(quest.id)
     if params[:photos]
       #===== The magic is here ;)
       params[:photos].each { |photo|

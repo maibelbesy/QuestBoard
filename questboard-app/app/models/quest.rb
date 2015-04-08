@@ -23,7 +23,7 @@ class Quest < ActiveRecord::Base
     if args[:assign_to].blank?
       args.delete :assign_to
       quest = self.create(args)
-      UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true,:reminder=> self.date_convert(reminderD))
+      UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true)
 
     else
       quest = self.create(args.except(:assign_to))
@@ -32,11 +32,12 @@ class Quest < ActiveRecord::Base
       
     end
     if (quest.remind_to==true)
-      Reminder.create(:user_id=>user.id, :quest_id=> quest.id, )
+      Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> self.date_convert(reminderD))
     end
     if not user.google_connected?
     self.add_calendar_event quest, user
     ####end
+    quest
   end 
 
   def self.date_convert (reminderD)
