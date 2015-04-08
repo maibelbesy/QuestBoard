@@ -16,7 +16,6 @@ class CreateDb < ActiveRecord::Migration
       t.string "oauth_refresh_token"
       t.datetime "oauth_expires_at"
       t.integer "points", default: 0
-
       t.timestamps
     end
   
@@ -39,6 +38,8 @@ class CreateDb < ActiveRecord::Migration
       t.string "status", default: ""
       t.string "gid"
       t.boolean "remind_to", default: false
+      t.integer "bounty_points", default: 0
+
       # t.integer "user_id"
 
       t.timestamps

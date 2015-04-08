@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -72,6 +73,7 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.boolean  "remind_to",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bounty_points", default: 0
   end
 
   create_table "reminders", force: :cascade do |t|
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.integer  "points",              default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+
   end
 
   add_index "users", ["email"], name: "index_users_on_email"
@@ -146,4 +149,8 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   add_index "users_quests", ["assignor_id"], name: "index_users_quests_on_assignor_id"
   add_index "users_quests", ["quest_id"], name: "index_users_quests_on_quest_id"
 
+
+
+ 
 end
+
