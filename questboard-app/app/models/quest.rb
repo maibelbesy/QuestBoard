@@ -36,8 +36,7 @@ class Quest < ActiveRecord::Base
     end
     if not user.google_connected?
     self.add_calendar_event quest, user
-    end
-    #add my code
+    ####end
   end 
 
   def self.date_convert (reminderD)
@@ -126,4 +125,4 @@ class Quest < ActiveRecord::Base
 
   end
 end
-
+end

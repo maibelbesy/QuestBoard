@@ -1,5 +1,5 @@
 class QuestsController < ApplicationController
-<<<<<<< HEAD
+
 	require 'eventmachine'
 
   def index
@@ -17,7 +17,7 @@ class QuestsController < ApplicationController
   #   # user = User.last
   #   # puts "CONNECTED #{user.google_connected?}"
   #   # puts "TOKEN #{user.fresh_token}"
-  #   redirect_to quests_path
+  #   redirect_toa quests_path
   # end
 
   def edit
@@ -45,7 +45,7 @@ class QuestsController < ApplicationController
     quests = UsersQuest.where(:assignor_id => @current_user.id).pluck(:quest_id)
     @quests = Quest.where(:id => quests).order('due_date')
   end
-  
+
 def pending_quests
     quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).pluck(:quest_id)
     @quests = Quest.where(:id => quests).order('due_date')
@@ -129,8 +129,7 @@ def pending_quests
       	end
       end
     	 @quest.quest_videos.create(:url => params[:quest][:url])
-
-		if not hash[:assign_to].blank?
+		  if not hash[:assign_to].blank?
 			respond_to do |format|
 				user_quest = UsersQuest.find_by(:quest_id => @quest.id)
 				notif = Notification.create(:user_id => user_quest.assignee_id, 
@@ -171,7 +170,6 @@ def status
     quest.save
     end
     redirect_to quests_path
-  end
-
 end
 
+end

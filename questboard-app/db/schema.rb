@@ -138,4 +138,3 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   add_index "users_quests", ["quest_id"], name: "index_users_quests_on_quest_id"
 
 end
-

@@ -87,10 +87,6 @@ Rails.application.routes.draw do
 #       get 'sold'
 #     end
 #   end
-<<<<<<< HEAD
-
-=======
->>>>>>> d615b3ccfa2fab019359ca4d47452cddf4bc73ff
 # Example resource route with sub-resources:
 #   resources :products do
 #     resources :comments, :sales
@@ -104,20 +100,13 @@ Rails.application.routes.draw do
 #       get 'recent', on: :collection
 #     end
 #   end
-<<<<<<< HEAD
-
-=======
->>>>>>> d615b3ccfa2fab019359ca4d47452cddf4bc73ff
 # Example resource route with concerns:
 #   concern :toggleable do
 #     post 'toggle'
 #   end
 #   resources :posts, concerns: :toggleable
 #   resources :photos, concerns: :toggleable
-<<<<<<< HEAD
 
-=======
->>>>>>> d615b3ccfa2fab019359ca4d47452cddf4bc73ff
 # Example resource route within a namespace:
 #   namespace :admin do
 #     # Directs /admin/products/* to Admin::ProductsController
