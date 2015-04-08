@@ -14,9 +14,62 @@ class User < ActiveRecord::Base
 
 	validates_confirmation_of :password
 
-	# validates :gender, :in => %w( m f )
-
 	has_many :tasks, foreign_key: "user_id"
 
   has_secure_password validations: false
+
+  #saves the tokens and valuse from the authentication (callback) in to Users table
+  def self.from_omniauth(auth, users)
+    
+    user = self.find_by_id(users.id)
+    user.provider = auth.provider
+    user.guid = auth.uid
+    user.oauth_token = auth.credentials.token
+    user.oauth_refresh_token = auth.credentials.refresh_token 
+    user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+    user.save!
+  end
+
+require 'net/http'
+require 'json'
+  
+   #Changes the token’s attributes into a hash with the key names that the Google API expects for a token refresh
+   def to_params
+    {'refresh_token' => oauth_refresh_token,
+    'client_id' => ENV['CLIENT_ID'],
+    'client_secret' => ENV['CLIENT_SECRET'],
+    'grant_type' => 'refresh_token'}
+  end
+ 
+  #Makes a http POST request to the Google API OAuth 2.0 authorization using parameters from to_params method
+  def request_token_from_google
+   url = URI("https://accounts.google.com/o/oauth2/token")
+    Net::HTTP.post_form(url, self.to_params)
+  end
+ 
+  #Requests the token from Google, parses its JSON response and updates your database 
+  def refresh!
+    response = request_token_from_google
+    data = JSON.parse(response.body)
+    update_attributes(
+    oauth_token: data['access_token'],
+    oauth_expires_at: Time.now + (data['expires_in'].to_i).seconds)
+  end
+  
+  #checks whether the token expired or not
+  def expired?
+    oauth_expires_at < Time.now
+  end
+  
+  #refreshes the token so we could use a valid token
+  def fresh_token
+    refresh! if expired?
+    oauth_token 
+  end
+
+  #checks if the user is connected to google
+  def google_connected? 
+    guid.blank?
+  end
+
 end

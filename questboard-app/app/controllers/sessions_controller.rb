@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :redirect_user, except: [:destroy]
+  before_action :redirect_user, except: [:destroy, :google_create]
 
   def new
   end
@@ -15,6 +15,11 @@ class SessionsController < ApplicationController
   	end
   end
 
+  #Takes the valuse retruned from the omniauth authentication (tokens) and sends them to the user model
+  def google_create
+    user = User.from_omniauth(env["omniauth.auth"], @current_user)
+    redirect_to user_path(@current_user.id)
+  end
 
   def register
   end
