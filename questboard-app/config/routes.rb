@@ -29,12 +29,22 @@ Rails.application.routes.draw do
   post '/quests/edit/:id' => 'quests#update', as: :update_quest
   post '/quests/new' => 'quests#create', as: :create_quest
   delete '/quests/:id'=> 'quests#destroy', as: :delete_quest
+  
+  get '/quests/review/:id' => 'quests#review', as: :review_quest
+  post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
+  
 
   # Routes for the account web pages
   get '/users/edit/:id' => 'account#edit', as: :user_edit
   # get '/users/:id' => 'account#show', as: :user
   post '/users/edit/:id' => 'account#update', as: :user_update
 
+  # Routes for tasks
+  get '/quests/task/:id' => 'task#index', as: :task
+  get '/quests/task/add/:id' => 'task#create', as: :create_task
+  post '/quests/task/add/:id' => 'task#create_task', as: :add_task
+  delete '/quests/task/:id' => 'task#destroy', as: :delete_task
+  
   resources :users
 
   get 'auth/:provider/callback' => 'sessions#google_create', as: :google_signin

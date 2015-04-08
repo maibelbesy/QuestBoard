@@ -92,21 +92,53 @@ class QuestsController < ApplicationController
     redirect_to quests_path
   end
 
-  #create quest
-  def create
-    hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
-    hash[:assign_to] = params[:quest][:assign_to]
-    puts params[:quest][:assign_to]
+	#Shows all information about a Quest. 
+	def show
+		@user_quest = UsersQuest.find(params[:id])
+		@assignor_id = UsersQuest.find(params[:id]).assignor_id
+		@assignee_id = UsersQuest.find(params[:id]).assignee_id
+		@is_accepted = UsersQuest.find(params[:id]).is_accepted 
+		@is_rejected = UsersQuest.find(params[:id]).is_rejected 
+		@name = User.find(@user_quest.assignee_id)
+		@quest = Quest.find(@user_quest)
+		@photos = @quest.quest_images
+		@video = QuestVideo.find_by_quest_id(@quest.id).url.split('/').last
+		@tasks = @quest.tasks
+	end
 
-    quest = Quest.create_general_quest(hash, @current_user)
-    @quest = Quest.find(quest.quest_id)
-    if params[:photos]
-      #===== The magic is here ;)
-      params[:photos].each { |photo|
-        @quest.quest_images.create(:photo => photo)
-      }
-    end 
-    @quest.quest_videos.create(:url => params[:quest][:url])
-    redirect_to quests_path
-  end 
+	#Shows the Review related to certain Quest.
+	def review
+		#TODO On Event (done Quest)
+		# @user_to_review = UsersQuest.find(params[:id]).review
+		@user_quest = UsersQuest.find(params[:id])
+	 #redirect_to quests_path
+
+	end
+	#Gives the User the option to write a review on a certain Quest.
+	def add_review
+		#@user_quest = UsersQuest.find(params[:id])
+		UsersQuest.update(params[:id], params.require(:quest).permit(:review))
+		redirect_to quests_path
+	end
+
+	#A User can create the Quest with a title, description, deadline, bounty and assign the Quest to another User.
+	def create
+		hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
+		hash[:assign_to] = params[:quest][:assign_to]
+		puts params[:quest][:assign_to]
+		 
+		quest = Quest.create_general_quest(hash, @current_user)
+		@quest = Quest.find(quest.quest_id)
+     	 if params[:photos]
+        #===== The magic is here ;)
+        params[:photos].each { |photo|
+          @quest.quest_images.create(:photo => photo)
+
+        }
+      	end
+    	 @quest.quest_videos.create(:url => params[:quest][:url])
+		redirect_to quests_path
+	end
+
 end
+
