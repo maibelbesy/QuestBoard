@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.datetime "updated_at"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string   "title",      default: "Untitled notification"
+    t.boolean  "is_seen",    default: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
+
   create_table "quest_images", force: :cascade do |t|
     t.string   "caption"
     t.integer  "quest_id"
@@ -51,16 +61,30 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   end
 
   create_table "quests", force: :cascade do |t|
-    t.string   "title",                        null: false
-    t.text     "description",  default: ""
-    t.boolean  "is_completed", default: false
-    t.string   "bounty",       default: ""
+    t.string   "title",                         null: false
+    t.text     "description",   default: ""
+    t.boolean  "is_completed",  default: false
+    t.string   "bounty",        default: ""
     t.datetime "due_date"
     t.datetime "completed_at"
-    t.string   "status",       default: ""
+    t.string   "status",        default: ""
+    t.string   "gid"
+    t.boolean  "remind_to",     default: false
+    t.integer  "bounty_points", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "reminders", force: :cascade do |t|
+    t.datetime "reminder"
+    t.integer  "user_id"
+    t.integer  "quest_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reminders", ["quest_id"], name: "index_reminders_on_quest_id"
+  add_index "reminders", ["user_id"], name: "index_reminders_on_user_id"
 
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
@@ -88,12 +112,18 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "username",                        null: false
-    t.string   "email",                           null: false
-    t.string   "password_digest",                 null: false
+    t.string   "username",                            null: false
+    t.string   "email",                               null: false
+    t.string   "password_digest",                     null: false
     t.boolean  "gender"
-    t.string   "photo",           default: ""
-    t.boolean  "email_verified",  default: false
+    t.string   "photo",               default: ""
+    t.boolean  "email_verified",      default: false
+    t.string   "provider"
+    t.string   "guid"
+    t.string   "oauth_token"
+    t.string   "oauth_refresh_token"
+    t.datetime "oauth_expires_at"
+    t.integer  "points",              default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
