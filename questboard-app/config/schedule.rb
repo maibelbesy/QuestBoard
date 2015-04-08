@@ -8,6 +8,7 @@
 #set :output, "/path/to/my/cron_log.log"
 #
 every 1.minute do
+
 #command "/usr/bin/some_great_command"
   runner "Quest.reminders" , :environment=>'development'
 #runner "Quest.addinDB" , :environment=>'development'
@@ -32,6 +33,7 @@ end
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
+
 
 # Learn more: http://github.com/javan/whenever
 

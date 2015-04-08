@@ -15,6 +15,4 @@ it "Reminds User of Quest's Deadline" do
 			
 		end
 	end
-
-	
 end

@@ -44,7 +44,9 @@ function unsubscribeForNotifications(subscription) {
 };
 
 function publishNotification(channel, payload, redirect) {
-	publisher = client.publish(channel, payload);
+	if (typeof channel !== "undefined" && channel !== null) {
+		publisher = client.publish(channel, payload);
+	}
 	if (typeof redirect !== "undefined" && redirect !== null) {
 		publisher.then(function() {
 		  // OK

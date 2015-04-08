@@ -61,15 +61,16 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   end
 
   create_table "quests", force: :cascade do |t|
-    t.string   "title",                        null: false
-    t.text     "description",  default: ""
-    t.boolean  "is_completed", default: false
-    t.string   "bounty",       default: ""
+    t.string   "title",                         null: false
+    t.text     "description",   default: ""
+    t.boolean  "is_completed",  default: false
+    t.string   "bounty",        default: ""
     t.datetime "due_date"
     t.datetime "completed_at"
-    t.string   "status",       default: ""
+    t.string   "status",        default: ""
     t.string   "gid"
-    t.boolean  "remind_to",    default: false
+    t.boolean  "remind_to",     default: false
+    t.integer  "bounty_points", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
