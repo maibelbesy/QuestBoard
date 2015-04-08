@@ -116,10 +116,10 @@ blockquote:before, blockquote:after, q:before, q:after { content: ''; content: n
   margin-bottom: 20px;
   padding: .1em 0;
   color: #444;
-	position: relative;
-	overflow: hidden;
-	white-space: nowrap;
-	text-align: center;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
 }
 #w h1:before,
 #w h1:after {
@@ -154,10 +154,10 @@ blockquote:before, blockquote:after, q:before, q:after { content: ''; content: n
   margin-bottom: 20px;
   padding: .1em 0;
   color: #444;
-	position: relative;
-	overflow: hidden;
-	white-space: nowrap;
-	text-align: center;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
 }
 
 #w p {
@@ -552,4 +552,5 @@ font {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
+
 

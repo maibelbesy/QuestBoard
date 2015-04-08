@@ -1,4 +1,4 @@
-<!-- <<<<<<< HEAD -->
+
 <% if false %>
 	<%= form_for :quest, :url => update_quest_path(params[:id]) do |f| %>
 		<%= f.text_field :title, :value => @quest.title, placeholder: "Enter quest title"%>
@@ -10,8 +10,9 @@
 	<% end %>
 <% end %>
 
-<header class="header-title">Edit Quest<font class="label" style="font-size: 28px"><%= " | #{@quest.title}" %></font><header>
-
+<header class="header-title">
+	Edit Quest<font class="label" style="font-size: 28px"><%= " | #{@quest.title}" %></font>
+</header>
 <%# if false %>
 <div>
 	<%= form_for :quest, :url => update_quest_path(params[:id]) do |f| %>
@@ -43,19 +44,17 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <div class="input-group">
 <div class="col-lg-5 col-md-offset-5">
+>>>>>>> dc9647488c43836556b212203cece36875a99214
 
-<%= form_for :quest, :url => update_quest_path(params[:id]) do |f| %>
-        <%= f.text_field :title, :value => @quest.title, placeholder: "Enter quest title" ,class:"form-control"%>
-         <%= f.text_area :description, :value => @quest.description, placeholder: "Enter post content" ,class:"form-control"%>
-         <%= f.text_field :bounty, :value => @quest.bounty, placeholder: "Enter quest bounty",class:"form-control"%>
-         <%= f.date_select :due_date, :order => [:day, :month, :year] %>
-         <div class="checkbox">
-         <label>
-         <%= f.check_box :is_completed %> Is completed
-         </label>
-         </div>
-         <%= f.submit "Save", class: "login-button", style: "margin-top: 0.5em;" ,class:"form-control"%>
-    <% end %>
-    </div>
-    </div>
->>>>>>> master -->
+				<tr style="padding-bottom: 1em;">
+					<td><font class="label">Due date: </font></td>
+					<td><%#= f.date_select :due_date, :order => [:day, :month, :year], value: @quest.due_date %></td>
+				</tr>
+				<tr>
+					<td></td><td colspan="1"><%#= f.submit "Save", class: "login-button", class: "button", style: "float: right" %></td>
+				</tr>
+			</table>
+			<%# end %>
+		</div>
+		
+		

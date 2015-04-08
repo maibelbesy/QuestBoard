@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   add_index "connections", ["connection_id"], name: "index_connections_on_connection_id"
   add_index "connections", ["user_id"], name: "index_connections_on_user_id"
 
+  create_table "messages", force: :cascade do |t|
+    t.string   "author"
+    t.text     "message"
+    t.string   "timetoken"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.string   "title",      default: "Untitled notification"
     t.boolean  "is_seen",    default: false
@@ -53,15 +61,16 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   end
 
   create_table "quests", force: :cascade do |t|
-    t.string   "title",                        null: false
-    t.text     "description",  default: ""
-    t.boolean  "is_completed", default: false
-    t.string   "bounty",       default: ""
+    t.string   "title",                         null: false
+    t.text     "description",   default: ""
+    t.boolean  "is_completed",  default: false
+    t.string   "bounty",        default: ""
     t.datetime "due_date"
     t.datetime "completed_at"
-    t.string   "status",       default: ""
+    t.string   "status",        default: ""
     t.string   "gid"
-    t.boolean  "remind_to",    default: false
+    t.boolean  "remind_to",     default: false
+    t.integer  "bounty_points", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -114,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.string   "oauth_token"
     t.string   "oauth_refresh_token"
     t.datetime "oauth_expires_at"
+    t.integer  "points",              default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

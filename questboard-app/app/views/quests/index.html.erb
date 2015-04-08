@@ -1,5 +1,7 @@
 <div style="overflow: auto">
-	<header class="header-title" style="float:left;">My Quests</header>
+	<header class="header-title" style="float:left;">
+		My Quests
+	</header>
 	<!-- <a href="#" class="circular-button" style="float: right">+</a> -->
 	<%= link_to "+", new_quest_path, class: "circular-button", style: "float: right; color: white;" %>
 </div>
@@ -7,6 +9,7 @@
 <div>
 	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
 		<% @quests.each do |quest| %>
+		
 			<tr style="padding-bottom: 1em; height: 3em;" class="quest" id="<%= quest.id %>">
 				<!-- <td><font class="label" style="width:20%;">Title: </font></td> -->
 				<!-- <td><p class="label" style="margin-bottom: 0.5em;"><%= quest.title %></p></td> -->
