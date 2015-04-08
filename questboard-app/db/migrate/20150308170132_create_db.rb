@@ -15,6 +15,7 @@ class CreateDb < ActiveRecord::Migration
       t.string "oauth_token"
       t.string "oauth_refresh_token"
       t.datetime "oauth_expires_at"
+      t.integer "points", default: 0
 
       t.timestamps
     end

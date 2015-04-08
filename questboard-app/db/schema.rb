@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20150331171642) do
     t.string   "oauth_token"
     t.string   "oauth_refresh_token"
     t.datetime "oauth_expires_at"
+    t.integer  "points",          default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
