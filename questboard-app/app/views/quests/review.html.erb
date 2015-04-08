@@ -1,0 +1,28 @@
+
+<%= form_for :quest, :url => review_quest_path(params[:id]) do |f| %>
+
+<font class="label">Review: </font>
+				<%= f.text_area :review, placeholder: "Enter Review about the person", class: "textarea", style: "width:100%;resize: vertical;" %>
+				<div class="btn-toolbar" role="toolbar" aria-label="...">
+				<%= f.radio_button :points, 1 %>
+        <font style="margin-right: 0.5em">1</font>
+        <%= f.radio_button :points, 2 %>
+        <font style="margin-right: 0.5em">2</font>
+         <%= f.radio_button :points, 3 %>
+        <font style="margin-right: 0.5em">3</font>
+         <%= f.radio_button :points, 4 %>
+        <font style="margin-right: 0.5em">4</font>
+         <%= f.radio_button :points, 5 %>
+        <font style="margin-right: 0.5em">5</font>
+
+        <div><%= button_to "Submit", add_review_quest_path(params[:id]), method: :post, class: "button", style: "width: 20%;float:right;" %></div>
+				
+			
+				
+<!-- <button type="button" class="btn btn-default">1</button>
+<button type="button" class="btn btn-primary">2</button>
+<button type="button" class="btn btn-success">3</button>
+<button type="button" class="btn btn-info">4</button>
+<button type="button" class="btn btn-warning">5</button> -->
+</div>
+<% end %>
