@@ -12,8 +12,8 @@ class Quest < ActiveRecord::Base
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true)
 
     else
-      quest = self.create(args.except(:assign_to))
       id = User.find_by(:username => args[:assign_to]).id
+      quest = self.create(args.except(:assign_to))
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
 
     end

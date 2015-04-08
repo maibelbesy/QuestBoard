@@ -55,14 +55,19 @@ class QuestsController < ApplicationController
     hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
     hash[:assign_to] = params[:quest][:assign_to]
     puts params[:quest][:assign_to]
-
+    if not params[:quest][:assign_to].blank?
+      user = User.find_by(:username => params[:quest][:assign_to])
+      if  user == nil
+        flash[:notice] = 'No assinee with this user name'
+        redirect_to create_quest_path and return 
+      end
+    end
     quest = Quest.create_general_quest(hash, @current_user)
     @quest = Quest.find(quest.quest_id)
     if params[:photos]
       #===== The magic is here ;)
       params[:photos].each { |photo|
         @quest.quest_images.create(:photo => photo)
-
       }
     end
     @quest.quest_videos.create(:url => params[:quest][:url])
@@ -95,10 +100,10 @@ class QuestsController < ApplicationController
       UsersQuest.delete_all(:quest_id => params[:id])
       Quest.delete_all(:id => params[:id])
       Task.delete_all(:quest_id => params[:id])
-    #flash should be implemented in the view
-    # flash[:notice] = "Quest is Deleted."
-    # else
-    # flash[:notice] = "Quest wasn't deleted."
+      #flash should be implemented in the view
+      # flash[:notice] = "Quest is Deleted."
+      # else
+      # flash[:notice] = "Quest wasn't deleted."
     end
     # Quest.delete_all(:id => params[:id])
     redirect_to quests_path

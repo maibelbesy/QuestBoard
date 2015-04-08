@@ -1,3 +1,6 @@
+ <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
 <header class="header-title">Create a new Quest</header>
 
 <%# if false %>
