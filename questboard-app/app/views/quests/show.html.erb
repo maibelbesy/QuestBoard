@@ -89,12 +89,13 @@
 
 </tr>
 <div><%= button_to "Add Tasks", task_path(@quest.id), method: :get, class: "button", style: "width: 20%;float:right;" %></div>
+<div><%= button_to "Edit Quest", edit_quest_path(@quest.id), method: :get, class: "button", style: "width: 20%;float:right;" %></div>
 <% if @current_user.id == @assignee_id and @current_user.id != @assignor_id and @is_accepted == false and @is_rejected == false%>
 <div>
-    <%= button_to "Reject", reject_quest_path(@quest.id), method: :post, class: "button", style: "width: 20%;float:right;" %>
+    <%= button_to "Reject", reject_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "width: 20%;float:right;" %>
 </div>
 <div>
-    <%= button_to "Accept", accept_quest_path(@quest.id), method: :post, class: "button", style: "width: 20%;float:right;" %>
+    <%= button_to "Accept", accept_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "width: 20%;float:right;" %>
 </div>
 <%end%>
 <%if @quest.is_completed == true%>

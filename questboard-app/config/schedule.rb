@@ -5,22 +5,6 @@
 
 # Example:
 #
-#set :output, "/path/to/my/cron_log.log"
-#
-every 1.minute do
-
-#command "/usr/bin/some_great_command"
-  runner "Quest.reminders" , :environment=>'development'
-#runner "Quest.addinDB" , :environment=>'development'
-# rake "some:great:rake:task"
-end
-#every 1.minute do
-
-#runner "Quest.addinDB" , :environment=>'development'
-
-#end
-#end
-
 # set :output, "/path/to/my/cron_log.log"
 #
 # every 2.hours do
@@ -28,21 +12,13 @@ end
 #   runner "MyModel.some_method"
 #   rake "some:great:rake:task"
 # end
-
 #
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
 
+# Learn more: htt
 
-# Learn more: http://github.com/javan/whenever
-
-# require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-# set :path, Rails.root
-# set :output, Rails.root.join('log', 'cron.log')
-
-# every 1.minute do
-# 	runner "Quest.add_demo", :environment => "development"
-# 	# command "echo 'you can use raw cron syntax too'"
-# end
-
+every 1.minute do
+	runner "Quest.reminders", :environment => "development"
+end
