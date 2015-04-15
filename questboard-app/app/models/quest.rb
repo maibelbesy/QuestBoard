@@ -1,5 +1,6 @@
 class Quest < ActiveRecord::Base
   require 'mandrill'
+  require 'pp'
 
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
   has_many :quest_images, :dependent => :destroy
@@ -10,17 +11,16 @@ class Quest < ActiveRecord::Base
   def self.create_general_quest(args, user, reminderD)
     if args[:assign_to].blank?
       args.delete :assign_to
-      quest = self.create(args)
+      quest = self.create(args.except :remind_to)
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>user.id, :quest_id => quest.id, :is_accepted => true)
     else
-      quest = self.create(args.except(:assign_to))
+      quest = self.create(args.except(:assign_to, :remind_to))
       # id = User.find_by(:username => args[:assign_to]).id
       users = User.find_by(:username => args[:assign_to])
       id = users.id if users != nil
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
-
     end
-    if (quest.remind_to==true)
+    if (args[:remind_to] == 'true')
       Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> self.date_convert(reminderD))
     end
     if not user.google_connected?
@@ -67,7 +67,7 @@ class Quest < ActiveRecord::Base
         @quest.save
         m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
         message = {
-          :subject=> "Quest Reminder",
+          :subject=> "[QuestBoard] Reminder",
           :from_name=> "QuestBoard",
           :text=>"Hello",
           :to=>[
@@ -78,7 +78,7 @@ class Quest < ActiveRecord::Base
             }
           ],
           :html=>"<html><h1>Hi, #{@quest.title} deadline is on <strong>#{@quest.due_date.strftime("%d-%m-%Y %H:%M")} </strong></h1></html>",
-          :from_email=>"QuestBoard@yourdomain.com"
+          :from_email=>"reminders@questboard.com"
         }
         sending = m.messages.send message
         puts sending
@@ -86,6 +86,10 @@ class Quest < ActiveRecord::Base
 
       end
     end
+  end
+
+  def self.add_demo
+    Quest.create(:title => "reminder")
   end
 
   def self.add_calendar_event (quest, user)
