@@ -51,10 +51,6 @@
             <%= link_to "#{notifs}", notifications_path, class: "navbar-link notifs-label" %>
           </li>
           <li style="float: left">
-            <%= link_to 'Chat', :streamer, class: "navbar-link" %>
-
-          </li>
-          <li style="float: left">
             <%= link_to @current_user.first_name, user_path(@current_user.id), class: "navbar-link" %>
           </li>
           <li style="float: left">

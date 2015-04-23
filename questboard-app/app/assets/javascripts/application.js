@@ -17,7 +17,6 @@
 // = require turbolinks
 //= require faye
 // = require_tree .
-//= require streamer
 
 // $(function(){
 //   $('.quest').mouseenter(function(){
