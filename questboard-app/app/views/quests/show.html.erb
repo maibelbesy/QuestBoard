@@ -1,75 +1,104 @@
-    <tr style="padding-bottom: 1em">
     
-    <td style="width:80%;" ><h1 class="label label-default" ><%= @quest.title%></h1></td>
+    
+    <tr style="padding-bottom: 1em">
+
+        <td style="width:80%;" ><h1><%= @quest.title%></h1></td>
     </p>
 
     <td><font class="label" style="width:20%;">Description: </font></td>
     <td style="width:80%;"><font class="label"><%= @quest.description%></font></td>
-    </p>
-    </p>
-    <td><font class="label" style="width:20%;">Bounty: </font></td>
-    <td style="width:80%;"><%= @quest.bounty%></td>
-    </p>
-    <td><font class="label" style="width:20%;">Due date: </font></td>
-    <td style="width:80%;"><%= @quest.due_date%></td>
-    </p>
-    <%if @quest.is_completed%>
-    <td><font class="label" style="width:20%;">Completed at: </font></td>
-    <td style="width:80%;"><%= @quest.completed_at%></td>
-    <%end%>
-    </p>
+</p>
+</p>
+<td><font class="label" style="width:20%;">Bounty: </font></td>
+<td style="width:80%;"><%= @quest.bounty%></td>
+</p>
+<td><font class="label" style="width:20%;">Due date: </font></td>
+<td style="width:80%;"><%= @quest.due_date%></td>
+</p>
+<%if @quest.is_completed%>
+<td><font class="label" style="width:20%;">Completed at: </font></td>
+<td style="width:80%;"><%= @quest.completed_at%></td>
+<%end%>
+</p>
 
-    <td><font class="label" style="width:20%;">Assgined to:</font></td>
-    <font class="label" style="width:20%;"><%=@name.username%></font>
-    </p>
-    <%if @user_quest.is_accepted==true%>
-    <td><font size="2" class="label label-info">Accepted</font></td>
+<td><font class="label" style="width:20%;">Assgined to:</font></td>
+<font class="label" style="width:20%;"><%=@name.username%></font>
+</p>
+<%if @user_quest.is_accepted==true%>
+<td><font size="2" class="label label-info">Accepted</font></td>
+<%end%>
+<%if @user_quest.is_rejected==true%>
+<td><font size="2" class="label label-info">Rejected</font></td>
+<%end%>
+<%if @user_quest.is_accepted==false and @user_quest.is_rejected==false%>
+<td><font size="2" class="label label-info">Pending</font></td>
+<%end%>
+</p>
+<div class="progress">
+  <div id = "pro-bar" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+  </div>
+</div>
+    <td>
+    <%if not @quest.status == "Done"%>
+       <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="background-color: gray; color:white;">
+            Add Task
+            </button>
     <%end%>
-    <%if @user_quest.is_rejected==true%>
-    <td><font size="2" class="label label-info">Rejected</font></td>
-    <%end%>
-    <%if @user_quest.is_accepted==false and @user_quest.is_rejected==false%>
-    <td><font size="2" class="label label-info">Pending</font></td>
-    <%end%>
-    </p>
-    <table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
-    <br>
-    <label>Tasks: </label>
-    <br>
-        <% @tasks.each do |task| %>
+    </td>
+    <div class="collapse" id="collapseExample" style="padding-bottom: 1em">
+    <%= form_for :task, :url => add_task_path(params[:id]), html: { multipart: true } do |f| %>
+        <table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;">
             <tr style="padding-bottom: 1em">
-    
-                <td><%= task.title%></td>
-                <%if task.user == @current_user.id%>
-                <td style=""><%= button_to "X", delete_task_path(task.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
-                <%end%>
+                <td><font class="label" style="width:20%;">Task: </font></td>
+                <td style="width:80%;"><%= f.text_field :title, placeholder: "Enter quest title", class: "input", style: "width:100%" %></td>
             </tr>
-        <% end %>
-    </table>
-    <%if QuestVideo.find_by_quest_id(@quest.id).url != ""%>
-    <iframe width="560" height="349" src="<%= "http://www.youtube.com/embed/"+@video %>"></iframe>
-    </p>
-    <td><font class="label" style="width:20%;">Images </font></td>
-    <%end%>
-    <% @photos.each do |pic| %>
-    <%= link_to image_tag(pic.photo.url (:small)), pic.photo.url %>
+
+            <tr><td></td><td colspan="1"><%= f.submit "Add", class: "login-button", class: "button", style: "float: right" %></td></tr>
+        </table>
     <% end %>
-    <div class="btn-group" role="group" aria-label="...">
-        <script><%if @quest.status == "OnIt" %>
-    $(function() {
-    document.getElementById("1").disabled=true;
-    });
-<% elsif @quest.status == "InProgress"%>
-    $(function() {
-    document.getElementById("2").disabled=true;
-    });
-<% elsif @quest.status == "Done"%>
-    $(function() {
-    document.getElementById("3").disabled=true;
-    });
-<%end%></script>
-<%if not @quest.is_completed and @user_quest.is_accepted==true%>
-<button type="submit" class="btn btn-default" onclick="window.location.href='/quests/<%= @quest.id%>/OnIt'" id = "1">
+</div>
+    <br>
+    <% @tasks.each do |task| %>
+    <tr style="padding-bottom: 1em">
+        <td><font class="label" style="width:20%;">-<%= task.title%></font></td>
+        </p>
+        <%if task.user == @current_user.id%>
+        <td style=""><%= button_to "X", delete_task_path(task.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
+        <%end%>
+    </tr>
+    <% end %>
+<br>
+
+<%if QuestVideo.find_by_quest_id(@quest.id).url != ""%>
+<iframe width="560" height="349" src="<%= "http://www.youtube.com/embed/"+@video %>"></iframe>
+</p>
+<td><font class="label" style="width:20%;">Images </font></td>
+<%end%>
+<% @photos.each do |pic| %>
+<%= link_to image_tag(pic.photo.url (:small)), pic.photo.url %>
+<% end %>
+<div class="btn-group" role="group" aria-label="...">
+    <script><%if @quest.status == "OnIt" %>
+        $(function() {
+            document.getElementById("1").disabled=true;
+            $("#pro-bar").css("width", "33%");
+        });
+        <% elsif @quest.status == "InProgress"%>
+        $(function() {
+            document.getElementById("2").disabled=true;
+            $("#pro-bar").css("width", "66%");
+        });
+        <% elsif @quest.status == "Done"%>
+        $(function() {
+            document.getElementById("3").disabled=true;
+            document.getElementById("2").disabled=true;
+            document.getElementById("1").disabled=true;
+            $("#pro-bar").css("width", "100%");
+        });
+        <%end%>
+    </script>
+        <%if @user_quest.is_accepted==true%>
+        <button type="submit" class="btn btn-default" onclick="window.location.href='/quests/<%= @quest.id%>/OnIt'" id = "1">
             On it
         </button>
         <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @quest.id%>/InProgress'" id = "2">
@@ -80,25 +109,27 @@
         </button>
     </div>
     <%end%>
-    </p>
-    <%if @quest.is_completed%>
-    <td><font class="label" style="width:20%;">Completed at: </font></td>
-    <td style="width:80%;"><%= @quest.completed_at%></td>
-    <%end%>
-    </p>
+</p>
+<%if @quest.is_completed%>
+<td><font class="label" style="width:20%;">Completed at: </font></td>
+<td style="width:80%;"><%= @quest.completed_at%></td>
+<%end%>
+</p>
 
 </tr>
-<div><%= button_to "Add Tasks", task_path(@quest.id), method: :get, class: "button", style: "width: 20%;float:right;" %></div>
-<div><%= button_to "Edit Quest", edit_quest_path(@quest.id), method: :get, class: "button", style: "width: 20%;float:right;" %></div>
+
+
+<%= button_to "Edit Quest", edit_quest_path(@quest.id), method: :get, class: "button", style: "margin-top: 0.5em;" %>
+
 <% if @current_user.id == @assignee_id and @current_user.id != @assignor_id and @is_accepted == false and @is_rejected == false%>
 <div>
-    <%= button_to "Reject", reject_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "width: 20%;float:right;" %>
+    <%= button_to "Accept", accept_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
 </div>
 <div>
-    <%= button_to "Accept", accept_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "width: 20%;float:right;" %>
+    <%= button_to "Reject", reject_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
 </div>
 <%end%>
 <%if @quest.is_completed == true%>
-<div><%= button_to "Review", review_quest_path(@quest.id), method: :get, class: "button", style: "width: 20%;float:right;" %></div>
+<div><%= button_to "Review", review_quest_path(@quest.id), method: :get, class: "button", style: "margin-top: 0.5em;" %></div>
 <%end%>
 
