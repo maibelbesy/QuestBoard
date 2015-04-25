@@ -113,7 +113,7 @@ skip_before_filter  :verify_authenticity_token
       quest.bounty_points += 50
       quest.save
     end
-    redirect_to quests_path
+    redirect_to quest_path(quest.id)
   end
 
   def accept
@@ -133,8 +133,8 @@ skip_before_filter  :verify_authenticity_token
       notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title}")
       @options = {:channel => "/notifs/#{user_quest.assignor_id}",
                   :message => notif.title,
-                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quests_path}
-      format.html {redirect_to quests_path}
+                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id])}
+      format.html {redirect_to quest_path(params[:id])}
       format.js
     end
     # Connection.where("user_id = ? Or connection_id = ?" @current_user,@current_user)
@@ -196,7 +196,7 @@ skip_before_filter  :verify_authenticity_token
       Quest.assign_non_user @current_user, @quest, params[:quest][:assign_to] if non_user == true
        # quest = Quest.find(@quest.quest_id)
       if params[:photos]
-        puts "hiiiiii"
+
         #===== The magic is here ;)
         params[:photos].each { |photo|
           @quest.quest_images.create(:photo => photo)
@@ -208,8 +208,8 @@ skip_before_filter  :verify_authenticity_token
         user_quest = UsersQuest.find_by(:quest_id => @quest.id)
         notif_user = User.find_by(:id => user_quest.assignee_id)
         if notif_user == nil
-          format.html {redirect_to quests_path}
-          @options = {:redirect => quests_path}
+          format.html {redirect_to quest_path(@quest.id)}
+          @options = {:redirect => quest_path(@quest.id)}
           format.js
           return
         end
@@ -217,12 +217,12 @@ skip_before_filter  :verify_authenticity_token
                                     :title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
         @options = {:channel => "/notifs/#{user_quest.assignee_id}",
                     :message => notif.title,
-                    :count => "#{User.unread_notifications_count notif_user}", :redirect => quests_path}
-        format.html {redirect_to quests_path}
+                    :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(@quest.id)}
+        format.html {redirect_to quest_path(@quest.id)}
         format.js
       else
-        @options = {:redirect => quests_path}
-        format.html {redirect_to quests_path}
+        @options = {:redirect => quest_path(@quest.id)}
+        format.html {redirect_to quest_path(@quest.id)}
         format.js
       end
     end
