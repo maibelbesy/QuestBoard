@@ -13,10 +13,6 @@ Rails.application.routes.draw do
   get '/signup' => 'sessions#register', as: :register
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
-
-  get '/streamer' => 'streamer#index', as: :streamer
-  get 'get_messages' => 'streamer#get_messages'
-  get 'publish' => 'streamer#publish'
   
   # Routes for Quests
 
