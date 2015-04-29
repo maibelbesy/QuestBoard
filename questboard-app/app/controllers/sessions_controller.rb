@@ -28,11 +28,12 @@ class SessionsController < ApplicationController
 
   def register
   end
-
+  # count the number of users that register 
   def register_user
     @user = User.new(params.require(:register).permit(:email, :password, :first_name, :last_name, :username, :gender))
     if @user.save
       log_in @user
+      User.publish_event :sign_ups, ({:sign_ups => 'Number of Users'})
       redirect_to root_path
     else
       render 'register'
