@@ -173,10 +173,4 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-
-#ontroller
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
 end
