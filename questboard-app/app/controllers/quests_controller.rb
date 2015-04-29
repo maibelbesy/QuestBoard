@@ -243,7 +243,7 @@ skip_before_filter  :verify_authenticity_token
     end
     redirect_to quests_path
   end
-
+# tracks the number of quests each gender completes
   def status
     quest = Quest.find(params[:id])
     quest.update(:status=> params[:string])
@@ -255,6 +255,19 @@ skip_before_filter  :verify_authenticity_token
       user = User.find(@current_user.id)
       user.points += 10
       user.save
+      if @current_user.gender
+        gender = 'male'
+      else
+        gender = 'female'
+      end
+      User.publish_event :gender, ({:gender => gender})
+
+      userQuest=UsersQuest.find_by_quest_id(quest.id)
+      if @current_user.id==userQuest.assignor_id && @current_user.id==userQuest.assignee_id
+        User.publish_event :quest_type, ({:self_assigned => 'Self Assigned'})
+      else
+         User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
+      end   
 
     end
     redirect_to quest_path(params[:id])

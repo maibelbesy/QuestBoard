@@ -118,5 +118,14 @@ class User < ActiveRecord::Base
   def google_connected?
     guid.blank?
   end
+  # setting keen api key and then publish the analytics event
+  def self.publish_event col, hash
+    keen = Keen::Client.new(:project_id => '553e50d296773d66ebe3d8a1',
+                        :write_key  => '0c94a97409a33626937e8068934a664b60d136e0531bcb56f3b14e1d83dfe1235ace7cbda2dc5a4e3882a0a25a0b621626909536884b894fa860599420c22ecdcd09a8921aa777217aa46d1432a676c11c14cd2e53c12997c3cde78147e17640d1295ea17002c55a10f631075ed9af05',
+                        :read_key   => '04b1c1d473ea426c9bbdeed886b7dcf5a22efc9a9263a5a79159d3f0791087a6a406a44bf78d88f6a1742d7838d96ea311552dac3cc3edbd17107cc2b7c94b7d58e5c38e9a8f9a610cbae54cfc051c7ea5746ea47d29141146285acf19f6b6c28d33e40e9b84eb2c04da0ead1084e62d',
+                        :master_key => 'CDCE3F5F71725B60AFAD7A6A5262D6DF')
+
+    keen.publish(col, hash)
+  end
 
 end
