@@ -266,7 +266,7 @@ skip_before_filter  :verify_authenticity_token
       if @current_user.id==userQuest.assignor_id && @current_user.id==userQuest.assignee_id
         User.publish_event :quest_type, ({:self_assigned => 'Self Assigned'})
       else
-         User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
+        User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
       end   
 
     end
