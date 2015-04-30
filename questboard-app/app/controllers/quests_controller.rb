@@ -130,10 +130,14 @@ skip_before_filter  :verify_authenticity_token
       @assignor_id.frequency += 1
       @assignor_id.save
       notif_user = User.find_by(:id => user_quest.assignor_id)
-      notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title}")
+      notif = Notification.create(:user_id => user_quest.assignor_id,
+        :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title},
+        :url => quest_path(user_quest.quest_id)")
       @options = {:channel => "/notifs/#{user_quest.assignor_id}",
                   :message => notif.title,
-                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id])}
+                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id]),
+                  :url => quest_path(user_quest.quest_id),
+                  :id => notif.id}
       format.html {redirect_to quest_path(params[:id])}
       format.js
     end
@@ -145,10 +149,14 @@ skip_before_filter  :verify_authenticity_token
       user_quest = UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
       # redirect_to quests_path
       notif_user = User.find_by(:id => user_quest.assignor_id)
-      notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has rejected your assigned quest: #{Quest.find(params[:id]).title}")
+      notif = Notification.create(:user_id => user_quest.assignor_id,
+        :title => "#{@current_user.first_name} #{@current_user.last_name} has rejected your assigned quest: #{Quest.find(params[:id]).title}",
+        :url => quest_path(user_quest.quest_id))
       @options = {:channel => "/notifs/#{user_quest.assignor_id}",
                   :message => notif.title,
-                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quests_path}
+                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quests_path,
+                  :url => quest_path(user_quest.quest_id),
+                  :id => notif.id}
       format.html {redirect_to quests_path}
       format.js
     end
@@ -214,10 +222,13 @@ skip_before_filter  :verify_authenticity_token
           return
         end
         notif = Notification.create(:user_id => user_quest.assignee_id,
-                                    :title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}")
+                                    :title => "#{@current_user.first_name} #{@current_user.last_name} has assigned you a quest: #{@quest.title}",
+                                    :url => quest_path(@quest.id))
         @options = {:channel => "/notifs/#{user_quest.assignee_id}",
                     :message => notif.title,
-                    :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(@quest.id)}
+                    :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(@quest.id),
+                    :url => quest_path(@quest.id),
+                    :id => notif.id}
         format.html {redirect_to quest_path(@quest.id)}
         format.js
       else

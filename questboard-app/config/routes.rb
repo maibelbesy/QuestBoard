@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   # Routes for Notifications
   get '/notifications' => 'notifications#index', as: :notifications
+  post '/notifications' => 'notifications#seen'
 
   # Routes for the account web pages
   
