@@ -30,7 +30,6 @@ class User < ActiveRecord::Base
 
     puts "AUTH------------#{auth.info.email}"
     puts "AUTH------------#{auth}"
-    puts "AUTH------------#{auth.credentials}"
 
     user = self.find_by_id(users.id)
     user.provider = auth.provider

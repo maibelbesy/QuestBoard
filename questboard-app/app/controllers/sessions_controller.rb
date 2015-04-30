@@ -22,11 +22,12 @@ class SessionsController < ApplicationController
  # gets the tokens and displays all quests created previously
   def google_create
     auth = env["omniauth.auth"]
+    puts "HASH ---------------- #{auth}"
     if(@current_user == nil)
       user = User.find_by(:guid => auth.uid)
       if (user == nil)
         email = auth.info.email
-        picture = auth.info.picture
+        picture = auth.info.image
         token = auth.credentials.token
         id = auth.uid
         prov = auth.provider
@@ -38,12 +39,13 @@ class SessionsController < ApplicationController
         log_in user
       end
     else
-      if @current_user.guid.blank?
-        user = User.from_omniauth(auth, @current_user)
-        user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
-        quest = Quest.where(:id => user_quest, :gid => nil)
-        quest.each do |q|
-          Quest.add_calendar_event q, @current_user
+      user = User.from_omniauth(auth, @current_user)
+        if @current_user.guid.blank?
+          user = User.from_omniauth(auth, @current_user)
+          user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
+          quest = Quest.where(:id => user_quest, :gid => nil)
+          quest.each do |q|
+            Quest.add_calendar_event q, @current_user
         end
       end
     end
