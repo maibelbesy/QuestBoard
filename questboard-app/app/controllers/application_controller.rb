@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
 
   private
   def authorize_user
-    redirect_to login_path and return if !logged_in? && (request.path != "/login" && request.path != "/signup")
+    puts "PATH -------- #{request.path}"
+     redirect_to login_path and return if !logged_in? && (request.path != "/login" && request.path != "/signup" && request.path != "/auth/google_oauth2/callback")
     current_user
   end
 end
