@@ -247,3 +247,33 @@ D, [2015-04-25T00:51:35.064116 #17392] DEBUG -- pubnub: Setting default values
 D, [2015-04-25T00:51:35.064172 #17392] DEBUG -- pubnub: 
 
 Created new Pubnub::Client instance
+D, [2015-04-27T16:58:02.705415 #28073] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-27T16:58:02.724130 #28073] DEBUG -- pubnub: Setting default values
+D, [2015-04-27T16:58:02.724274 #28073] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-04-27T16:58:21.721682 #28087] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-27T16:58:21.722013 #28087] DEBUG -- pubnub: Setting default values
+D, [2015-04-27T16:58:21.722150 #28087] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-04-27T16:58:35.207944 #28101] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-27T16:58:35.208326 #28101] DEBUG -- pubnub: Setting default values
+D, [2015-04-27T16:58:35.208498 #28101] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-04-27T17:20:05.358086 #2343] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-27T17:20:05.376885 #2343] DEBUG -- pubnub: Setting default values
+D, [2015-04-27T17:20:05.377051 #2343] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-04-28T20:10:57.730525 #16540] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-04-28T20:10:57.741701 #16540] DEBUG -- pubnub: Setting default values
+D, [2015-04-28T20:10:57.741868 #16540] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
+D, [2015-05-01T20:35:10.069481 #12757] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-05-01T20:35:10.091401 #12757] DEBUG -- pubnub: Setting default values
+D, [2015-05-01T20:35:10.091599 #12757] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance

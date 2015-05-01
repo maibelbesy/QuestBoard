@@ -2,12 +2,14 @@ class Quest < ActiveRecord::Base
   require 'mandrill'
   require 'pp'
 
+  has_many :comments
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
   has_many :quest_images, :dependent => :destroy
   accepts_nested_attributes_for :quest_images, :reject_if => lambda { |t| t['quest_image'].nil? }
 
   has_many :quest_videos , :dependent => :destroy
-
+  validates :title, presence: true
+  validates :description, presence: true
   def self.create_general_quest(args, user, reminderD)
     if args[:assign_to].blank?
       args.delete :assign_to

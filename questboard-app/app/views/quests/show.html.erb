@@ -1,28 +1,293 @@
     
-    
-    <tr style="padding-bottom: 1em">
+<!-- Project Accordions -->
+<!-- Accordion 1 -->
+<div class="row col-sm-12">
+ <div class="panel-group" id="accordionrnd_1">
+   <!-- Accordion header -->
+   <div class="panel top no-icon">
+     <div class="panel-heading">
+      <div class="row col-md-12">
 
-        <td style="width:80%;" ><h1><%= @quest.title%></h1></td>
+       <div class="col-xs-6">
+         <h4><%=@Quest.title%></h4>
+         <div class="col-xs-6">
+          <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-gray"  role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width:0%" id="pro-bar"></div>
+          </div> 
+        </div>
+      </div>
+      <div class="tools pull-right text-transparent">
+        <a href="#"><i class="icon-refresh"></i></a>
+        <a href="#"><i class="icon-trash"></i></a>
+        <a href="#"><i class="icon-star"></i></a>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div><!-- / Accordion header -->
+<!-- / project description -->
+<div class="panel">
+  <div class="panel-heading task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1b">
+     <i class="icon-pencil text-transparent"></i>
+     &nbsp;&nbsp;Description
+   </a>
+ </div>
+ <div id="project1b" class="accord-collapse panel-collapse collapse">
+  <div class="panel-body">
+   <%= @Quest.description%>
+ </div>
+</div>
+</div><!-- / project description -->
+<!-- notes -->
+<div class="panel">
+  <div class="panel-heading brand-highlight task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1c">
+     <i class="icon-file-alt text-transparent"></i>
+     &nbsp;&nbsp;Details&nbsp;&nbsp;&nbsp;&nbsp;
+   </a>
+ </div>
+ <div id="project1c" class="accord-collapse panel-collapse collapse">
+  <div class="panel-body">
+    <%= @Quest.bounty%>
+  </br>
+  Due Date:<%= @Quest.due_date%>
+</br>
+Assigned to:<%=@name.username%>
+</br>
+<%if @Quest.is_completed%>
+
+<%= @Quest.completed_at%>
+<%end%>
+</div>
+</div>
+</div><!-- notes -->
+<!-- bottom panel -->
+
+<div class="panel">
+  <div class="panel-heading task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1d">
+     <i class="icon-file-alt text-transparent"></i>
+     &nbsp;&nbsp;Media&nbsp;&nbsp;&nbsp;&nbsp;
+   </a>
+ </div>
+ <div id="project1d" class="accord-collapse panel-collapse collapse">
+  <div class="panel-body">
+    <%if QuestVideo.find_by_quest_id(@Quest.id).url != ""%>
+    <iframe width="560" height="349" src="<%= "http://www.youtube.com/embed/"+@video %>"></iframe>
+  </p>
+  <%end%>
+  <td><font  style="width:20%;">Images </font></td>
+  <% @photos.each do |pic| %>
+  <%= link_to image_tag(pic.photo.url (:small)), pic.photo.url %>
+  <%end%>
+</div>
+</div>
+</div>
+
+<div class="panel">
+  <div class="panel-heading brand-highlight task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1f">
+     <i class="icon-file-alt text-transparent"></i>
+     &nbsp;&nbsp;Task&nbsp;&nbsp;&nbsp;&nbsp;
+   </a>
+ </div>
+ <div id="project1f" class="accord-collapse panel-collapse collapse">
+  <div class="panel-body">
+    <% @tasks.each do |task| %>
+    <tr style="padding-bottom: 1em">
+        <td><font  style="width:20%;">-<%= task.title%></font></td>
+        </p>
+        <%if task.user == @current_user.id%>
+        <td style=""><%= button_to "X", delete_task_path(task.id), method: :delete%></p></td>
+        <%end%>
+    </tr>
+    <%end%>
+    <tr>
+    <%if not @Quest.status == "Done"%>
+       <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample" style="background-color: gray; color:white;">
+            Add Task
+            </button>
+    <%end%>
+    </td>
+    <div class="collapse" id="collapseExample2" style="padding-bottom: 1em">
+    <%= form_for :task, :url => add_task_path(params[:id]), html: { multipart: true } do |f| %>
+        <table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;">
+            <tr style="padding-bottom: 1em">
+                <td><font  style="width:20%;">Task: </font></td>
+                <td style="width:80%;"><%= f.text_field :title, placeholder: "Enter Task",id: '5'%></td>
+            </tr>
+
+            <tr><td></td><td colspan="1"><%= f.submit "Add", name: 'lol' %></td></tr>
+        </table>
+    <% end %>
+    </div>
+</div>
+</div>
+
+
+<div class="panel bottom">
+  <div class="panel-heading task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1e">
+     <i class="icon-user text-transparent"></i>
+     &nbsp;&nbsp;Options
+   </a>
+ </div>
+
+
+   <div id="project1e" class="accord-collapse panel-collapse collapse">
+  <%= button_to "Edit Quest", edit_quest_path(@Quest.id), method: :get, class: "button", style: "margin-top: 0.5em;" %>
+
+  <% if @current_user.id == @assignee_id and @current_user.id != @assignor_id and @is_accepted == false and @is_rejected == false%>
+
+  <%= button_to "Accept", accept_quest_path(@Quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
+
+
+  <%= button_to "Reject", reject_quest_path(@Quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
+
+  <%end%>
+  <%if @Quest.is_completed == true%>
+  <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample" style="background-color: gray; color:white;">
+            Add Review
+            </button>
+             <div class="collapse" id="collapseExample3" style="padding-bottom: 1em">
+    <%= form_for :quest, :url => review_quest_path(params[:id]) do |f| %>
+
+<font >Review: </font>
+				<%= f.text_area :review, placeholder: "Enter Review about the person" %>
+				
+				<%= f.radio_button :points, 1 %>
+        <font >1</font>
+        <%= f.radio_button :points, 2 %>
+        <font >2</font>
+         <%= f.radio_button :points, 3 %>
+        <font>3</font>
+         <%= f.radio_button :points, 4 %>
+        <font >4</font>
+         <%= f.radio_button :points, 5 %>
+        <font >5</font>
+
+        <div><%= button_to "Submit", add_review_quest_path(params[:id]), method: :post %></div>
+				
+			
+				
+<!-- <button type="button" class="btn btn-default">1</button>
+<button type="button" class="btn btn-primary">2</button>
+<button type="button" class="btn btn-success">3</button>
+<button type="button" class="btn btn-info">4</button>
+<button type="button" class="btn btn-warning">5</button> -->
+
+<% end %>
+
+    </div>
+  
+  <%end%>
+  <br>
+  <div class="btn-group" role="group" aria-label="...">
+    
+
+    <%if @user_quest.is_accepted==true and @assignee_id == @current_user.id %>
+    <button type="submit" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/OnIt'" id = "1">
+      On it
+    </button>
+    <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/InProgress'" id = "2">
+      in Progress
+    </button>
+    <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/Done'" id = "3">
+      Done
+    </button>
+    <%end%>
+</div>
+</div>
+</div>
+<div class="panel">
+  <div class="panel-heading brand-highlight task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1g">
+     <i class="icon-file-alt text-transparent"></i>
+     &nbsp;&nbsp;Comments&nbsp;&nbsp;&nbsp;&nbsp;
+   </a>
+ </div>
+ <div id="project1g" class="accord-collapse panel-collapse collapse">
+  <div class="panel-body">
+    <h3>Comments</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_name %></strong>
+    <br />
+    <p><%= comment.body %></p>
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  </div>
+<% end %>
+<%= render 'comments/form' %>
+</div>
+</div>
+</div>
+
+</table>
+</div>
+
+<!--<h3>Comments</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_name %></strong>
+    <br />
+    <p><%= comment.body %></p>
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  </div>
+<% end %>
+<%= render 'comments/form' %>-->
+
+
+<script><%if @Quest.status == "OnIt" %>
+
+
+
+  $("#1").prop("disabled",true);
+            //  document.getElementById("1").disabled=true;
+            $("#pro-bar").css("width", "33%");
+
+            <% elsif @Quest.status == "InProgress"%>
+
+            document.getElementById("2").disabled=true;
+            $("#pro-bar").css("width", "66%");
+
+            <% elsif @Quest.status == "Done"%>
+
+            document.getElementById("3").disabled=true;
+            document.getElementById("2").disabled=true;
+            document.getElementById("1").disabled=true;
+            $("#pro-bar").css("width", "100%");
+
+            <%end%>
+
+          </script>
+          <!-- /bottom  panel -->
+
+        </div>
+      </div>
+<!--     <tr style="padding-bottom: 1em">
+
+        <td style="width:80%;" ><h1><%= @Quest.title%></h1></td>
     </p>
 
-    <td><font class="label" style="width:20%;">Description: </font></td>
-    <td style="width:80%;"><font class="label"><%= @quest.description%></font></td>
+    <td><font  style="width:20%;">Description: </font></td>
+    <td style="width:80%;"><font ><%= @Quest.description%></font></td>
 </p>
 </p>
-<td><font class="label" style="width:20%;">Bounty: </font></td>
-<td style="width:80%;"><%= @quest.bounty%></td>
+<td><font  style="width:20%;">Bounty: </font></td>
+<td style="width:80%;"><%= @Quest.bounty%></td>
 </p>
-<td><font class="label" style="width:20%;">Due date: </font></td>
-<td style="width:80%;"><%= @quest.due_date%></td>
+<td><font  style="width:20%;">Due date: </font></td>
+<td style="width:80%;"><%= @Quest.due_date%></td>
 </p>
-<%if @quest.is_completed%>
-<td><font class="label" style="width:20%;">Completed at: </font></td>
-<td style="width:80%;"><%= @quest.completed_at%></td>
+<%if @Quest.is_completed%>
+<td><font  style="width:20%;">Completed at: </font></td>
+<td style="width:80%;"><%= @Quest.completed_at%></td>
 <%end%>
 </p>
 
-<td><font class="label" style="width:20%;">Assgined to:</font></td>
-<font class="label" style="width:20%;"><%=@name.username%></font>
+<td><font  style="width:20%;">Assgined to:</font></td>
+<font  style="width:20%;"><%=@name.username%></font>
 </p>
 <%if @user_quest.is_accepted==true%>
 <td><font size="2" class="label label-info">Accepted</font></td>
@@ -39,7 +304,7 @@
   </div>
 </div>
     <td>
-    <%if not @quest.status == "Done"%>
+    <%if not @Quest.status == "Done"%>
        <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="background-color: gray; color:white;">
             Add Task
             </button>
@@ -49,7 +314,7 @@
     <%= form_for :task, :url => add_task_path(params[:id]), html: { multipart: true } do |f| %>
         <table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;">
             <tr style="padding-bottom: 1em">
-                <td><font class="label" style="width:20%;">Task: </font></td>
+                <td><font  style="width:20%;">Task: </font></td>
                 <td style="width:80%;"><%= f.text_field :title, placeholder: "Enter quest title", class: "input", style: "width:100%" %></td>
             </tr>
 
@@ -60,7 +325,7 @@
     <br>
     <% @tasks.each do |task| %>
     <tr style="padding-bottom: 1em">
-        <td><font class="label" style="width:20%;">-<%= task.title%></font></td>
+        <td><font  style="width:20%;">-<%= task.title%></font></td>
         </p>
         <%if task.user == @current_user.id%>
         <td style=""><%= button_to "X", delete_task_path(task.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
@@ -69,67 +334,38 @@
     <% end %>
 <br>
 
-<%if QuestVideo.find_by_quest_id(@quest.id).url != ""%>
+<%if QuestVideo.find_by_quest_id(@Quest.id).url != ""%>
 <iframe width="560" height="349" src="<%= "http://www.youtube.com/embed/"+@video %>"></iframe>
 </p>
-<td><font class="label" style="width:20%;">Images </font></td>
+<td><font  style="width:20%;">Images </font></td>
 <%end%>
 <% @photos.each do |pic| %>
 <%= link_to image_tag(pic.photo.url (:small)), pic.photo.url %>
 <% end %>
 <div class="btn-group" role="group" aria-label="...">
-    <script><%if @quest.status == "OnIt" %>
-        $(function() {
-            document.getElementById("1").disabled=true;
-            $("#pro-bar").css("width", "33%");
-        });
-        <% elsif @quest.status == "InProgress"%>
-        $(function() {
-            document.getElementById("2").disabled=true;
-            $("#pro-bar").css("width", "66%");
-        });
-        <% elsif @quest.status == "Done"%>
-        $(function() {
-            document.getElementById("3").disabled=true;
-            document.getElementById("2").disabled=true;
-            document.getElementById("1").disabled=true;
-            $("#pro-bar").css("width", "100%");
-        });
-        <%end%>
-    </script>
+    
         <%if @user_quest.is_accepted==true%>
-        <button type="submit" class="btn btn-default" onclick="window.location.href='/quests/<%= @quest.id%>/OnIt'" id = "1">
+        <button type="submit" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/OnIt'" id = "1">
             On it
         </button>
-        <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @quest.id%>/InProgress'" id = "2">
+        <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/InProgress'" id = "2">
             in Progress
         </button>
-        <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @quest.id%>/Done'" id = "3">
+        <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/Done'" id = "3">
             Done
         </button>
     </div>
     <%end%>
 </p>
-<%if @quest.is_completed%>
-<td><font class="label" style="width:20%;">Completed at: </font></td>
-<td style="width:80%;"><%= @quest.completed_at%></td>
+<%if @Quest.is_completed%>
+<td><font  style="width:20%;">Completed at: </font></td>
+<td style="width:80%;"><%= @Quest.completed_at%></td>
 <%end%>
 </p>
 
 </tr>
+-->
 
 
-<%= button_to "Edit Quest", edit_quest_path(@quest.id), method: :get, class: "button", style: "margin-top: 0.5em;" %>
 
-<% if @current_user.id == @assignee_id and @current_user.id != @assignor_id and @is_accepted == false and @is_rejected == false%>
-<div>
-    <%= button_to "Accept", accept_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
-</div>
-<div>
-    <%= button_to "Reject", reject_quest_path(@quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
-</div>
-<%end%>
-<%if @quest.is_completed == true%>
-<div><%= button_to "Review", review_quest_path(@quest.id), method: :get, class: "button", style: "margin-top: 0.5em;" %></div>
-<%end%>
 

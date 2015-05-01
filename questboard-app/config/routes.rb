@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get '/quests/new' => 'quests#new', as: :new_quest
   get '/quests/pending_quests' => 'quests#pending_quests', as: :pending_quests
   get '/quests/general_quests' => 'quests#general_quests', as: :general_quests
+  get '/quests/my_quests' => 'quests#my_quests', as: :my_quests
+  get '/quests/assigned_quests' => 'quests#assigned_quests', as: :assigned_quests
   get '/quests/:id' => 'quests#show', as: :quest
   get '/quests/edit/:id' => 'quests#edit', as: :edit_quest
   post '/quests/accept/:id' => 'quests#accept', as: :accept_quest
@@ -37,7 +39,7 @@ Rails.application.routes.draw do
   get '/quests/review/:id' => 'quests#review', as: :review_quest
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
 
-  
+      resources :comments
 
   # Routes for Notifications
   get '/notifications' => 'notifications#index', as: :notifications
