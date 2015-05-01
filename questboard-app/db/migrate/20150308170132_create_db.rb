@@ -83,6 +83,7 @@ class CreateDb < ActiveRecord::Migration
 
     create_table :notifications do |t|
       t.string "title", default: "Untitled notification"
+      t.string "url"
       t.boolean "is_seen", default: false
       t.belongs_to :user, index: true
 

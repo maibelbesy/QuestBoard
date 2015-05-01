@@ -465,6 +465,7 @@ a:visited {
     padding: 15px;
     overflow: auto;
     opacity: 0;
+    cursor: pointer;
 }
 
 .notifs-message {
