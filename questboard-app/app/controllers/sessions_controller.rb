@@ -110,7 +110,7 @@ class SessionsController < ApplicationController
     message = {
       :subject=> "[QuestBoard] Reset Password",
       :from_name=> "QuestBoard",
-      :text => "Hi ,\r\n\r\nyou forgot your password \r\n #{domain}/users/reset_password?email=#{user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
+      :text => "Hi,\r\n\r\nYou requested to reset your password. Click on the link below to receive your new password\r\n #{domain}/users/reset_password?email=#{user.email}&token=#{token}\r\n\r\nIf it wasn't you, please disregard this email.\r\n\r\nRegards,\r\nThe team",
       :to=>[
         {
           :email=> "#{params[:sessions][:email]}",
@@ -141,7 +141,7 @@ class SessionsController < ApplicationController
        message = {
       :subject=> "[QuestBoard] Password",
       :from_name=> "QuestBoard",
-      :text => "Hi ,\r\n\r\nyour password \r\n #{password}\r\n\r\nRegards,\r\nThe team",
+      :text => "Hi ,\r\n\r\nYour new password is:\r\n #{password}\r\n\r\nYour old password is no longer valid.\r\n\r\nRegards,\r\nThe team",
       :to=>[
         {
           :email=> "#{user.email}",
