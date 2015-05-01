@@ -89,9 +89,6 @@ class SessionsController < ApplicationController
   def forgot_password
      m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
      user = User.find_by(:email => params[:sessions][:email])
-    puts "NAME-------- #{user.first_name}"
-    puts " EMAIL -------- #{params[:sessions][:email]}"
-
      redirect_to login_path and return if user.nil? 
      domain = "http://localhost:3000"
      token = Token.generate_random
