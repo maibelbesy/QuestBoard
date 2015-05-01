@@ -1,0 +1,15 @@
+<div style="overflow: auto">
+	<header class="header-title" style="float:left;">Notifications</header>
+	<!-- <a href="#" class="circular-button" style="float: right">+</a> -->
+</div>
+<br>
+<div>
+	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
+		<% @notifications.each do |notif| %>
+			<tr style="padding-bottom: 1em; height: 3em;" class="quest" id="<%= notif.id %>">
+				<!-- <td style="width: 60%;border-bottom: 1px solid;"><p class="label"><%= notif.title %></p></td> -->
+				<td style="width: 60%;border-bottom: 1px solid;"><p class="label"><%= link_to notif.title, notif.url %></p></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
