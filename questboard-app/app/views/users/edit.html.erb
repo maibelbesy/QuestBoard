@@ -1,19 +1,65 @@
-<% provide(:title, "Edit user") %> <h1>Update your profile</h1>
-
+<div class="col-md-10" style="width:90%;border-collapse: separate;border-spacing: 1em 0em;"> 
+<% provide(:title, "Edit user") %> <h1 align="center">Update your profile</h1>
+<br>
+</div>
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<%= form_for(@user) do |f| %>
+                <table class="table table-hover table-striped table-content" style="width:90%;border-collapse: separate;border-spacing: 0em 0em;" >
+                
+                <tr>
+                <td><h4>  Email: </h4> </td>
+                <td ><%= f.email_field :email, placeholder: "Enter New Email", class: "input", style: "width:100%" %></td>
+                <td></td>
+                </tr>
+<!-- 		<%= f.email_field :email, placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
+                <tr>
+                <td><h4>  Old Password: </h4> </td>
+                <td ><%= password_field_tag :current_password, params[:current_password], placeholder: "Enter Old Password", class: "input", style: "width:100%" %></td>
+                <td></td>
+                </tr>
+                
+		<!--<%= password_field_tag :current_password, params[:current_password], placeholder: "Old password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
+		
+                <tr>
+                <td><h4>  New Password: </h4> </td>
+                <td ><%= f.password_field :password, placeholder: "Create a new password", class: "input", style: "width:100%" %></td>
+                <td></td>
+                </tr>
+		
+<!-- 		<%= f.password_field :password, placeholder: "Create a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
+		
+                <tr>
+                <td><h4>  Confirm Password: </h4> </td>
+                <td ><%= f.password_field :password_confirm, placeholder: "Confirm a new password", class: "input", style: "width:100%" %></td>
+                <td></td>
+                </tr>
+		
 
-		<%= f.email_field :email, class: "login-input", placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
+		
+                <tr>
+                <td><h4>  Confirm Password: </h4> </td>
+                <td ><%= f.text_field :first_name, placeholder: "Enter your first name", class: "input", style: "width:100%" %></td>
+                <td></td>
+                </tr>
+		
+<!-- 		<%= f.text_field :first_name, placeholder: "Enter your first name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
 
-		<%= password_field_tag :current_password, params[:current_password], class: "login-input", placeholder: "Old password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-		<%= f.password_field :password, class: "login-input", placeholder: "Create a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-		<%= f.password_field :password_confirmation, class: "login-input", placeholder: "Confirm a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-		<%= f.text_field :first_name, class: "login-input", placeholder: "Enter your first name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
-		<%= f.text_field :last_name, class: "login-input", placeholder: "Enter your last name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %>
+                <tr>
+                <td><h4>  Confirm Password: </h4> </td>
+                <td ><%= f.text_field :last_name, placeholder: "Enter your last name", class: "input", style: "width:100%" %></td>
+                <td></td>
+                </tr>
 
-		<%= f.submit "Save changes", class: "login-button", style: "margin-top: 0.5em;" %>
-		<% end %>
+<!-- 		<%= f.text_field :last_name, placeholder: "Enter your last name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
+
+<!-- 		<%= f.submit "Save changes", class: "login-button", style: "margin-top: 0.5em;" %> -->
+		</table>
+
+		<div class="col-md-10" style="width:90%;border-collapse: separate;border-spacing: 0em 1em;">
+		<%= f.submit "Save changes" , class: "button btn btn-primary btn-lg btn-block" %>
+		</div>
+            <% end %>
 	</div>
 </div>
 </div>
