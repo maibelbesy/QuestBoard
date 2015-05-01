@@ -154,9 +154,9 @@ Assigned to:<%=@name.username%>
     <%= form_for :quest, :url => review_quest_path(params[:id]) do |f| %>
 
 <font >Review: </font>
-				<%= f.text_area :review, placeholder: "Enter Review about the person" %>
-				
-				<%= f.radio_button :points, 1 %>
+        <%= f.text_area :review, placeholder: "Enter Review about the person" %>
+        
+        <%= f.radio_button :points, 1 %>
         <font >1</font>
         <%= f.radio_button :points, 2 %>
         <font >2</font>
@@ -168,9 +168,9 @@ Assigned to:<%=@name.username%>
         <font >5</font>
 
         <div><%= button_to "Submit", add_review_quest_path(params[:id]), method: :post %></div>
-				
-			
-				
+        
+      
+        
 <!-- <button type="button" class="btn btn-default">1</button>
 <button type="button" class="btn btn-primary">2</button>
 <button type="button" class="btn btn-success">3</button>

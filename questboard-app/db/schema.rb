@@ -24,16 +24,9 @@ ActiveRecord::Schema.define(version: 20150331171642) do
   add_index "connections", ["connection_id"], name: "index_connections_on_connection_id"
   add_index "connections", ["user_id"], name: "index_connections_on_user_id"
 
-  create_table "messages", force: :cascade do |t|
-    t.string   "author"
-    t.text     "message"
-    t.string   "timetoken"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.string   "title",      default: "Untitled notification"
+    t.string   "url"
     t.boolean  "is_seen",    default: false
     t.integer  "user_id"
     t.datetime "created_at"

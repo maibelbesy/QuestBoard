@@ -22,7 +22,7 @@
                 
                 <!-- Keep all page content within the page-content-wrapper -->
                 <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
- 				<!-- page content header -->
+                <!-- page content header -->
                     <div class="row add-padding">
                             <div class="pull-left">
                                 <h1>Hello, <%=@current_user.first_name%></h1>
@@ -36,11 +36,11 @@
             <br><br>
                             <!--row 1, col 2-->
                             <div class="col-md-3 col-sm-6 daily-stats">
-                             	<div class="panel" >
+                                <div class="panel" >
                                 <a href="/quests/my_quests">
-                               		<div class="panel-body brand-warning-bg text-inverse">
+                                    <div class="panel-body brand-warning-bg text-inverse">
                                         <div class="pull-left">
-                                        	<div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-tasks"></i></div></div>							
+                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-tasks"></i></div></div>                           
                                         </div>
                                         <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).count%></span>
                                             <div class="stat text-transparent">
@@ -49,7 +49,7 @@
                                     </div>
                                     </a>
                                     <div class="panel-footer white-bg">
-                                    	
+                                        
                                                                         
                                 
                             </div> 
@@ -60,11 +60,11 @@
                             </div><!--/ row 1, col 2-->
                             <!--row 1, col 3-->
                             <div class="col-md-3 col-sm-6 daily-stats">
-                            	<div class="panel">
+                                <div class="panel">
                                 <a href="/quests/general_quests">
-                               		<div class="panel-body brand-primary-bg text-inverse" >
+                                    <div class="panel-body brand-primary-bg text-inverse" >
                                         <div class="pull-left">
-                                        	<div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-briefcase"></i></div></div>							
+                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-briefcase"></i></div></div>                           
                                         </div>
                                         <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user).count%></span>
                                             <div class="stat text-transparent">
@@ -73,17 +73,17 @@
                                     </div>
                                     </a>
                                     <div class="panel-footer white-bg">
-                                    	
+                                        
                                     </div>
                                 </div>
                             </div><!--/ row 1, col 3-->
                             <!--row 1, col 4-->
                             <div class="col-md-3 col-sm-6 daily-stats">
-                            	<div class="panel">
+                                <div class="panel">
                                 <a href="/quests/pending_quests">
-                               		<div class="panel-body brand-info-bg text-inverse">
+                                    <div class="panel-body brand-info-bg text-inverse">
                                         <div class="pull-left">
-                                        	<div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-bullhorn"></i></div></div>							
+                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-bullhorn"></i></div></div>                            
                                         </div>
                                         <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).count%></span>
                                             <div class="stat text-transparent">
@@ -121,31 +121,31 @@
                      <div class="col-md-8 no-padding">
                             <!--inner row 1-->
                             <div class="row">
-                            	<div class="col-md-6 no-padding">
+                                <div class="col-md-6 no-padding">
                                 
                                 
                                 </div>
-    							<div class="col-md-6 no-padding">
+                                <div class="col-md-6 no-padding">
                                     
                                 </div>
                             </div>
                             
                             <!--inner row 2-->
-							<div class="row">
+                            <div class="row">
                             
                                     
                             </div><!--/row 2--> 
                             <!--row 3-->
-							
+                            
                             </div><!--/row 3-->   
                             <!--row 4-->
-							<div class="row">
+                            <div class="row">
                             
                         </div>
                         <!-- / stats & Updates Col 1-->
                         <!-- Stats & Updates Col 2-->
-                       	<div class="col-md-4">
-                        	
+                        <div class="col-md-4">
+                            
                                         
                                          <!-- Calendar-->
                                          <div id="calendar">
@@ -162,7 +162,7 @@
                                          </div><!-- / calendar -->
                                          
                         </div><!-- / stats & Updates Col 2-->
- 				
+                
                     
 
 
