@@ -21,7 +21,14 @@ class Quest < ActiveRecord::Base
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
     end
     if (args[:remind_to] == 'true')
-      Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> self.date_convert(reminderD))
+         Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> self.date_convert(reminderD))
+    else
+      due_date= Quest.find_by_id(quest.id).pluck(:due_date)
+      date=due_date.to_date()
+      ##due_date.strftime("%d-%m-%Y") - DateTime.now.strftime("%d-%m-%Y") > 1.days
+      if(due_date.to_date()- Date.now > 1.day)
+        Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> due_date)
+      end
     end
     if not user.google_connected?
       self.add_calendar_event quest, user
