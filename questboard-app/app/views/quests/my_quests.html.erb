@@ -4,11 +4,12 @@
                <!-- page content header -->
                     <div class="row add-padding">
                             <div class="pull-left">
-                                <h1>General Quests</h1>
+                                <h1>My Quests</h1>
                             </div>
+<br><br><br>
                     </div><!-- / page content header -->
                     <!--Content-->
-                    <br>
+                    
                     <!-- Row 2 -->
                     <div class="row col-lg-12">
                           <div class="panel panel-white-solid">
@@ -31,25 +32,22 @@
                                                         <tr>
                                                             <td><%= link_to "#{quest.title}", quest_path(quest.id), style: "margin-bottom: 0.5em;" %></td>
                                                             <td><span class="label label-inverse label-md"><%= quest.status%></span></td>
-                                                            
-<!--                                                            <td>
+                                                           
+                                                             <td> 
                                                                 <div class="btn-group">
                                                                       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                                                         Action <span class="caret"></span>
                                                                       </button>
                                                                       <ul class="dropdown-menu" role="menu">
-                                                                        <li><a href="#">Action</a></li>
-                                                                        <li><a href="#">Another action</a></li>
-                                                                        <li><a href="#">Something else here</a></li>
-                                                                        <li class="divider"></li>
-                                                                        <li><a href="#">Separated link</a></li>
+                                                                        <li><%=link_to "Delete", delete_quest_path(quest.id), method: :delete%></li>
+                                                                        <li><%=link_to "Edit", edit_quest_path(quest.id), method: :get %></li>
                                                                       </ul>
                                                                     </div>
-                                                            </td>-->
+                                                            </td>
 
                                                             <td>
                                                             <%if quest.status == "OnIt"%>
-                                                            	<div class="progress progress-striped active">
+                                                              <div class="progress progress-striped active">
                                                                   <div class="progress-bar progress-bar-gray "  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
                                                                     <span class="sr-only"> Complete</span>
                                                                   </div>
@@ -69,7 +67,6 @@
                                                                 </div>
                                                            </td>
                                                         </tr>
-
                                                         
                                                         <%end%>
                                                         

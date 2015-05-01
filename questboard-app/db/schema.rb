@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150429170144) do
 
   create_table "notifications", force: :cascade do |t|
     t.string   "title",      default: "Untitled notification"
+    t.string   "url"
     t.boolean  "is_seen",    default: false
     t.integer  "user_id"
     t.datetime "created_at"

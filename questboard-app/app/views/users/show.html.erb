@@ -1,6 +1,7 @@
 <div id="w">
   <div id="content" class="clearfix">
-    <%= image_tag("avatar.png", :alt => "avatar feed") %>
+    <%= image_tag("avatar.png", :alt => "avatar feed") if @member.photo.blank? %>
+    <%= image_tag("#{@member.photo}", :alt => "avatar feed") if not @member.photo.blank? %>
     <h1><%= "#{@member.first_name} #{@member.last_name}" %></h1>
 
     <nav id="profiletabs">

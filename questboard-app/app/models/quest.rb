@@ -10,6 +10,10 @@ class Quest < ActiveRecord::Base
   has_many :quest_videos , :dependent => :destroy
   validates :title, presence: true
   validates :description, presence: true
+
+
+  #creates a new quest
+
   def self.create_general_quest(args, user, reminderD)
     if args[:assign_to].blank?
       args.delete :assign_to
@@ -22,8 +26,14 @@ class Quest < ActiveRecord::Base
       id = users.id if users != nil
       UsersQuest.create(:assignor_id => user.id, :assignee_id=>id, :quest_id => quest.id)
     end
+    due_date = Quest.find_by_id(quest.id).due_date
     if (args[:remind_to] == 'true')
-      Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> self.date_convert(reminderD))
+         Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> self.date_convert(reminderD))
+    else
+       due_date= quest.due_date
+        if((due_date - DateTime.now) >= 2.days) # flag
+          Reminder.create(:user_id=>user.id, :quest_id=> quest.id,:reminder=> (due_date - 2.days).strftime("%d-%m-%Y %H:%M"))
+         end
     end
     if not user.google_connected?
       self.add_calendar_event quest, user
@@ -31,6 +41,7 @@ class Quest < ActiveRecord::Base
     quest
   end
 
+  #Sends an email containing the assigned quest to non users
   def self.assign_non_user(assignor, quest, assignee)
     m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
     message = {
@@ -49,7 +60,7 @@ class Quest < ActiveRecord::Base
     sending = m.messages.send message
   end
 
-
+  #aggregates date data
   def self.date_convert (reminderD)
     DateTime.new(reminderD["reminder(1i)"].to_i,
                  reminderD["reminder(2i)"].to_i,
@@ -58,6 +69,7 @@ class Quest < ActiveRecord::Base
                  reminderD["reminder(5i)"].to_i)
   end
 
+  #sends email reminders to users
   def self.reminders
     @reminders_all = Reminder.all
     date = DateTime.now.utc.strftime("%d-%m-%Y %H:%M")
@@ -90,10 +102,7 @@ class Quest < ActiveRecord::Base
     end
   end
 
-  def self.add_demo
-    Quest.create(:title => "reminder")
-  end
-
+  #add/delete/update calendar events to google calendar
   def self.add_calendar_event (quest, user)
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token

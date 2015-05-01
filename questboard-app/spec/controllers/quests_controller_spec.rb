@@ -9,6 +9,7 @@ RSpec.describe QuestsController, type: :controller do
 			expect(quest.status).to eq "OnIt"
 		end
 	end
+
 	
 	it "Assign Quest to User" do
 		
@@ -64,4 +65,5 @@ RSpec.describe QuestsController, type: :controller do
       expect(user_quest.is_rejected).to eq true
     end
   end
+
 end
