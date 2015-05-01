@@ -1,34 +1,129 @@
-<div style="overflow: auto">
-	<header class="header-title" style="float:left;">My Pending Quests</header>
-	<!-- <a href="#" class="circular-button" style="float: right">+</a> -->
-	<%= link_to "+", new_quest_path, class: "circular-button", style: "float: right; color: white;" %>
-</div>
-<br>
-<section>
-<h1>To me</h1>
-<div>
-	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
-		<% @quests.each do |quest| %>
-			<tr style="padding-bottom: 1em">
-				<!-- <td><font class="label" style="width:20%;">Title: </font></td> -->
-				<!-- <td><p class="label" style="margin-bottom: 0.5em;"><%= quest.title %></p></td> -->	
-				<td><%= link_to "#{quest.title}", quest_path(quest.id), class: "label", style: "margin-bottom: 0.5em;" %></td>
-			</tr>
-		<% end %>
-	</table>
-</div>
-</section>
-<section>
-<h1>By me</h1>
-<div>
-	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
-		<% @by_me_quests.each do |by_me_quest| %>
-			<tr style="padding-bottom: 1em">
-					
-				<td><%= link_to "#{by_me_quest.title}", quest_path(by_me_quest.id), class: "label", style: "margin-bottom: 0.5em;" %></td>
-				<td style=""><%= button_to "X", delete_quest_path(by_me_quest.id), method: :delete, class: "button", style: "width: 20%;float:right;" %></p></td>
-			</tr>
-		<% end %>
-	</table>
-</div>
-</section>
+<!-- Keep all page content within the page-content-wrapper -->
+          <div id="page-content-wrapper" class="animated-med-delay fadeInRight">
+             
+               <!-- page content header -->
+                    <div class="row add-padding">
+                            <div class="pull-left">
+                                <h1>Pending Quests</h1>
+                            </div>
+                    </div><!-- / page content header -->
+                    <!--Content-->
+                    <br>
+                    <!-- Row 2 -->
+                    <div class="row col-lg-12">
+                          <div class="panel panel-white-solid">
+                               
+                                <div class="panel-body">
+                                       <!--table--> 
+                                            <div class="table-responsive">
+                                                     <table id="tasks" class="table table-hover table-striped table-content">
+                                                      <thead>
+                                                         <tr>
+                                                            <th>Title</th>
+                                                            <th>Status</th>
+                                                            <th>Options</th>
+                                                           
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      <% @quests.each do |quest| %>
+                                                      
+                                                        <tr>
+                                                            <td><%= link_to "#{quest.title}", quest_path(quest.id), style: "margin-bottom: 0.5em;" %></td>
+                                                            <td><span class="label label-inverse label-md"><%= quest.status%></span></td>
+                                                            
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                                        Action <span class="caret"></span>
+                                                                      </button>
+                                                                      <ul class="dropdown-menu" role="menu">
+                                                                        <li><%= link_to "Accept", accept_quest_path(quest.id), method: :post, remote: true%></li>
+                                                                        <li><%= link_to "Reject", reject_quest_path(quest.id), method: :post, remote: true%></li>
+                                                                      </ul>
+                                                                    </div>
+                                                            </td>
+
+                                                            <td>
+
+                                                            	
+                                                           </td>
+                                                        </tr>
+                                                        <%end%>
+                                                        
+                                                        <% @by_me_quests.each do |myquest| %>
+
+                                                      
+                                                        <tr>
+                                                            <td><%= link_to "#{myquest.title}", quest_path(myquest.id), style: "margin-bottom: 0.5em;" %></td>
+                                                            <td><span class="label label-inverse label-md"><%="Waiting"%></span></td>
+                                                            
+                                                            
+
+                                                            <td>
+<!--                                                            <div class="btn-group">
+                                                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+                                                                        Waiting</button>
+                                                            </div>-->
+                                                           </td>
+                                                           <td></td>
+                                                        </tr>
+                                                        
+                                                        <%end%>
+                                                        
+                                                      </tbody>
+                                                  </table>
+                                                 </div>
+                                                <!-- / table -->
+                                            </div>
+
+                                            
+                                        </div> 
+                       			 </div>
+                             <!-- / row 2 -->
+
+<!--                             <div class="row col-lg-12">
+                          <div class="panel panel-white-solid">
+                               
+                                <div class="panel-body">-->
+                                       <!--table--> 
+<!--                                            <div class="table-responsive">
+                                                     <table id="tasks" class="table table-hover table-striped table-content">
+                                                      <thead>
+                                                         <tr>
+                                                            <th>Status</th>
+                                                            <th>Title</th>
+                                                            
+                                                          
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      <% @by_me_quests.each do |myquest| %>
+
+                                                      
+                                                        <tr>
+                                                            <td><span class="label label-inverse label-md"><%= myquest.status%></span></td>
+                                                            <td><%= link_to "#{myquest.title}", quest_path(myquest.id), style: "margin-bottom: 0.5em;" %></td>
+                                                            
+
+                                                            <td>
+
+                                                              
+                                                           </td>
+                                                        </tr>
+                                                        
+                                                        <%end%>
+                                                        
+                                                        
+                                                      </tbody>
+                                                  </table>
+                                                 </div>-->
+                                                <!-- / table -->
+<!--                                            </div>
+                                            
+                                            
+                                        </div> 
+                             </div>-->
+                            
+                    
+          </div><!-- /page-content-wrapper -->

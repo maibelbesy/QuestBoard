@@ -6,11 +6,16 @@ skip_before_filter  :verify_authenticity_token
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
+  def my_quests
+     quests = UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).pluck(:quest_id)
+    @quests = Quest.where(:id => quests).order('due_date')
+  end
+
   def new
   end
 
   def edit
-    @quest = Quest.find(params[:id])
+    @Quest = Quest.find(params[:id])
   end
 
   #destroy the specified quest and all of its dependencies
@@ -47,22 +52,32 @@ skip_before_filter  :verify_authenticity_token
 
   #get all quests which are accepted
   def general_quests
-    quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user).pluck(:quest_id)
+    quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user.id).pluck(:quest_id)
+    @quests = Quest.where(:id => quests).order('due_date')
+  end
+
+  def assigned_quests
+    quests = UsersQuest.where(:assignor_id => @current_user.id,:is_accepted => true).where.not(:assignee_id => @current_user.id).pluck(:quest_id)
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
   #Shows all information about a Quest.
   def show
-    @user_quest = UsersQuest.find(params[:id])
+
+     @user_quest = UsersQuest.find(params[:id])
     @assignor_id = UsersQuest.find(params[:id]).assignor_id
     @assignee_id = UsersQuest.find(params[:id]).assignee_id
     @is_accepted = UsersQuest.find(params[:id]).is_accepted
     @is_rejected = UsersQuest.find(params[:id]).is_rejected
     @name = User.find(@user_quest.assignee_id)
-    @quest = Quest.find(@user_quest)
-    @photos = @quest.quest_images
-    @video = QuestVideo.find_by_quest_id(@quest.id).url.split('/').last
-    @tasks = @quest.tasks
+    @Quest = Quest.find(@user_quest)
+    @photos = @Quest.quest_images
+    if QuestVideo.find_by_quest_id(@Quest.id).url != ""
+    @video = QuestVideo.find_by_quest_id(@Quest.id).url.split('/').last
+  else
+    @video = ""
+    end
+    @tasks = @Quest.tasks
   end
 
   #Shows the Review related to certain Quest.
@@ -181,6 +196,7 @@ skip_before_filter  :verify_authenticity_token
       @quest = Quest.create_general_quest(hash, @current_user, params.require(:quest).permit(:reminder, :remind_to))
       Quest.assign_non_user @current_user, @quest, params[:quest][:assign_to] if non_user == true
       if params[:photos]
+
         params[:photos].each { |photo|
           @quest.quest_images.create(:photo => photo)
         }
@@ -203,6 +219,7 @@ skip_before_filter  :verify_authenticity_token
                     :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(@quest.id),
                     :url => quest_path(@quest.id),
                     :id => notif.id}
+
         format.html {redirect_to quest_path(@quest.id)}
         format.js
       else

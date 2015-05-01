@@ -1,0 +1,88 @@
+<!-- Keep all page content within the page-content-wrapper -->
+          <div id="page-content-wrapper" class="animated-med-delay fadeInRight">
+             
+               <!-- page content header -->
+                    <div class="row add-padding">
+                            <div class="pull-left">
+                                <h1>Assigned Quests</h1>
+                            </div>
+                    </div><!-- / page content header -->
+                    <!--Content-->
+                    
+                    <!-- Row 2 -->
+                    <div class="row col-lg-12">
+                          <div class="panel panel-white-solid">
+                               
+                                <div class="panel-body">
+                                       <!--table--> 
+                                            <div class="table-responsive">
+                                                     <table id="tasks" class="table table-hover table-striped table-content">
+                                                      <thead>
+                                                         <tr>
+                                                            <th>Title</th>
+                                                            <th>Status</th>
+                                                            <!--<th>Options</th>-->
+<!--                                                             <th>Progress</th> -->
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      <% @quests.each do |quest| %>
+
+                                                      
+                                                        <tr>
+                                                            <td><%= link_to "#{quest.title}", quest_path(quest.id), style: "margin-bottom: 0.5em;" %></td>
+                                                            <td><span class="label label-inverse label-md"><%= quest.status%></span></td>
+                                                            
+<!--                                                            <td>
+                                                                <div class="btn-group">
+                                                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                                        Action <span class="caret"></span>
+                                                                      </button>
+                                                                      <ul class="dropdown-menu" role="menu">
+                                                                        <li><a href="#">Action</a></li>
+                                                                        <li><a href="#">Another action</a></li>
+                                                                        <li><a href="#">Something else here</a></li>
+                                                                        <li class="divider"></li>
+                                                                        <li><a href="#">Separated link</a></li>
+                                                                      </ul>
+                                                                    </div>
+                                                            </td>-->
+
+<!--                                                            <td>
+                                                            <%if quest.status == "OnIt"%>
+                                                            	<div class="progress progress-striped active">
+                                                                  <div class="progress-bar progress-bar-gray "  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                                                                    <span class="sr-only"> Complete</span>
+                                                                  </div>
+                                                                </div>
+                                                                <%elsif quest.status == "InProgress" %>
+                                                                <div class="progress progress-striped active">
+                                                                  <div class="progress-bar progress-bar-gray "  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 66%">
+                                                                    <span class="sr-only"> Complete</span>
+                                                                  </div>
+                                                                </div>
+                                                                <%elsif quest.status == "Done" %>
+                                                                <div class="progress progress-striped active">
+                                                                  <div class="progress-bar progress-bar-gray "  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                                    <span class="sr-only"> Complete</span>
+                                                                  </div>
+                                                                  <%end%>
+                                                                </div>
+                                                           </td>-->
+                                                        </tr>
+
+                                                        
+                                                        <%end%>
+                                                        
+                                                        
+                                                      </tbody>
+                                                  </table>
+                                                 </div>
+                                                <!-- / table -->
+                                            </div>
+                                            
+                                        </div> 
+                       			 </div><!-- / row 2 -->
+                            
+                    
+          </div><!-- /page-content-wrapper -->
