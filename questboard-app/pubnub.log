@@ -247,3 +247,8 @@ D, [2015-04-25T00:51:35.064116 #17392] DEBUG -- pubnub: Setting default values
 D, [2015-04-25T00:51:35.064172 #17392] DEBUG -- pubnub: 
 
 Created new Pubnub::Client instance
+D, [2015-05-01T20:17:03.940676 #8328] DEBUG -- pubnub: Symbolizing options keys
+D, [2015-05-01T20:17:03.940676 #8328] DEBUG -- pubnub: Setting default values
+D, [2015-05-01T20:17:03.940676 #8328] DEBUG -- pubnub: 
+
+Created new Pubnub::Client instance
