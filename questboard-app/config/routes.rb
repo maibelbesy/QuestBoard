@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   get '/signup' => 'sessions#register', as: :register
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
-  
+  get '/reset_password' => 'sessions#reset_password', as: :reset_password
+  post '/forgot_password' => 'sessions#forgot_password', as: :forgot_password
+  get '/users/reset_password' => 'sessions#send_password', as: :send_password
+
   # Routes for Quests
 
   get '/' => 'quests#index', as: :quests
