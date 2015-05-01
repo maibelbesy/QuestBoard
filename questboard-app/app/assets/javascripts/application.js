@@ -36,7 +36,7 @@ function subscribeForNotifications(channel) {
 	// var client;
 	// client = new Faye.Client('/faye');
   var subscription = client.subscribe(channel, function(payload) {
-  	respondToNotification(payload);
+  	respondToNotification(payload, channel);
   });
 };
 

@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authorize_user
+    exemptions = ['/login', '/signup', '/users/verify_email']
     redirect_to login_path and return if !logged_in? && (request.path != "/login" && request.path != "/signup")
     current_user
   end

@@ -13,10 +13,7 @@ Rails.application.routes.draw do
   get '/signup' => 'sessions#register', as: :register
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
-
-  get '/streamer' => 'streamer#index', as: :streamer
-  get 'get_messages' => 'streamer#get_messages'
-  get 'publish' => 'streamer#publish'
+  get '/users/verify_email' => 'sessions#verify_email'
   
   # Routes for Quests
 
@@ -41,6 +38,7 @@ Rails.application.routes.draw do
 
   # Routes for Notifications
   get '/notifications' => 'notifications#index', as: :notifications
+  post '/notifications' => 'notifications#seen'
 
   # Routes for the account web pages
   
