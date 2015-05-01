@@ -8,6 +8,7 @@ class Quest < ActiveRecord::Base
 
   has_many :quest_videos , :dependent => :destroy
 
+  #creates a new quest
   def self.create_general_quest(args, user, reminderD)
     if args[:assign_to].blank?
       args.delete :assign_to
@@ -35,6 +36,7 @@ class Quest < ActiveRecord::Base
     quest
   end
 
+  #Sends an email containing the assigned quest to non users
   def self.assign_non_user(assignor, quest, assignee)
     m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
     message = {
@@ -53,7 +55,7 @@ class Quest < ActiveRecord::Base
     sending = m.messages.send message
   end
 
-
+  #aggregates date data
   def self.date_convert (reminderD)
     DateTime.new(reminderD["reminder(1i)"].to_i,
                  reminderD["reminder(2i)"].to_i,
@@ -62,6 +64,7 @@ class Quest < ActiveRecord::Base
                  reminderD["reminder(5i)"].to_i)
   end
 
+  #sends email reminders to users
   def self.reminders
     @reminders_all = Reminder.all
     date = DateTime.now.utc.strftime("%d-%m-%Y %H:%M")
@@ -94,10 +97,7 @@ class Quest < ActiveRecord::Base
     end
   end
 
-  def self.add_demo
-    Quest.create(:title => "reminder")
-  end
-
+  #add/delete/update calendar events to google calendar
   def self.add_calendar_event (quest, user)
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token

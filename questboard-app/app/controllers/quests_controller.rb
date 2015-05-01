@@ -2,27 +2,18 @@ class QuestsController < ApplicationController
 skip_before_filter  :verify_authenticity_token
 
   def index
-    # TODO: Find personal quests
     quests = UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).pluck(:quest_id)
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
   def new
-    # @quest = Quest.new
   end
-
-  # def create
-  #   Quest.create_personal_quest(params.require(:quest).permit(:title, :description, :due_date, :remind_to), @current_user, params.require(:quest).permit(:reminder))
-  #   # user = User.last
-  #   # puts "CONNECTED #{user.google_connected?}"
-  #   # puts "TOKEN #{user.fresh_token}"
-  #   redirect_toa quests_path
-  # end
 
   def edit
     @quest = Quest.find(params[:id])
   end
 
+  #destroy the specified quest and all of its dependencies
   def destroy
     @Uquest = UsersQuest.find_by_quest_id(params[:id])
     if(@Uquest.assignor_id == @current_user.id)
@@ -45,6 +36,7 @@ skip_before_filter  :verify_authenticity_token
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
+  # returns all the quests that are assigned by the user and to the users which are yet to be accepted
   def pending_quests
     quests = UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).pluck(:quest_id)
     @quests = Quest.where(:id => quests).order('due_date')
@@ -75,54 +67,41 @@ skip_before_filter  :verify_authenticity_token
 
   #Shows the Review related to certain Quest.
   def review
-    #TODO On Event (done Quest)
-    # @user_to_review = UsersQuest.find(params[:id]).review
     @user_quest = UsersQuest.find(params[:id])
-
-    #redirect_to quests_path
-
   end
+
   #Gives the User the option to write a review on a certain Quest.
   def add_review
-    #@user_quest = UsersQuest.find(params[:id])
     UsersQuest.update(params[:id], params.require(:quest).permit(:review))
     quest = Quest.find(params[:id])
 
     if params[:quest][:points] == "1"
-      puts "hiiii"
       quest.bounty_points += 10
       quest.save
     end
     if params[:quest][:points] == "2"
-      puts "hiiii"
       quest.bounty_points += 20
       quest.save
     end
     if params[:quest][:points] == "3"
-      puts "hiiii"
       quest.bounty_points += 30
       quest.save
     end
     if params[:quest][:points] == "4"
-      puts "hiiii"
       quest.bounty_points += 40
       quest.save
     end
     if params[:quest][:points] == "5"
-      puts "hiiii"
       quest.bounty_points += 50
       quest.save
     end
     redirect_to quest_path(quest.id)
   end
 
+# accepts the assigned quest, notifies the assignor, and increases the connection frequency
   def accept
     respond_to do |format|
       user_quest = UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
-      # redirect_to quests_path
-      # @assignor_id = Connection.find_or_initialize_by(:user_id => params[:id])
-      # @assignor_id.frequency += 1
-      # @assignor_id.save
       @assignor_id = Connection.find_by("user_id = ? OR connection_id = ?", user_quest.assignor_id, user_quest.assignee_id)
       if @assignor_id == nil
         @assignor_id = Connection.create(:user_id => user_quest.assignor_id, :connection_id => user_quest.assignee_id)
@@ -137,13 +116,12 @@ skip_before_filter  :verify_authenticity_token
       format.html {redirect_to quest_path(params[:id])}
       format.js
     end
-    # Connection.where("user_id = ? Or connection_id = ?" @current_user,@current_user)
   end
 
+# rejects the assigned quest and notifies the assignor
   def reject
     respond_to do |format|
       user_quest = UsersQuest.update(params[:id],:is_accepted => false,:is_rejected => true)
-      # redirect_to quests_path
       notif_user = User.find_by(:id => user_quest.assignor_id)
       notif = Notification.create(:user_id => user_quest.assignor_id, :title => "#{@current_user.first_name} #{@current_user.last_name} has rejected your assigned quest: #{Quest.find(params[:id]).title}")
       @options = {:channel => "/notifs/#{user_quest.assignor_id}",
@@ -153,9 +131,9 @@ skip_before_filter  :verify_authenticity_token
       format.js
     end
   end
+
   #Gives the User the option to write a review on a certain Quest.
   def add_review
-    #@user_quest = UsersQuest.find(params[:id])
     UsersQuest.update(params[:id], params.require(:quest).permit(:review))
     redirect_to quest_path(params[:id])
   end
@@ -194,16 +172,12 @@ skip_before_filter  :verify_authenticity_token
       end
       @quest = Quest.create_general_quest(hash, @current_user, params.require(:quest).permit(:reminder, :remind_to))
       Quest.assign_non_user @current_user, @quest, params[:quest][:assign_to] if non_user == true
-       # quest = Quest.find(@quest.quest_id)
       if params[:photos]
-
-        #===== The magic is here ;)
         params[:photos].each { |photo|
           @quest.quest_images.create(:photo => photo)
         }
       end
       @quest.quest_videos.create(:url => params[:quest][:url])
-      # redirect_to quests_path
       if not hash[:assign_to].blank?
         user_quest = UsersQuest.find_by(:quest_id => @quest.id)
         notif_user = User.find_by(:id => user_quest.assignee_id)
@@ -228,14 +202,12 @@ skip_before_filter  :verify_authenticity_token
     end
   end
 
-
+# update the content of the specified quest
   def update
     hash = params[:quest]
     flash[:warning] = []
     flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
-    # flash[:warning] << "Content cannot be left blank" if hash[:description].blank?
     redirect_to edit_quest_path and return if flash[:warning].count > 0
-    # Quest.find(params[:id]).update(:title => hash[:title], :description => hash[:description], :is_completed => hash[:is_completed], :bounty => hash[:bounty], :due_date => hash[:due_date] )
     Quest.update(params[:id], params.require(:quest).permit(:title, :description, :due_date,:bounty, :assign_to))
     quest = Quest.find_by_id(params[:id])
     if not quest.gid.blank?
@@ -243,7 +215,8 @@ skip_before_filter  :verify_authenticity_token
     end
     redirect_to quests_path
   end
-# tracks the number of quests each gender completes
+
+# Updates the quest's current status and tracks the number of quests each gender completes
   def status
     quest = Quest.find(params[:id])
     quest.update(:status=> params[:string])

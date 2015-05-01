@@ -4,36 +4,34 @@ class SessionsController < ApplicationController
   require 'pp'
   before_action :redirect_user, except: [:destroy, :google_create]
 
-  def new
-  end
 
+# login an existing user view
   def login
   end
 
+# creates a new session and logs the user in
   def create
-
     @REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
     input = params[:sessions][:email_username]
-    if ((input =~ @REGEX) != nil ) 
+    if ((input =~ @REGEX) != nil) 
        user = User.find_by(:email=> params[:sessions][:email_username].downcase)
     else
       user = User.find_by(:username => params[:sessions][:email_username])
-  
     end
-    if user && user.authenticate(params[:sessions][:password]) 
 
+    if user && user.authenticate(params[:sessions][:password]) 
       log_in user
       redirect_to root_path
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'login'
     end
-
   end
- # gets the tokens and displays all quests created previously
+
+# signing using Google+
+
   def google_create
     auth = env["omniauth.auth"]
-    puts "AUTH ----------- #{auth}"
     if(@current_user == nil)
       user = User.find_by(:guid => auth.uid)
       if (user == nil)
@@ -63,16 +61,16 @@ class SessionsController < ApplicationController
       end
     end
     current_user
-    puts "TEST #{request.env["omniauth.auth"]["credentials"]}"  
-    redirect_to user_path(@current_user.id)
+    redirect_to root_path
   end
 
+# register a new user view
   def register
   end
-  # count the number of users that register 
+
+  # regsiters the user and publishes the count of newly registered users
   def register_user
     @user = User.new(params.require(:register).permit(:email, :password, :first_name, :last_name, :username, :gender))
-    puts "USER ------ #{params}"
     if !params[:token].nil?
       @user.oauth_token = params[:token]
       @user.provider = params[:prov]
@@ -95,6 +93,7 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
+# reset user's password view
   def reset_password 
   end
 
@@ -121,7 +120,6 @@ class SessionsController < ApplicationController
       :from_email=>"team@questboard.com"
     }
     sending = m.messages.send message
-    puts "MANDRIL -------- #{sending}"
     redirect_to login_path 
 
   end

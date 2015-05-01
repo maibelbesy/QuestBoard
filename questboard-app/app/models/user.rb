@@ -1,14 +1,13 @@
 class User < ActiveRecord::Base
 
-  before_save { self.email = email.downcase if not self.email.blank?}
+  require 'net/http'
+  require 'json'
+  require 'pp'
 
+  before_save { self.email = email.downcase if not self.email.blank?}
   validates :first_name, presence: true, length: { maximum: 20 }
   validates :last_name, presence: true, length: { maximum: 30 }
   validates :username, presence:true, uniqueness: true, length: { maximum: 10 }
-
-  require 'net/http'
-  require 'json'
-
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
@@ -20,17 +19,13 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_secure_password validations: false
   
-
-
+  # returns the count of the user's unread notifications
   def self.unread_notifications_count(user)
     Notification.where(:user_id => user.id, :is_seen => false).count
   end
 
+# updates the user's data from the Google return response
   def self.from_omniauth(auth, users)
-
-    puts "AUTH------------#{auth.info.email}"
-    puts "AUTH------------#{auth}"
-
     user = self.find_by_id(users.id)
     user.provider = auth.provider
     user.guid = auth.uid
@@ -43,8 +38,7 @@ class User < ActiveRecord::Base
     self.check_for_quests(user)
   end
 
-  require 'pp'
-
+  # checks for quests assigned to the newly registered user who is connected to Google
   def self.check_for_quests(user)
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token
@@ -79,22 +73,14 @@ class User < ActiveRecord::Base
       user_quest.assignee_id = user.id
       user_quest.save
     end
-
-    # pp data
-    # pp data['snippet'].scan(/\[\quest #\d+\]/)[0].scan(/\d+/)[0]
-    # if data['payload']['mimeType'].split('/')[0] == 'multipart'
-    #   pp Base64.decode64 data['payload']['parts'][0]['body']['data']  
-    # else
-    #   pp Base64.decode64 data['payload']['body']['data']
-    # end
   end
- 
-   def to_params
 
+ # refresh the Google access token
+  def to_params
     {'refresh_token' => oauth_refresh_token,
-      'client_id' => ENV['CLIENT_ID'],
-      'client_secret' => ENV['CLIENT_SECRET'],
-      'grant_type' => 'refresh_token'}
+    'client_id' => ENV['CLIENT_ID'],
+    'client_secret' => ENV['CLIENT_SECRET'],
+    'grant_type' => 'refresh_token'}
   end
 
   def request_token_from_google
@@ -119,9 +105,11 @@ class User < ActiveRecord::Base
     oauth_token
   end
 
+  # checks if the user is connected to google
   def google_connected?
     guid.blank?
   end
+
   # setting keen api key and then publish the analytics event
   def self.publish_event col, hash
     keen = Keen::Client.new(:project_id => '553e50d296773d66ebe3d8a1',
