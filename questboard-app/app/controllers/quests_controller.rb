@@ -120,7 +120,7 @@ skip_before_filter  :verify_authenticity_token
 # accepts the assigned quest, notifies the assignor, and increases the connection frequency
   def accept
     respond_to do |format|
-      user_quest = UsersQuest.update(params[:id],:is_accepted => true,:is_rejected => false)
+      user_quest = UsersQuest.update(params[:id], :is_accepted => true, :is_rejected => false)
       @assignor_id = Connection.find_by("user_id = ? OR connection_id = ?", user_quest.assignor_id, user_quest.assignee_id)
       if @assignor_id == nil
         @assignor_id = Connection.create(:user_id => user_quest.assignor_id, :connection_id => user_quest.assignee_id)
@@ -129,8 +129,8 @@ skip_before_filter  :verify_authenticity_token
       @assignor_id.save
       notif_user = User.find_by(:id => user_quest.assignor_id)
       notif = Notification.create(:user_id => user_quest.assignor_id,
-        :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title},
-        :url => quest_path(user_quest.quest_id)")
+        :title => "#{@current_user.first_name} #{@current_user.last_name} has accepted your assigned quest: #{Quest.find(params[:id]).title}",
+        :url => quest_path(user_quest.quest_id))
       @options = {:channel => "/notifs/#{user_quest.assignor_id}",
                   :message => notif.title,
                   :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id]),
@@ -151,10 +151,10 @@ skip_before_filter  :verify_authenticity_token
         :url => quest_path(user_quest.quest_id))
       @options = {:channel => "/notifs/#{user_quest.assignor_id}",
                   :message => notif.title,
-                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quests_path,
+                  :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id]),
                   :url => quest_path(user_quest.quest_id),
                   :id => notif.id}
-      format.html {redirect_to quests_path}
+      format.html {redirect_to quest_path(params[:id])}
       format.js
     end
   end

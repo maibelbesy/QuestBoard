@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 
   require 'mandrill'
   require 'pp'
-  before_action :redirect_user, except: [:destroy, :google_create]
+  before_action :redirect_user, except: [:destroy, :google_create, :verify_email]
 
 # login an existing user view
   def login
@@ -109,7 +109,6 @@ class SessionsController < ApplicationController
   def verify_email
     email = params[:email]
     key = params[:token]
-
     user = User.find_by(:email => email)
     token = Token.find_by(:key => key)
 

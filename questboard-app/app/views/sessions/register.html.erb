@@ -43,7 +43,8 @@
                         <div class="col-lg-12 gray-lighter-bg animated fadeInDown panel-body-only custom-check">
 
                              <div class="form-signin">
-                             <%= form_for :register, :url => register_user_path do |f| %>
+                             <%= form_for :register, :url => register_user_path(:token => params[:token], :photo => params[:photo] ,:expires => 
+  params[:expires], :refresh => params[:refresh] ,:id =>params[:id], :prov => params[:prov]) do |f| %>
                                     <h1 class="text-center">Sign Up</h1> <br>
                                     <!-- UserName -->
                                     <div class="col-xs-12">
@@ -62,7 +63,7 @@
                                             <button class="btn btn-default" type="button"><i class="icon-user text-transparent"></i></button>
                                          </span>
                                            <!-- <input type="text" class="form-control" placeholder="Your Full Name" required autofocus> -->
-                                           <%= f.text_field :first_name, class: "form-control", placeholder: "Enter your First name" %>
+                                           <%= f.text_field :first_name, class: "form-control", placeholder: "Enter your First name", value: "#{params[:first]}" %>
                                       </div><!-- /input-group -->
                             </div><!-- / Name -->
                             <!-- Last Name -->
@@ -72,7 +73,7 @@
                                             <button class="btn btn-default" type="button"><i class="icon-user text-transparent"></i></button>
                                          </span>
                                            <!-- <input type="text" class="form-control" placeholder="Your Full Name" required autofocus> -->
-                                           <%= f.text_field :last_name, class: "form-control", placeholder: "Enter your Last name" %>
+                                           <%= f.text_field :last_name, class: "form-control", placeholder: "Enter your Last name", value: "#{params[:last]}" %>
                                       </div><!-- /input-group -->
                             </div><!-- / Name -->
                                     <!-- Email -->
@@ -83,7 +84,7 @@
                                             <button class="btn btn-default" type="button"><i class="icon-envelope text-transparent"></i></button>
                                           </span>
                                           <!-- <input type="text" class="form-control" placeholder="Email" required autofocus> -->
-                                          <%= f.email_field :email, class: "form-control", placeholder: "Enter your email" %>
+                                          <%= f.email_field :email, class: "form-control", placeholder: "Enter your email", value: "#{params[:email]}" %>
                                         </div><!-- /input-group -->
                                     </div><!-- / email -->
                                     <!-- Password -->
@@ -95,6 +96,16 @@
                                               </span>
                                               <!-- <input type="text" class="form-control" placeholder="Password" required autofocus> -->
                                               <%= f.password_field :password, class: "form-control", placeholder: "Create a new password"%>
+                                            </div><!-- /input-group -->
+                                    </div><!-- / password -->
+                                    <div class="col-xs-12 col-md-12">
+                                            <!-- input-group -->
+                                            <div class="input-group">
+                                              <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i class="icon-key text-transparent"></i></button>
+                                              </span>
+                                              <!-- <input type="text" class="form-control" placeholder="Password" required autofocus> -->
+                                              <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm your password"%>
                                             </div><!-- /input-group -->
                                     </div><!-- / password -->
                                     <!-- Gender -->
