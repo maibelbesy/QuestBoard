@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
     user.oauth_token = auth.credentials.token
     user.oauth_refresh_token = auth.credentials.refresh_token
     user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+    user.photo = auth.info.image
     user.save!
 
     self.check_for_quests(user)

@@ -33,17 +33,20 @@ class SessionsController < ApplicationController
  # gets the tokens and displays all quests created previously
   def google_create
     auth = env["omniauth.auth"]
+    puts "AUTH ----------- #{auth}"
     if(@current_user == nil)
       user = User.find_by(:guid => auth.uid)
       if (user == nil)
         email = auth.info.email
+        first = auth.info.first_name
+        last = auth.info.last_name
         picture = auth.info.image
         token = auth.credentials.token
         id = auth.uid
         prov = auth.provider
         refresh_token = auth.credentials.refresh_token
         expires = auth.credentials.expires_at
-        redirect_to "/signup?email=#{email}&token=#{token}&picture=#{picture}&id=#{id}&prov=#{prov}&refresh=#{refresh_token}&expires=#{expires_at}"
+        redirect_to "/signup?email=#{email}&first=#{first}&last=#{last}&token=#{token}&photo=#{picture}&id=#{id}&prov=#{prov}&refresh=#{refresh_token}&expires=#{expires}"
         return
       else
         log_in user
@@ -69,6 +72,15 @@ class SessionsController < ApplicationController
   # count the number of users that register 
   def register_user
     @user = User.new(params.require(:register).permit(:email, :password, :first_name, :last_name, :username, :gender))
+    puts "USER ------ #{params}"
+    if !params[:token].nil?
+      @user.oauth_token = params[:token]
+      @user.provider = params[:prov]
+      @user.guid =params[:id]
+      @user.oauth_refresh_token = params[:refresh]
+      @user.oauth_expires_at = Time.at(params[:expires].to_i)
+      @user.photo = params[:photo]
+    end
     if @user.save && @user.password == params[:register][:password_confirmation]
       log_in @user
       User.publish_event :sign_ups, ({:sign_ups => 'Number of Users'})
@@ -86,6 +98,7 @@ class SessionsController < ApplicationController
   def reset_password 
   end
 
+  #sends an email to the user and verfies the email
   def forgot_password
      m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
      user = User.find_by(:email => params[:sessions][:email])
@@ -113,6 +126,7 @@ class SessionsController < ApplicationController
 
   end
 
+  #sends a new password to the user
   def send_password
     m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
     email = params[:email]
