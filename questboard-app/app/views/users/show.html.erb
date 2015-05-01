@@ -1,88 +1,102 @@
-<div id="w">
-  <div id="content" class="clearfix">
-    <%= image_tag("avatar.png", :alt => "avatar feed") if @member.photo.blank? %>
-    <%= image_tag("#{@member.photo}", :alt => "avatar feed") if not @member.photo.blank? %>
-    <h1><%= "#{@member.first_name} #{@member.last_name}" %></h1>
 
-    <nav id="profiletabs">
-      <ul class="clearfix">
-        <li><a href="#MyBoard">About</a></li>
-        <li><a href="#Connections">Connections</a></li>
-        <li><a href="#Reviews">Reviews</a></li>
-        <li><a href="#Performance">Performance</a></li>
-        <li><a href="#settings">Settings</a></li>
-      </ul>
-    </nav>
-    
-    
-    <section id="MyBoard">
-
-      <p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
+              <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
+                
+                <!-- Col 1 -->
+                 <div class="col-md-8 no-breadcrumb" style=" margin-left: 236px;">
+              <!-- basic info -->
+                <% if logged_in? && @current_user.id == @member.id %>                   
+                                      <div id="profile-main-widget" class="col-md-12 no-padding">
+                                        <div class="panel text-center">
+                                            <div class="panel-body bgimg-clouds">
+                                              <div class="col-sm-12  no-padding text-center">
+                                                   <div class="tools pull-right icons-medium text-transparent">
+                                              <a href="#"><i class="icon-camera text-transparent"></i></a>
+                                              <a href="#"><i class="icon-cog text-transparent"></i></a>
+                                                    <a href="#"><i class="icon-pencil text-transparent"></i></a>
+                                                </div>
+                                                  <div class="clearfix"></div>
+                                                <!-- user -->
+                                                      <ul class="list-inline list-unstyled">
+                                                          <li>
+                                                              <div class="avatar text-center avatar-lg animated flipInX">
+                                                                  <!-- <img src="" alt="" class="img-circle" width="135"> -->
+                                                                  <%= image_tag("avatar.png", :alt => "avatar feed", class: "img-circle") if @member.photo.nil? %>
+                                                                  <%= image_tag("#{@member.photo}", :alt => "avatar feed", class: "img-circle") if not @member.photo.nil? %>
+                                                               </div>
+                                                           </li>
+                                                           <li class="align-center-vert">
+                                                               <div class="leftarrowdiv-white">
+                                                                   <div class="well-lg transparent">
+                                                                       <ul class="list-unstyled">
+                                                                         <li class="no-padding-left"><h2><%= "#{@member.first_name} #{@member.last_name}" %></h2></li>
+                                                                        
+                                                                       </ul>
+                                                                   </div>
+                                                                </div>
+                                                           </li>
+                                                        </li> 
+                                                        </ul>  
+                                                </div>
+                                                <br><br>
+                                                    <div class="col-sm-3 col-xs-6">
+                                                                 <div class="text-inverse">
+                                                                    <span class="number"><i class="glyphicon glyphicon-usd"></i>&nbsp; <%=@member.points%></span>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                   </div>
+                                        </div>
+                                    </div>  <!-- / basic info -->
+                            <!-- Edit personal info -->
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                              <li><a href="#user" data-toggle="tab"><i class="icon-user"></i>&nbsp;&nbsp;&nbsp;About me</a>
+                              <li><a href="#education" data-toggle="tab"><i class="icon-book"></i>&nbsp;&nbsp;&nbsp;Connections</a></li>
+                              <li><a href="#resume" data-toggle="tab"><i class="icon-file-text"></i>&nbsp;&nbsp;&nbsp;Reviews</a></li>
+                            </ul>
+                            
+                            <!-- Tab panes -->
+                            <div class="tab-content add-shadow">
+                              <div class="tab-pane active" id="user">
+                                          <h3>Basic Info</h3>
+                                          <p><a href="#" id="info" data-type="text" data-pk="1" data-title="Enter Info"><p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
 
       <p class="setting"><span>Full Name: </span><%= "#{@member.first_name} #{@member.last_name}" %></p>
-
-      <p class="setting"><span>Points: </span><%=@member.points%></p>
       
       <p class="setting"><span>Username: </span><%=@member.username%></p> 
 
       <% if @member.gender %>
         <p class="setting"><span>Gender: </span><%= "male" %></p>
       <% else %>
-        <p class="setting"><span>Gender: </span><%= "female" %></p>               
-      <%end %>
+        <p class="setting"><span>Gender: </span><%= "female" %></p>
+               
+      <%end %></a>
+                                            </p><br>
+       <!--                                     <p><strong>Find me:</strong></p>
+                                            <button class="btn btn-default"><i class="icon-flickr"></i></button>
+                      <button class="btn btn-default"><i class="icon-tumblr"></i></button>
+                                            <button class="btn btn-default"><i class="icon-android"></i></button> -->
+                                      </div>
+                                      <div class="tab-pane" id="education">
+                                          <h3>Connections</h3>
+                                          <% @connections.each do |connection| %>
+                                          <p class="setting"><%=connection.username%> </p>
+                                          <% end %>
+                                      </div>
+                                      <div class="tab-pane" id="resume">
+                                          <h3>Reviews</h3>
+                                          
+                                      </div>
+                                      
+                            </div>
+                 </div><!--/ Col 1 -->
+                 <!-- Col 2-->
+                 
+                 
+                <%end%>
 
-      <%= link_to "Connect to Google+", "/auth/google_oauth2", id: "sign_in" %>
-    </section>
-    
-    <section id="Reviews" class="hidden">
-   <% @reviews.each do |review| %>
-          <p class="setting"><%=review.review%> </p>
-        <% end %>
-    </section>
-    
-    <section id="Connections" class="hidden">
-        <% @connections.each do |connection| %>
-          <p class="setting"><%=connection.username%> </p>
-        <% end %>
-      
-      <ul id="friendslist" class="clearfix">
-      </ul>
-    </section>
-    
-    <section id="settings" class="hidden">
-   
-    <% if logged_in? && @current_user.id == @member.id %>
-		<div style="">
-		<%= button_to "Edit Profile", edit_user_path(current_user), class: "delete-post", style: "float:right;margin-right: 1em;", method: :get %>
-		</div>
-	<% end %> 
-      <p>Edit your user settings:</p>
-      <p class="setting"><span>E-mail Address </span> lolno@gmail.com</p>
-      
-      <p class="setting"><span>Language </span> English(US)</p>
-      
-      <p class="setting"><span>Profile Status </span> Public</p>
-      
-      <p class="setting"><span>Update Frequency </span> Weekly</p>
-      
-      <p class="setting"><span>Connected Accounts </span> None</p>
-    </section>
-  </div><!-- @end #content -->
+                </div><!--/ page-content-wrapper-->
 
-</div><!-- @end #w -->
-<script type="text/javascript">
-	$(function() {
-	$('#profiletabs ul li a').on('click', function(e) {
-	e.preventDefault();
-	var newcontent=$(this).attr('href');
-	$('#profiletabs ul li a').removeClass('sel');
-	$(this).addClass('sel');
-	$('#content section').each(function() {
-	if(!$(this).hasClass('hidden')) {
-	$(this).addClass('hidden');
-	}
-	});
-	$(newcontent).removeClass('hidden');
-	});
-	});
-</script>
+      </div><!-- / wrapper for content below nav bar -->
+        </div><!-- /container for chat panel push--> 
+        
