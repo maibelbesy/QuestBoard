@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/signup' => 'sessions#register', as: :register
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
+  get '/users/verify_email' => 'sessions#verify_email'
   
   # Routes for Quests
 

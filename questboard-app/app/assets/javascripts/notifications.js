@@ -35,15 +35,6 @@ function showNotificationsCard(message) {
     $notifs.hide();
   });
 
-  // $notifs.mouseover(function(){
-  //   $(this).stop();
-  // });
-  // $notifs.mouseout(function(){
-  //   $(this).animate({opacity: 0, bottom:'1em'}, 'fast', function(){
-  //     $notifs.hide();
-  //   });
-  // });
-
   $notifs.hover(
      function(){
         $(this).stop(true,false);
