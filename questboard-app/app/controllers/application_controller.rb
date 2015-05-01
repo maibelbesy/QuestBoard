@@ -8,8 +8,11 @@ class ApplicationController < ActionController::Base
 
   private
   def authorize_user
-    puts "PATH -------- #{request.path}"
-     redirect_to login_path and return if !logged_in? && (request.path != "/login" && request.path != "/signup" && request.path != "/auth/google_oauth2/callback")
+    puts "PATH -------- #{request.path}" 
+     redirect_to login_path and return if !logged_in? && (request.path != "/login" && request.path != "/signup" && request.path != "/auth/google_oauth2/callback" && request.path != '/reset_password' && request.path != '/forgot_password' && request.path != '/users/reset_password')
     current_user
   end
 end
+ 
+
+#keda?

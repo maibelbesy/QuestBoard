@@ -26,7 +26,7 @@
         quitClient(client);
       <% end %>
     </script>
-  <% if (request.path != "/login" && request.path != "/signup") %>
+  <% if (request.path != "/login" && request.path != "/signup"&& request.path != "/reset_password" ) %>
     <div class="header">
       <div style="float: left;width: 40%;height: 55%;position:relative;left:5em;border: 0px solid rgba(208, 208, 208, 0.67);position: relative;top:25%;">     
         <%= link_to "QuestBoard", root_path, class: "logo", style: "float: left; color: white" %>
