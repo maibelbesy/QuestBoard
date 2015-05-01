@@ -11,6 +11,7 @@ skip_before_filter  :verify_authenticity_token
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
+
   def new
   end
 
@@ -78,6 +79,9 @@ skip_before_filter  :verify_authenticity_token
     @video = ""
     end
     @tasks = @Quest.tasks
+    @comments = @Quest.comments.all
+    @comment = @Quest.comments.build
+
   end
 
   #Shows the Review related to certain Quest.

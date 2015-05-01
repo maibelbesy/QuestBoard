@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   get '/quests/review/:id' => 'quests#review', as: :review_quest
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
 
-  
+      resources :comments
 
   # Routes for Notifications
   get '/notifications' => 'notifications#index', as: :notifications

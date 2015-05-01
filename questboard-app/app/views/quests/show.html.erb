@@ -124,7 +124,7 @@ Assigned to:<%=@name.username%>
     </div>
 </div>
 </div>
-</div>
+
 
 <div class="panel bottom">
   <div class="panel-heading task-list">
@@ -198,12 +198,46 @@ Assigned to:<%=@name.username%>
     </button>
     <%end%>
 </div>
-
-
 </div>
 </div>
+<div class="panel">
+  <div class="panel-heading brand-highlight task-list">
+    <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1g">
+     <i class="icon-file-alt text-transparent"></i>
+     &nbsp;&nbsp;Comments&nbsp;&nbsp;&nbsp;&nbsp;
+   </a>
+ </div>
+ <div id="project1g" class="accord-collapse panel-collapse collapse">
+  <div class="panel-body">
+    <h3>Comments</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_name %></strong>
+    <br />
+    <p><%= comment.body %></p>
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  </div>
+<% end %>
+<%= render 'comments/form' %>
+</div>
+</div>
+</div>
+
 </table>
 </div>
+
+<!--<h3>Comments</h3>
+<% @comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_name %></strong>
+    <br />
+    <p><%= comment.body %></p>
+    <p><%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  </div>
+<% end %>
+<%= render 'comments/form' %>-->
+
+
 <script><%if @Quest.status == "OnIt" %>
 
 
