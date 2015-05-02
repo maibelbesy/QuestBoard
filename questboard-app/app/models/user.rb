@@ -25,8 +25,8 @@ class User < ActiveRecord::Base
   end
 
 # updates the user's data from the Google return response
-  def self.from_omniauth(auth, users)
-    user = self.find_by_id(users.id)
+  def self.from_omniauth(auth, user)
+    # user = self.find_by_id(users.id)
     user.provider = auth.provider
     user.guid = auth.uid
     user.oauth_token = auth.credentials.token

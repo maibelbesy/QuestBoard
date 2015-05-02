@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   require 'mandrill'
-  before_action :redirect_user, except: [:destroy, :google_create, :verify_email]
+  before_action :redirect_user, except: [:destroy, :google_create, :google_delete, :verify_email]
 
 # login an existing user view
   def login
@@ -29,7 +29,6 @@ class SessionsController < ApplicationController
   def google_create
     auth = env["omniauth.auth"]
     # User.from_omniauth(auth, @current_user)
-    puts "AUTH ------------------------------- #{auth.uid}"
     if(@current_user == nil)
       user = User.find_by(:guid => auth.uid)
       if (user == nil)
@@ -48,9 +47,8 @@ class SessionsController < ApplicationController
         log_in user
       end
     else
-      # user = User.from_omniauth(auth, @current_user)
       if @current_user.guid.blank?
-        user = User.from_omniauth(auth, @current_user)
+        User.from_omniauth(auth, @current_user)
         user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
         quest = Quest.where(:id => user_quest, :gid => nil)
         quest.each do |q|
@@ -60,6 +58,22 @@ class SessionsController < ApplicationController
     end
     current_user
     redirect_to root_path
+  end
+
+  def google_delete
+    user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
+    quest = Quest.where(:id => user_quest).where.not(:gid => nil)
+    quest.each do |q|
+      Quest.delete_calendar_event q, @current_user
+    end
+    @current_user.oauth_token = params[:token]
+    @current_user.provider = params[:prov]
+    @current_user.guid =params[:id]
+    @current_user.oauth_refresh_token = params[:refresh]
+    @current_user.oauth_expires_at = Time.at(params[:expires].to_i)
+    @current_user.photo = params[:photo]
+    @current_user.save
+    redirect_to user_path(@current_user.id)
   end
 
 # register a new user view

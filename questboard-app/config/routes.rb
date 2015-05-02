@@ -61,6 +61,7 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback' => 'sessions#google_create', as: :google_signin
   # get 'auth/:provider/callback', to: redirect('http://www.google.com'), as: :google_signin
+  get '/disconnect_google' => 'sessions#google_delete', as: :google_delete
   get 'auth/failure', to: redirect('/')
 # You can have the root of your site routed with "root"
 # root 'welcome#index'
