@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   require 'mandrill'
-  before_action :redirect_user, except: [:destroy, :google_create, :google_delete, :verify_email]
+  before_action :redirect_user, except: [:destroy, :google_create, :google_delete, :verify_email, :send_verify]
 
 # login an existing user view
   def login
@@ -101,7 +101,7 @@ class SessionsController < ApplicationController
       message = {
         :subject=> "[QuestBoard] Email Verification",
         :from_name=> "QuestBoard",
-        :text => "Hi #{@user.first_name},\r\n\r\nThank you for choosing QuestBoard. Please click on the link below to verify your email.\r\n\r\n#{domain}/users/verify_email?email=#{@user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
+        :text => "Hi #{@user.first_name},\r\n\r\nThank you for choosing QuestBoard. Please click on the link below to verify your email.\r\n\r\n#{domain}/verify_email?email=#{@user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
         :to=>[
           {
             :email=> "#{@user.email}",
@@ -118,6 +118,28 @@ class SessionsController < ApplicationController
     end
   end
 
+  def send_verify
+    token = Token.generate_random
+    Token.create(:key => token, :user_id => @current_user.id, :token_type => 'verify')
+    domain = 'http://localhost:3000'
+    m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
+    message = {
+      :subject=> "[QuestBoard] Email Verification",
+      :from_name=> "QuestBoard",
+      :text => "Hi #{@current_user.first_name},\r\n\r\nThank you for choosing QuestBoard. Please click on the link below to verify your email.\r\n\r\n#{domain}/verify_email?email=#{@current_user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
+      :to=>[
+        {
+          :email=> "#{@current_user.email}",
+          :type=>"to",
+          :name=> "#{@current_user.first_name}"
+        }
+      ],
+      :from_email=>"team@questboard.com"
+    }
+    sending = m.messages.send message
+    redirect_to user_path(@current_user.id)
+  end
+
   def verify_email
     email = params[:email]
     key = params[:token]
@@ -129,6 +151,7 @@ class SessionsController < ApplicationController
       user.save
       Token.delete(token.id)
     end
+    flash[:success] = "Your email has been successfully verified."
     redirect_to root_path
   end
 
@@ -153,7 +176,7 @@ class SessionsController < ApplicationController
     message = {
       :subject=> "[QuestBoard] Reset Password",
       :from_name=> "QuestBoard",
-      :text => "Hi,\r\n\r\nYou requested to reset your password. Click on the link below to receive your new password\r\n #{domain}/users/reset_password?email=#{user.email}&token=#{token}\r\n\r\nIf it wasn't you, please disregard this email.\r\n\r\nRegards,\r\nThe team",
+      :text => "Hi,\r\n\r\nYou requested to reset your password. Click on the link below to receive your new password\r\n #{domain}/reset_password?email=#{user.email}&token=#{token}\r\n\r\nIf it wasn't you, please disregard this email.\r\n\r\nRegards,\r\nThe team",
       :to=>[
         {
           :email=> "#{params[:sessions][:email]}",

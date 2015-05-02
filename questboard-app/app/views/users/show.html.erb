@@ -1,11 +1,18 @@
-
               <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
                 
                 <!-- Col 1 -->
                  <div class="col-md-8 no-breadcrumb" style=" margin-left: 236px;">
               <!-- basic info -->
-                <% if logged_in? && @current_user.id == @member.id %>                   
+                <%# if logged_in? && @current_user.id == @member.id %>
+                <% if true %>
                   <div id="profile-main-widget" class="col-md-12 no-padding">
+                    <% if @member.email_verified == false %>
+                      <!-- <div class="alert alert-warning" role="alert">Please verify your email.</div> -->
+                      <div class="alert alert-warning" role="alert">
+                        Please verify your email. 
+                        <a href="/send_verify" class="alert-link">Click here to resend the verification email.</a>
+                      </div>
+                    <% end %>
                     <div class="panel text-center">
                         <div class="panel-body bgimg-clouds">
                           <div class="col-sm-12  no-padding text-center">
