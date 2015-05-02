@@ -1,10 +1,20 @@
-<div id="container"> 
+<div id="container">
     <!-- Wrapper for content below nav bar -->
     <div id="wrapper" style="padding-left: 0px;">
         <!-- Keep all page content within the page-content-wrapper -->
         <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
         <!-- page content header -->
             <div class="row add-padding">
+                <% if flash[:success] && flash[:success].count > 0 %>
+                    <!-- <div class="warning"><%#= safe_join(flash[:warning], "<br>".html_safe) %></div> -->
+                    <% flash[:success].each do |f| %>
+                      <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
+                        <%= f %>
+                        </div>
+                    <% end %>
+                    <br>
+                <% end %>
                 <div class="pull-left">
                     <h1>Hello, <%=@current_user.first_name%></h1>
                 </div>

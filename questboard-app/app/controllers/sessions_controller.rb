@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
         email = auth.info.email
         first = auth.info.first_name
         last = auth.info.last_name
-        picture = auth.info.image
+        picture = auth.info.image.gsub(/sz=\d+/, "sz=150")
         token = auth.credentials.token
         id = auth.uid
         prov = auth.provider
@@ -112,6 +112,8 @@ class SessionsController < ApplicationController
         :from_email=>"team@questboard.com"
       }
       sending = m.messages.send message
+      flash[:success] = []
+      flash[:success] << "Your account has been successfully created."
       redirect_to root_path
     else
       render 'register'
@@ -137,6 +139,8 @@ class SessionsController < ApplicationController
       :from_email=>"team@questboard.com"
     }
     sending = m.messages.send message
+    flash[:success] = []
+    flash[:success] << "Verification email was sent."
     redirect_to user_path(@current_user.id)
   end
 
@@ -151,7 +155,10 @@ class SessionsController < ApplicationController
       user.save
       Token.delete(token.id)
     end
-    flash[:success] = "Your email has been successfully verified."
+    # flash[:success] = "Your email has been successfully verified."
+    flash[:success] = []
+    flash[:success] << "Your email has been successfully verified."
+    flash.keep
     redirect_to root_path
   end
 
