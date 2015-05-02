@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def index
+    @users = User.all
+  end
+
 # gathers all the required information about the user to view his/her profile
 	def show
     @member = User.find(params[:id])

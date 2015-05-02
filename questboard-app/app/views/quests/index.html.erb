@@ -1,184 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-    
-    <body  onload="initPieChart();">
-    
-    <!-- preloader -->
-        <div class='preloader-wrapper'>
-            <div class="preloader">
-                <img src="img/preloader.png" alt='loading image'/>
+<div id="container"> 
+    <!-- Wrapper for content below nav bar -->
+    <div id="wrapper" style="padding-left: 0px;">
+        <!-- Keep all page content within the page-content-wrapper -->
+        <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
+        <!-- page content header -->
+            <div class="row add-padding">
+                <div class="pull-left">
+                    <h1>Hello, <%=@current_user.first_name%></h1>
+                </div>
             </div>
-        </div><!-- / preloader -->
-
-        
-
-        <!-- Container that wraps all content that gets "pushed" when chat panel shows-->
-        <div id="container"> 
-           
-            <!-- Wrapper for content below nav bar -->
-            <div id="wrapper" style="
-    padding-left: 0px;">
-                
-                
-                <!-- Keep all page content within the page-content-wrapper -->
-                <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
-                <!-- page content header -->
-                    <div class="row add-padding">
-                            <div class="pull-left">
-                                <h1>Hello, <%=@current_user.first_name%></h1>
-                                
+            <div class="row no-padding">
+                <br><br>
+                <div class="col-md-3 col-sm-6 daily-stats">
+                    <div class="panel" >
+                        <a href="/quests/my_quests">
+                            <div class="panel-body brand-warning-bg text-inverse">
+                                <div class="pull-left">
+                                    <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-tasks"></i></div></div>
+                                </div>
+                                <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).count%></span>
+                                <div class="stat text-transparent">
+                                     <h3>My Quests </h3>
+                                </div> 
                             </div>
-                    </div>
-                    <!-- / page content header -->
-                    <!--Page Content-->
-                        <!-- Stats top row-->
-                        <div class="row no-padding">
-            <br><br>
-                            <!--row 1, col 2-->
-                            <div class="col-md-3 col-sm-6 daily-stats">
-                                <div class="panel" >
-                                <a href="/quests/my_quests">
-                                    <div class="panel-body brand-warning-bg text-inverse">
-                                        <div class="pull-left">
-                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-tasks"></i></div></div>                           
-                                        </div>
-                                        <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).count%></span>
-                                            <div class="stat text-transparent">
-                                                 <h3>My Quests </h3>
-                                            </div> 
-                                    </div>
-                                    </a>
-                                    <div class="panel-footer white-bg">
-                                        
-                                                                        
-                                
-                            </div> 
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    </a>
-                                
-                            </div><!--/ row 1, col 2-->
-                            <!--row 1, col 3-->
-                            <div class="col-md-3 col-sm-6 daily-stats">
-                                <div class="panel">
-                                <a href="/quests/general_quests">
-                                    <div class="panel-body brand-primary-bg text-inverse" >
-                                        <div class="pull-left">
-                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-briefcase"></i></div></div>                           
-                                        </div>
-                                        <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user).count%></span>
-                                            <div class="stat text-transparent">
-                                                 <h3>General Quest </h3>
-                                            </div> 
-                                    </div>
-                                    </a>
-                                    <div class="panel-footer white-bg">
-                                        
-                                    </div>
-                                </div>
-                            </div><!--/ row 1, col 3-->
-                            <!--row 1, col 4-->
-                            <div class="col-md-3 col-sm-6 daily-stats">
-                                <div class="panel">
-                                <a href="/quests/pending_quests">
-                                    <div class="panel-body brand-info-bg text-inverse">
-                                        <div class="pull-left">
-                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-bullhorn"></i></div></div>                            
-                                        </div>
-                                        <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).count%></span>
-                                            <div class="stat text-transparent">
-                                                 <h3>Pending Quests </h3>
-                                            </div> 
-                                                                                </div>
-                                    </a>
-                                    <div class="panel-footer white-bg">
-                                    
-                                    </div>
-                                </div>
-                            </div><!--/ row 1, col 4-->
-                            <div class="col-md-3 col-sm-6 daily-stats">
-                                <div class="panel">
-                                <a href="/quests/assigned_quests">
-                                    <div class="panel-body brand-secondary-bg text-inverse">
-                                        <div class="pull-left">
-                                            <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-phone-alt"></i></div></div>                            
-                                        </div>
-                                        <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id,:is_accepted => true).where.not(:assignee_id => @current_user.id).count%></span>
-                                            <div class="stat text-transparent">
-                                                 <h3>Assigned Quests</h3>
-                                            </div> 
-                                    </div>
-                                    </a>
-                                    <div class="panel-footer white-bg">
-                                    
-                                    </div>
-                                </div>
-                            </div><!--/ row 1, col 4-->
-                        </div><!--/ row-->
-                    <!--/ Stats top row-->
-                        <br>
-                        <div id="count-pageviews-piechart"></div>
-                        <br>
-                        <div id="count1-pageviews-piechart"></div>
-                        <div id="count2-pageviews-metric" style="margin-top: 10em"></div>
-                    
-                     <!-- Stats & Updates Col 1-->
-                     <div class="col-md-8 no-padding">
-                            <!--inner row 1-->
-                            <div class="row">
-                                <div class="col-md-6 no-padding">
-                                
-                                
-                                </div>
-                                <div class="col-md-6 no-padding">
-                                    
-                                </div>
-                            </div>
-                            
-                            <!--inner row 2-->
-                            <div class="row">
-                            
-                                    
-                            </div><!--/row 2--> 
-                            <!--row 3-->
-                            
-                            </div><!--/row 3-->   
-                            <!--row 4-->
-                            <div class="row">
-                            
+                        </a>
+                        <div class="panel-footer white-bg"></div>
+                            <div class="clearfix"></div>
                         </div>
-                        <!-- / stats & Updates Col 1-->
-                        <!-- Stats & Updates Col 2-->
-                        <div class="col-md-4">
-                            
-                                        
-                                         <!-- Calendar-->
-                                         <div id="calendar">
-                                                    <div class="panel panel-med-gray-solid">
-                                                        <div class="panel-body no-padding add-radius">
-                                                            <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left:30%; margin-top:370px; width: 175px;">
-                                                                <div class="arrow"></div>
-                                                                <h3 class="popover-title" style="disadding: none;"></h3>
-                                                                <div id="date-popover-content" class="popover-content"></div>
-                                                            </div>
-                                                            <div id="my-calendar"></div>
-                                                    </div>
-                                                </div>
-                                         </div><!-- / calendar -->
-                                         
-                        </div><!-- / stats & Updates Col 2-->
-                
-                    
+                </div>
+                <div class="col-md-3 col-sm-6 daily-stats">
+                    <div class="panel">
+                    <a href="/quests/general_quests">
+                        <div class="panel-body brand-primary-bg text-inverse" >
+                            <div class="pull-left">
+                                <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-briefcase"></i></div></div>
+                            </div>
+                            <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user).count%></span>
+                            <div class="stat text-transparent">
+                                 <h3>General Quest </h3>
+                            </div> 
+                        </div>
+                        </a>
+                        <div class="panel-footer white-bg"></div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 daily-stats">
+                    <div class="panel">
+                    <a href="/quests/pending_quests">
+                        <div class="panel-body brand-info-bg text-inverse">
+                            <div class="pull-left">
+                                <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-bullhorn"></i></div></div>
+                            </div>
+                            <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).count%></span>
+                                <div class="stat text-transparent">
+                                     <h3>Pending Quests </h3>
+                                </div> 
+                        </div>
+                        </a>
+                        <div class="panel-footer white-bg">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 daily-stats">
+                    <div class="panel">
+                    <a href="/quests/assigned_quests">
+                        <div class="panel-body brand-secondary-bg text-inverse">
+                            <div class="pull-left">
+                                <div class="badge-circle daily-stat-left">
+                                    <div class="big-text">
+                                        <i class="glyphicon glyphicon-phone-alt"></i>
+                                    </div>
+                                </div>                            
+                            </div>
+                            <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id,:is_accepted => true).where.not(:assignee_id => @current_user.id).count%></span>
+                                <div class="stat text-transparent">
+                                     <h3>Assigned Quests</h3>
+                                </div> 
+                        </div>
+                    </a>
+                    <div class="panel-footer white-bg"></div>
+                    </div>
+                </div>
+            </div>
 
-
-                </div><!-- /page-content-wrapper -->
-                
-            </div><!-- / wrapper for content below nav bar -->
-        </div><!-- end container for chat panel push-->
-
-        <script type="text/javascript">
-            queryAnalytics();
-        </script>
-
-    </body>
-</html>
+                <!-- Analytics -->
+            <br>
+            <div id="count-pageviews-piechart"></div>
+            <br>
+            <div id="count1-pageviews-piechart"></div>
+            <div id="count2-pageviews-metric" style="margin-top: 5em"></div>
+                <!-- Analytics -->
+            
+                <!-- <div class="col-md-8 no-padding">
+                    <div class="row">
+                        <div class="col-md-6 no-padding"></div>
+                        <div class="col-md-6 no-padding"></div>
+                    </div>
+                    <div class="row"></div>
+                </div>
+                <div class="row"></div> -->
+                <!-- / stats & Updates Col 1-->
+                <!-- Stats & Updates Col 2-->
+                <!-- <div class="col-md-4"> -->
+                    <!-- Calendar-->
+                    <!-- <div id="calendar">
+                        <div class="panel panel-med-gray-solid">
+                            <div class="panel-body no-padding add-radius">
+                                <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left:30%; margin-top:370px; width: 175px;">
+                                    <div class="arrow"></div>
+                                    <h3 class="popover-title" style="disadding: none;"></h3>
+                                    <div id="date-popover-content" class="popover-content"></div>
+                                </div>
+                                <div id="my-calendar"></div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- / calendar -->
+                <!-- </div> -->
+                <!-- / stats & Updates Col 2-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    queryAnalytics();
+</script>

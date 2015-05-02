@@ -5,48 +5,47 @@
                  <div class="col-md-8 no-breadcrumb" style=" margin-left: 236px;">
               <!-- basic info -->
                 <% if logged_in? && @current_user.id == @member.id %>                   
-                                      <div id="profile-main-widget" class="col-md-12 no-padding">
-                                        <div class="panel text-center">
-                                            <div class="panel-body bgimg-clouds">
-                                              <div class="col-sm-12  no-padding text-center">
-                                                   <div class="tools pull-right icons-medium text-transparent">
-                                              <a href="#"><i class="icon-camera text-transparent"></i></a>
-                                              <a href="#"><i class="icon-cog text-transparent"></i></a>
-                                                    <a href="#"><i class="icon-pencil text-transparent"></i></a>
-                                                </div>
-                                                  <div class="clearfix"></div>
-                                                <!-- user -->
-                                                      <ul class="list-inline list-unstyled">
-                                                          <li>
-                                                              <div class="avatar text-center avatar-lg animated flipInX">
-                                                                  <!-- <img src="" alt="" class="img-circle" width="135"> -->
-                                                                  <%= image_tag("avatar.png", :alt => "avatar feed", class: "img-circle") if @member.photo.nil? %>
-                                                                  <%= image_tag("#{@member.photo}", :alt => "avatar feed", class: "img-circle") if not @member.photo.nil? %>
-                                                               </div>
-                                                           </li>
-                                                           <li class="align-center-vert">
-                                                               <div class="leftarrowdiv-white">
-                                                                   <div class="well-lg transparent">
-                                                                       <ul class="list-unstyled">
-                                                                         <li class="no-padding-left"><h2><%= "#{@member.first_name} #{@member.last_name}" %></h2></li>
-                                                                        
-                                                                       </ul>
-                                                                   </div>
-                                                                </div>
-                                                           </li>
-                                                        </li> 
-                                                        </ul>  
-                                                </div>
-                                                <br><br>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                                 <div class="text-inverse">
-                                                                    <span class="number"><i class="glyphicon glyphicon-usd"></i>&nbsp; <%=@member.points%></span>
-                                                                 </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                   </div>
+                  <div id="profile-main-widget" class="col-md-12 no-padding">
+                    <div class="panel text-center">
+                        <div class="panel-body bgimg-clouds">
+                          <div class="col-sm-12  no-padding text-center">
+                               <div class="tools pull-right icons-medium text-transparent">
+                          <a href="#"><i class="icon-camera text-transparent"></i></a>
+                          <a href="#"><i class="icon-cog text-transparent"></i></a>
+                                <a href="#"><i class="icon-pencil text-transparent"></i></a>
+                            </div>
+                              <div class="clearfix"></div>
+                            <!-- user -->
+                                  <ul class="list-inline list-unstyled">
+                                      <li>
+                                          <div class="avatar text-center avatar-lg animated flipInX">
+                                              <!-- <img src="" alt="" class="img-circle" width="135"> -->
+                                              <%= image_tag("avatar.png", :alt => "avatar feed", class: "img-circle") if @member.photo.blank? %>
+                                              <%= image_tag("#{@member.photo}", :alt => "avatar feed", class: "img-circle") if not @member.photo.blank? %>
+                                           </div>
+                                       </li>
+                                       <li class="align-center-vert">
+                                           <div class="leftarrowdiv-white">
+                                               <div class="well-lg transparent">
+                                                   <ul class="list-unstyled">
+                                                     <li class="no-padding-left"><h2><%= "#{@member.first_name} #{@member.last_name}" %></h2></li>
+                                                   </ul>
+                                               </div>
+                                            </div>
+                                       </li>
+                                    </li> 
+                                    </ul>  
+                            </div>
+                            <br><br>
+                                <div class="col-sm-3 col-xs-6">
+                                             <div class="text-inverse">
+                                                <span class="number"><i class="glyphicon glyphicon-usd"></i>&nbsp; <%=@member.points%></span>
+                                             </div>
                                         </div>
-                                    </div>  <!-- / basic info -->
+                                        <div class="clearfix"></div>
+                               </div>
+                    </div>
+                  </div>  <!-- / basic info -->
                             <!-- Edit personal info -->
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
@@ -66,12 +65,12 @@
       <p class="setting"><span>Username: </span><%=@member.username%></p> 
 
       <% if @member.gender %>
-        <p class="setting"><span>Gender: </span><%= "male" %></p>
+        <p class="setting"><span>Gender: </span><%= "Male" %></p>
       <% else %>
-        <p class="setting"><span>Gender: </span><%= "female" %></p>
-               
+        <p class="setting"><span>Gender: </span><%= "Female" %></p>
       <%end %></a>
                                             </p><br>
+                                            <%= link_to "Connect to Google+" , "/auth/google_oauth2", id: "sign_in" %><br>
        <!--                                     <p><strong>Find me:</strong></p>
                                             <button class="btn btn-default"><i class="icon-flickr"></i></button>
                       <button class="btn btn-default"><i class="icon-tumblr"></i></button>

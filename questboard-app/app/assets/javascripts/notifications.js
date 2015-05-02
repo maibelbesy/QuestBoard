@@ -9,9 +9,9 @@ function respondToNotification(payload, channel) {
   }
   if (typeof count !== "undefined" && count !== null) {
     if (count > 0) {
-      $('.notifs-label').text('Notifications [' + payload.count + ']');
+      $('.badge').text(payload.count);
     } else {
-      $('.notifs-label').text('Notifications');
+      $('.badge').text('0');
     }
   }
   if (typeof url !== "undefined" && url !== null && count !== '0') {

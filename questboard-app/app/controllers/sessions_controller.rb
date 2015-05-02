@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
-
   require 'mandrill'
-  require 'pp'
   before_action :redirect_user, except: [:destroy, :google_create, :verify_email]
 
 # login an existing user view
@@ -11,11 +9,11 @@ class SessionsController < ApplicationController
 # creates a new session and logs the user in
   def create
     @REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-    input = params[:sessions][:email_username]
+    input = params[:sessions][:email]
     if ((input =~ @REGEX) != nil) 
-       user = User.find_by(:email=> params[:sessions][:email_username].downcase)
+       user = User.find_by(:email=> params[:sessions][:email].downcase)
     else
-      user = User.find_by(:username => params[:sessions][:email_username])
+      user = User.find_by(:username => params[:sessions][:email])
     end
 
     if user && user.authenticate(params[:sessions][:password]) 
@@ -28,9 +26,10 @@ class SessionsController < ApplicationController
   end
 
 # signing using Google+
-
   def google_create
     auth = env["omniauth.auth"]
+    # User.from_omniauth(auth, @current_user)
+    puts "AUTH ------------------------------- #{auth.uid}"
     if(@current_user == nil)
       user = User.find_by(:guid => auth.uid)
       if (user == nil)
@@ -49,13 +48,13 @@ class SessionsController < ApplicationController
         log_in user
       end
     else
-      user = User.from_omniauth(auth, @current_user)
-        if @current_user.guid.blank?
-          user = User.from_omniauth(auth, @current_user)
-          user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
-          quest = Quest.where(:id => user_quest, :gid => nil)
-          quest.each do |q|
-            Quest.add_calendar_event q, @current_user
+      # user = User.from_omniauth(auth, @current_user)
+      if @current_user.guid.blank?
+        user = User.from_omniauth(auth, @current_user)
+        user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
+        quest = Quest.where(:id => user_quest, :gid => nil)
+        quest.each do |q|
+          Quest.add_calendar_event q, @current_user
         end
       end
     end
@@ -99,7 +98,6 @@ class SessionsController < ApplicationController
         :from_email=>"team@questboard.com"
       }
       sending = m.messages.send message
-      puts sending
       redirect_to root_path
     else
       render 'register'

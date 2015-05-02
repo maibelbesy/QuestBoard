@@ -170,6 +170,7 @@ skip_before_filter  :verify_authenticity_token
     hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
     hash[:assign_to] = params[:quest][:assign_to]
     hash[:remind_to] = params[:quest][:remind_to]
+    # hash[:default_reminder] = params[:quest][:default_reminder]
     respond_to do |format|
       if not params[:quest][:assign_to].blank?
         if params[:quest][:assign_to] =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
