@@ -15,7 +15,7 @@ function queryAnalytics() {
 
   keenClient.draw(visitor_origins, document.getElementById("count-pageviews-piechart"), {
     chartType: "piechart",
-    title: "Quest Completion By Gender"
+    title: "Quest Completion by Gender"
   });
 
   var visitor_origins1 = new Keen.Query("count", {
@@ -24,7 +24,7 @@ function queryAnalytics() {
   });
   keenClient.draw(visitor_origins1, document.getElementById("count1-pageviews-piechart"), {
     chartType: "piechart",
-    title: "Quest Completion By Assignment"
+    title: "Quest Completion by Assignment"
   });
 
   var count = new Keen.Query("count", {

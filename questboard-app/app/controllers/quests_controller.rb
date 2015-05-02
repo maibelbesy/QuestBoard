@@ -32,7 +32,7 @@ skip_before_filter  :verify_authenticity_token
       Task.delete_all(:quest_id => params[:id])
       Reminder.delete_all(:quest_id => params[:id])
     end
-    redirect_to quests_path
+    redirect_to :back
   end
 
   #get all quests which arent accepted yet

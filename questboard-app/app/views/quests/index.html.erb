@@ -16,7 +16,7 @@
                         <a href="/quests/my_quests">
                             <div class="panel-body brand-warning-bg text-inverse">
                                 <div class="pull-left">
-                                    <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-tasks"></i></div></div>
+                                    <!-- <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-tasks"></i></div></div> -->
                                 </div>
                                 <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id, :assignee_id => @current_user.id).count%></span>
                                 <div class="stat text-transparent">
@@ -33,11 +33,11 @@
                     <a href="/quests/general_quests">
                         <div class="panel-body brand-primary-bg text-inverse" >
                             <div class="pull-left">
-                                <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-briefcase"></i></div></div>
+                                <!-- <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-briefcase"></i></div></div> -->
                             </div>
                             <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => true).where.not(:assignor_id => @current_user).count%></span>
                             <div class="stat text-transparent">
-                                 <h3>General Quest </h3>
+                                 <h3>General Quests </h3>
                             </div> 
                         </div>
                         </a>
@@ -49,7 +49,7 @@
                     <a href="/quests/pending_quests">
                         <div class="panel-body brand-info-bg text-inverse">
                             <div class="pull-left">
-                                <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-bullhorn"></i></div></div>
+                                <!-- <div class="badge-circle daily-stat-left"><div class="big-text"><i class="glyphicon glyphicon-bullhorn"></i></div></div> -->
                             </div>
                             <span id="" class="big-text"><%=UsersQuest.where(:assignee_id => @current_user.id,:is_accepted => false,:is_rejected =>false).count%></span>
                                 <div class="stat text-transparent">
@@ -66,11 +66,11 @@
                     <a href="/quests/assigned_quests">
                         <div class="panel-body brand-secondary-bg text-inverse">
                             <div class="pull-left">
-                                <div class="badge-circle daily-stat-left">
-                                    <div class="big-text">
-                                        <i class="glyphicon glyphicon-phone-alt"></i>
-                                    </div>
-                                </div>                            
+                                <!-- <div class="badge-circle daily-stat-left"> -->
+                                    <!-- <div class="big-text"> -->
+                                        <!-- <i class="glyphicon glyphicon-phone-alt"></i> -->
+                                    <!-- </div> -->
+                                <!-- </div>  -->
                             </div>
                             <span id="" class="big-text"><%=UsersQuest.where(:assignor_id => @current_user.id,:is_accepted => true).where.not(:assignee_id => @current_user.id).count%></span>
                                 <div class="stat text-transparent">

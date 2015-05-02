@@ -73,6 +73,7 @@
                 <% if @member.id == params[:id].to_i %>
                     <%= link_to "Connect to Google+" , "/auth/google_oauth2", id: "sign_in" if @member.guid.blank? %><br>
                     <%= link_to "Disconnect from Google+" , google_delete_path, id: "sign_in" if not @member.guid.blank? %><br>
+                    <p>Disconnecting from Google will remove all your calendar events created by QuestBoard.</p>
                 <% end %>
        <!--                                     <p><strong>Find me:</strong></p>
                                             <button class="btn btn-default"><i class="icon-flickr"></i></button>

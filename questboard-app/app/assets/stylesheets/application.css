@@ -58,3 +58,24 @@
 .notifs-label {
   
 }
+
+/*SIDEBAR -----------------------------------------------------------------------*/
+
+a:hover {
+    /*background-color: red;*/
+    /*color: red;*/
+}
+
+/*.gn-icons {
+    background-color: blue;
+}*/
+
+.side-elem:hover {
+    /*background-color: grey;*/
+    background-color: rgb(186, 190, 199);
+    color: white;
+}
+
+.app-logo:hover {
+    color: grey;
+}
