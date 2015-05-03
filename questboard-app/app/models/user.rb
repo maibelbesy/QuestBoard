@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-
   validates :password, length: { minimum: 6 }, :on => :create
   validates_confirmation_of :password, length: { minimum: 6 }
   has_many :tasks, foreign_key: "user_id"
