@@ -259,9 +259,9 @@ skip_before_filter  :verify_authenticity_token
       user.points += 10
       user.save
       if @current_user.gender
-        gender = 'Male'
+        gender = 'male'
       else
-        gender = 'Female'
+        gender = 'female'
       end
       User.publish_event :gender, ({:gender => gender})
 

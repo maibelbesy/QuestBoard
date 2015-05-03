@@ -135,17 +135,15 @@ Assigned to:<%=@name.username%>
  </div>
 
 
-  <div id="project1e" class="accord-collapse panel-collapse collapse">
-  <% if @current_user.id == @assignor_id %>
-    <%= button_to "Edit Quest", edit_quest_path(@Quest.id), method: :get, class: "btn btn-default", style: "margin-top: 0.5em;" %>
-  <% end %>
+   <div id="project1e" class="accord-collapse panel-collapse collapse">
+  <%= button_to "Edit Quest", edit_quest_path(@Quest.id), method: :get, class: "button", style: "margin-top: 0.5em;" %>
 
   <% if @current_user.id == @assignee_id and @current_user.id != @assignor_id and @is_accepted == false and @is_rejected == false%>
 
-    <%= button_to "Accept", accept_quest_path(@Quest.id), method: :post, remote: true, class: "btn btn-default", style: "margin-top: 0.5em;" %>
+    <%= button_to "Accept", accept_quest_path(@Quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
 
 
-    <%= button_to "Reject", reject_quest_path(@Quest.id), method: :post, remote: true, class: "btn btn-default", style: "margin-top: 0.5em;" %>
+    <%= button_to "Reject", reject_quest_path(@Quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
 
   <%end%>
   <%if @Quest.is_completed == true%>

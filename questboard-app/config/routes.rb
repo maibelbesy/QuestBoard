@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+
+  get 'errors/internal_server_error'
+
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
 
@@ -64,6 +68,11 @@ Rails.application.routes.draw do
   # get 'auth/:provider/callback', to: redirect('http://www.google.com'), as: :google_signin
   get '/disconnect_google' => 'sessions#google_delete', as: :google_delete
   get 'auth/failure', to: redirect('/')
+  
+  %w( 404 500 errorX ).each do |code|
+  get code, :to => "errors#show", :code => code
+end
+
 # You can have the root of your site routed with "root"
 # root 'welcome#index'
 
