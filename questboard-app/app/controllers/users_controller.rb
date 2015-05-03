@@ -25,7 +25,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     user = User.find_by_email(current_user.email).try(:authenticate, params[:current_password])
     if user && @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
+      flash[:success] = []
+      flash[:success] = << "Your profile was updated successfully."
       redirect_to @user
     else
       render 'edit'
