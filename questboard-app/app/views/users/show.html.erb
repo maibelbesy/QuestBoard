@@ -81,12 +81,14 @@
             <p class="setting"><span>Gender: </span><%= "Female" %></p>
           <%end %></a>
           </p><br>
-          <% if @member.id == params[:id].to_i %>
+          <% if @current_user.id == params[:id].to_i %>
             <%= link_to "Connect to Google+" , "/auth/google_oauth2", id: "sign_in" if @member.guid.blank? %><br>
-            <%= link_to "Disconnect from Google+" , google_delete_path, id: "sign_in" if not @member.guid.blank? %><br>
-            <div class="alert alert-warning" role="alert">
-              Disconnecting from Google will remove all your calendar events created by QuestBoard.
-            </div>
+            <% if not @member.guid.blank? %>
+              <%= link_to "Disconnect from Google+" , google_delete_path, id: "sign_in" %><br>
+              <div class="alert alert-warning" role="alert">
+                Disconnecting from Google will remove all your calendar events created by QuestBoard.
+              </div>
+            <% end %>
           <% end %>
         </div>
         <div class="tab-pane" id="education">
