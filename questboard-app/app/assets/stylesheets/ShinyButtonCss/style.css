@@ -284,7 +284,7 @@ a i:hover				 			{text-decoration:inline-none;}
     text-align: center;
     white-space: nowrap;
     border-radius: 15px 15px 15px 15px;
-    position:absolute;
+/*     position:absolute; */
     z-index:999;}
 .panel a .badge {margin-left:-.8em;margin-top:-.6em;}
 

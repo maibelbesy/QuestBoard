@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_secure_password validations: false
   
+  def self.search(query)
+    where("username like ?", "%#{query}%") 
+  end
+  
   # returns the count of the user's unread notifications
   def self.unread_notifications_count(user)
     Notification.where(:user_id => user.id, :is_seen => false).count
