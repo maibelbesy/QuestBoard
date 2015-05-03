@@ -103,7 +103,6 @@ class Quest < ActiveRecord::Base
 
   #add/delete/update calendar events to google calendar
   def self.add_calendar_event (quest, user)
-    return if user.guid.blank?
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token
     service = client.discovered_api('calendar', 'v3')
@@ -118,7 +117,6 @@ class Quest < ActiveRecord::Base
   end
 
   def self.delete_calendar_event (quest, user)
-    return if user.guid.blank?
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token
     service = client.discovered_api('calendar', 'v3')
@@ -127,7 +125,6 @@ class Quest < ActiveRecord::Base
   end
 
   def self.update_calendar_event (quest, user)
-    return if user.guid.blank?
     client = Google::APIClient.new
     client.authorization.access_token = user.fresh_token
     service = client.discovered_api('calendar', 'v3')
@@ -142,6 +139,7 @@ class Quest < ActiveRecord::Base
                             :parameters => {'calendarId' => 'primary', 'eventId' => quest.gid},
                             :body_object => event,
                             :headers => {'Content-Type' => 'application/json'})
+
   end
 end
 
