@@ -1,15 +1,30 @@
-<div style="overflow: auto">
-	<header class="header-title" style="float:left;">Notifications</header>
-	<!-- <a href="#" class="circular-button" style="float: right">+</a> -->
+
+
+<div class="col-md-10" style="width:90%;border-collapse: separate;border-spacing: 1em 0em;"> 
+<% provide(:title, "Edit user") %> <h1 align="center">Notifications</h1>
 </div>
-<br>
-<div>
+
+<br>    
+<!--<div>
 	<table style="width:80%;border-collapse: separate;border-spacing: 0em 1em;margin-left: 4em;">
 		<% @notifications.each do |notif| %>
 			<tr style="padding-bottom: 1em; height: 3em;" class="quest" id="<%= notif.id %>">
-				<!-- <td style="width: 60%;border-bottom: 1px solid;"><p class="label"><%= notif.title %></p></td> -->
-				<td style="width: 60%;border-bottom: 1px solid;"><p class="label"><%= link_to notif.title, notif.url %></p></td>
+				<td style="width: 60%;border-bottom: 1px solid;"><p class="label"><%= notif.title %></p></td>
 			</tr>
 		<% end %>
 	</table>
+</div>-->
+
+<div class="row">
+<br><br><br>
+	<div class="col-md-6 col-md-offset-3">
+		<% @notifications.each do |notif| %>
+		<table class="table table-hover table-striped table-content" style="width:80%;border-collapse: separate;border-spacing: 0em 0em;" >
+                <tr>
+                <td><h4 align="center"> <%=  link_to notif.title, notif.url %>  </h4> </td>
+                </tr>
+		<% end %>
+            </table>
+	</div>
 </div>
+
