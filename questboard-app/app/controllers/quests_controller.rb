@@ -11,7 +11,6 @@ skip_before_filter  :verify_authenticity_token
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
-
   def new
   end
 
@@ -64,24 +63,22 @@ skip_before_filter  :verify_authenticity_token
 
   #Shows all information about a Quest.
   def show
-
-     @user_quest = UsersQuest.find(params[:id])
-    @assignor_id = UsersQuest.find(params[:id]).assignor_id
-    @assignee_id = UsersQuest.find(params[:id]).assignee_id
-    @is_accepted = UsersQuest.find(params[:id]).is_accepted
-    @is_rejected = UsersQuest.find(params[:id]).is_rejected
+    @user_quest = UsersQuest.find(params[:id])
+    @assignor_id = @user_quest.assignor_id
+    @assignee_id = @user_quest.assignee_id
+    @is_accepted = @user_quest.is_accepted
+    @is_rejected = @user_quest.is_rejected
     @name = User.find(@user_quest.assignee_id)
     @Quest = Quest.find(@user_quest)
     @photos = @Quest.quest_images
     if QuestVideo.find_by_quest_id(@Quest.id).url != ""
-    @video = QuestVideo.find_by_quest_id(@Quest.id).url.split('/').last
-  else
-    @video = ""
+      @video = QuestVideo.find_by_quest_id(@Quest.id).url.split('/').last
+    else
+      @video = ""
     end
     @tasks = @Quest.tasks
     @comments = @Quest.comments.all
     @comment = @Quest.comments.build
-
   end
 
   #Shows the Review related to certain Quest.
@@ -238,15 +235,15 @@ skip_before_filter  :verify_authenticity_token
 # update the content of the specified quest
   def update
     hash = params[:quest]
-    flash[:warning] = []
-    flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
-    redirect_to edit_quest_path and return if flash[:warning].count > 0
+    # flash[:warning] = []
+    # flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
+    # redirect_to edit_quest_path and return if flash[:warning].count > 0
     Quest.update(params[:id], params.require(:quest).permit(:title, :description, :due_date,:bounty, :assign_to))
     quest = Quest.find_by_id(params[:id])
     if not quest.gid.blank?
       Quest.update_calendar_event quest, @current_user
     end
-    redirect_to quests_path
+    redirect_to quest_path(params[:id])
   end
 
 # Updates the quest's current status and tracks the number of quests each gender completes

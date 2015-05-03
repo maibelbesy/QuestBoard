@@ -1,6 +1,5 @@
 class Quest < ActiveRecord::Base
   require 'mandrill'
-  require 'pp'
 
   has_many :comments
   has_many :tasks, foreign_key: "quest_id", dependent: :destroy
@@ -8,8 +7,8 @@ class Quest < ActiveRecord::Base
   accepts_nested_attributes_for :quest_images, :reject_if => lambda { |t| t['quest_image'].nil? }
 
   has_many :quest_videos , :dependent => :destroy
-  validates :title, presence: true
-  validates :description, presence: true
+  validates :title, presence: true, :on => :create
+  validates :description, presence: true, :on => :create
 
 
   #creates a new quest

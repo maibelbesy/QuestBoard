@@ -1,19 +1,6 @@
-
-<% if false %>
-	<%= form_for :quest, :url => update_quest_path(params[:id]) do |f| %>
-		<%= f.text_field :title, :value => @Quest.title, placeholder: "Enter quest title"%>
-		<%= f.text_area :description, :value => @Quest.description, placeholder: "Enter post content" %>
-		<%= f.text_field :bounty, :value => @Quest.bounty, placeholder: "Enter quest bounty"%>
-		<%= f.date_select :due_date, :order => [:day, :month, :year] %>
-		<%= f.check_box :is_completed %>
-		<%= f.submit "Save", class: "login-button", style: "margin-top: 0.5em;" %>
-	<% end %>
-<% end %>
-
-
 <div class="col-md-10" style="width:90%;border-collapse: separate;border-spacing: 1em 0em;"> 
- <h1 align="center">Edit <%= " | #{@Quest.title}" %></h1>
-<br>
+	<h1 align="center">Edit <%= " | #{@Quest.title}" %></h1>
+	<br>
 </div>
 <%# if false %>
 <!--<div>
@@ -41,59 +28,26 @@
 		</table>
 	<% end %>
 </div>-->
-	<div class="col-md-6 col-md-offset-3">
-		<%= form_for :quest, :url => update_quest_path(params[:id]) do |f|  %>
-                <table class="table table-hover table-striped table-content" style="width:90%;border-collapse: separate;border-spacing: 0em 0em;" >
-                
-                <tr>
-                <td><h4>  Title: </h4> </td>
-                <td ><%= f.text_field :title, placeholder: @Quest.title, class: "input", style: "width:100%" %></td>
-                <td></td>
-                </tr>
-<!-- 		<%= f.email_field :email, placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
-                <tr>
-                <td><h4> Description: </h4> </td>
-                <td ><%= f.text_area :description, placeholder: @Quest.description, class: "textarea", style: "width:100%;resize: vertical;" %></td>
-                <td></td>
-                </tr>
-                
-		<!--<%= password_field_tag :current_password, params[:current_password], placeholder: "Old password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
-		
-                <tr>
-                <td><h4>  Due date:</h4> </td>
-                <td ><%= f.date_select :due_date, :order => [:day, :month, :year], value: @Quest.due_date %></td>
-                <td></td>
-                </tr>
-		
-<!-- 		<%= f.password_field :password, placeholder: "Create a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
-		
-
-<!-- 		<%= f.text_field :last_name, placeholder: "Enter your last name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
-
-<!-- 		<%= f.submit "Save changes", class: "login-button", style: "margin-top: 0.5em;" %> -->
+<div class="col-md-6 col-md-offset-3">
+	<%= form_for :quest, :url => update_quest_path(params[:id]) do |f|  %>
+	  <table class="table table-hover table-striped table-content" style="width:90%;border-collapse: separate;border-spacing: 0em 0em;" >
+      <tr>
+	      <td><h4>  Title: </h4> </td>
+	      <td ><%= f.text_field :title, placeholder: @Quest.title, class: "input", style: "width:100%" %></td>
+      </tr>
+      <tr>
+	      <td><h4> Description: </h4> </td>
+	      <td ><%= f.text_area :description, placeholder: @Quest.description, class: "textarea", style: "width:100%;resize: vertical;" %></td>
+      </tr>
+      <tr>
+	      <td><h4>  Due date:</h4> </td>
+	      <td ><%= f.date_select :due_date, :order => [:day, :month, :year], value: @Quest.due_date %></td>
+      </tr>
 		</table>
-
 		<div class="col-md-10" style="width:90%;border-collapse: separate;border-spacing: 0em 1em;">
-		<%= f.submit "Save", class: "button btn btn-primary btn-lg btn-block"%>
+			<%= f.submit "Save", class: "button btn btn-primary btn-lg btn-block"%>
 		</div>
-            <% end %>
-	</div>
-<%# end %>
-<!-- =======
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<div class="input-group">
-<div class="col-lg-5 col-md-offset-5">
->>>>>>> dc9647488c43836556b212203cece36875a99214
-
-				<tr style="padding-bottom: 1em;">
-					<td><font class="label">Due date: </font></td>
-					<td><%#= f.date_select :due_date, :order => [:day, :month, :year], value: @Quest.due_date %></td>
-				</tr>
-				<tr>
-					<td></td><td colspan="1"><%#= f.submit "Save", class: "login-button", class: "button", style: "float: right" %></td>
-				</tr>
-			</table>
-			<%# end %>
-		</div>
+  <% end %>
+</div>
 		
 		

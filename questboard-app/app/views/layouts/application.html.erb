@@ -126,6 +126,7 @@
       <div class="container-container" style="padding: 01em;background-color: transparent;">
         <% if not exemptions.include? request.path %>
           <button class="shiny-button"  data-toggle="modal" data-target="#myModal2" style="margin-top: 15px;margin-left : 90%;" >New Quest</button>
+          <br>
           <% end %>
         <%= yield %>
       </div>
@@ -139,16 +140,16 @@
 
     <script>
       $.noConflict();
-      $(window).ready(function(){
-          $('input[name="commit"]').click(function(){
-              if($("#quest_title").val() == ""){
-                  alert("Please write Title");
-              }
-              if($("#quest_description").val() == ""){
-                  alert("Please write Descripton");
-              }
-          });
-      });
+      // $(window).ready(function(){
+      //     $('input[name="commit"]').click(function(){
+      //         if($("#quest_title").val() == ""){
+      //             alert("Please write Title");
+      //         }
+      //         if($("#quest_description").val() == ""){
+      //             alert("Please write Descripton");
+      //         }
+      //     });
+      // });
     </script>
   </body>
 </html>
