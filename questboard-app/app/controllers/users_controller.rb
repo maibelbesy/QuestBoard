@@ -29,11 +29,37 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     user = User.find_by_email(current_user.email).try(:authenticate, params[:current_password])
     if user && @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
+      flash[:success] = []
+      flash[:success] << "You profile was updated successfully."
       redirect_to @user
     else
       render 'edit'
     end
+    # hash = params[:user]
+    # @current_user.first_name = hash[:first_name]
+    # @current_user.last_name = hash[:last_name]
+    # if hash[:email] != @current_user.email
+    #   flag = true
+    #   @current_user.email = hash[:email]
+    #   @current_user.email_verified = false
+    # end
+    # if @current_user.authenticate(hash[:current_password])
+    #   if hash[:password] == hash[:password_confirmation]
+    #     @current_password.password = hash[:password]
+    #   else
+    #     flash[:alert] = []
+    #     flash[:alert] << "You profile was not updated successfully."
+    #     redirect_to edit_user_path(@current_user.id) and return
+    #   end
+    # elsif !@current_user.authenticate(hash[:current_password])
+    #   flash[:alert] = []
+    #   flash[:alert] << "You profile was not updated successfully."
+    #   redirect_to edit_user_path(@current_user.id) and return
+    # end
+    # flash[:success] = []
+    # flash[:success] << "You profile was updated successfully."
+    # @current_user.save
+    # redirect_to user_path(@current_user.id) and return
   end
 
   private
