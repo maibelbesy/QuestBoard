@@ -142,7 +142,7 @@ Assigned to:<%=@name.username%>
 
   <% if @current_user.id == @assignee_id and @current_user.id != @assignor_id and @is_accepted == false and @is_rejected == false%>
 
-    <%= button_to "Accept", accept_quest_path(@Quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
+    <%= button_to "Accept", accept_quest_path(@Quest.id), method: :post, remote: true, class: "btn btn-default", style: "margin-top: 0.5em;" %>
 
 
     <%= button_to "Reject", reject_quest_path(@Quest.id), method: :post, remote: true, class: "btn btn-default", style: "margin-top: 0.5em;" %>
