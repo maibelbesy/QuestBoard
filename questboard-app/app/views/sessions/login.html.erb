@@ -36,6 +36,24 @@
 
     </head>
     <body class="bg-med">
+            <% if flash[:info] && flash[:info].count > 0 %>
+              <% flash[:info].each do |f| %>
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
+                    <%= f %>
+                </div>
+                <% end %>
+                <br>
+            <% end %>
+            <% if flash[:success] && flash[:success].count > 0 %>
+              <% flash[:success].each do |f| %>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
+                    <%= f %>
+                </div>
+                <% end %>
+                <br>
+            <% end %>
         <div id="login" class="container">
             <div class="row center-panel ">
                 <div class="col-sm-6 col-md-4 col-md-offset-4 text-center">
@@ -55,7 +73,8 @@
                 <br>
                </span></div>
             </div>
-        </div><span class="clearfix">
+        </div>
+        <span class="clearfix">
 
     
         <!-- Plugins & Custom -->
