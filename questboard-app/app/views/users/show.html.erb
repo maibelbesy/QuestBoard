@@ -7,15 +7,15 @@
       <div id="profile-main-widget" class="col-md-12 no-padding">
         <% if @member.email_verified == false %>
           <div class="alert alert-warning" role="alert">
-            Please verify your email.
-            <a href="/send_verify" class="alert-link">Click here to resend the verification email.</a>
+          Please verify your email.
+          <a href="/send_verify" class="alert-link">Click here to resend the verification email.</a>
           </div>
         <% end %>
         <% if flash[:success] && flash[:success].count > 0 %>
           <% flash[:success].each do |f| %>
             <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
-              <%= f %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
+            <%= f %>
             </div>
             <% end %>
             <br>

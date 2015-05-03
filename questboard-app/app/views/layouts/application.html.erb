@@ -88,7 +88,7 @@
             <!-- /NEW QUEST -->
             <!-- NOTIFICATIONS -->
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle announcements" data-toggle="dropdown">
+              <a href="#" class="dropdown-toggle announcements" data-toggle="dropdown" style="margin: -7px;">
                 <i class="glyphicon glyphicon-flag"></i>
                 <span class="badge animated-delay flash">
                   <% unread = User.unread_notifications_count @current_user %>
@@ -125,7 +125,7 @@
     <div class="container-body">
       <div class="container-container" style="padding: 01em;background-color: transparent;">
         <% if not exemptions.include? request.path %>
-          <button class="shiny-button"  data-toggle="modal" data-target="#myModal2" style="margin-top: 15px;margin-left : 90%;" >New Quest</button>
+          <button class="shiny-button"  data-toggle="modal" data-target="#myModal2" style="margin-top: 10%;margin-left : 90%;" >New Quest</button>
           <br>
           <% end %>
         <%= yield %>

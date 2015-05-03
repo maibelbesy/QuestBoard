@@ -194,9 +194,8 @@ class SessionsController < ApplicationController
       :from_email=>"team@questboard.com"
     }
     sending = m.messages.send message
-    flash[:info] = []
-    flash[:info] << "Please follow the email sent to you to reset your password."
     redirect_to login_path 
+
   end
 
   #sends a new password to the user
@@ -228,8 +227,6 @@ class SessionsController < ApplicationController
     Token.delete(token.id)
     Token.where(:user_id => user.id, :token_type => "access").delete_all
     end
-    flash[:success] = []
-    flash[:success] << "Your password has been successfully reset and was sent to your email."
     redirect_to login_path
   end
 
@@ -237,4 +234,5 @@ class SessionsController < ApplicationController
   def redirect_user
     redirect_to root_path and return if logged_in?
   end
+
 end

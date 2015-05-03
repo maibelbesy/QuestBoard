@@ -459,7 +459,7 @@ button:hover, [class*=btn]:hover, a:hover, sidebar-nav .submenu li:hover, li:hov
 
 /* LOGIN, SIGNUP, REGISTER
  * -------------------------- */
-.center-panel   {margin-top: 15%; padding: 40px 20px 30px 20px;}
+.center-panel   {padding: 40px 20px 30px 20px;}
 #login .avatar  {padding-top:3em;}
 .need-help		{margin-top: 15px;}
 
