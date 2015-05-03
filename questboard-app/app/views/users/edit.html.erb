@@ -28,20 +28,20 @@
                 
                 <tr>
                 <td><h4>  Email: </h4> </td>
-                <td ><%= f.email_field :email, placeholder: "Enter New Email", class: "input", style: "width:100%" %></td>
+                <td ><%= f.email_field :email, placeholder: "Enter your email", class: "input", style: "width:100%" %></td>
                 <td></td>
                 </tr>
 <!-- 		<%= f.email_field :email, placeholder: "Enter your email", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
                 <tr>
-                <td><h4>  Old Password: </h4> </td>
-                <td ><%= password_field_tag :current_password, params[:current_password], placeholder: "Enter Old Password", class: "input", style: "width:100%" %></td>
+                <td><h4>  Current password: </h4> </td>
+                <td ><%= password_field_tag :current_password, params[:current_password], placeholder: "Enter your current password", class: "input", style: "width:100%" %></td>
                 <td></td>
                 </tr>
                 
 		<!--<%= password_field_tag :current_password, params[:current_password], placeholder: "Old password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
 		
                 <tr>
-                <td><h4>  New Password: </h4> </td>
+                <td><h4>  New password: </h4> </td>
                 <td ><%= f.password_field :password, placeholder: "Create a new password", class: "input", style: "width:100%" %></td>
                 <td></td>
                 </tr>
@@ -49,15 +49,15 @@
 <!-- 		<%= f.password_field :password, placeholder: "Create a new password", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
 		
                 <tr>
-                <td><h4>  Confirm Password: </h4> </td>
-                <td ><%= f.password_field :password_confirm, placeholder: "Confirm a new password", class: "input", style: "width:100%" %></td>
+                <td><h4>  Confirm password: </h4> </td>
+                <td ><%= f.password_field :password_confirm, placeholder: "Confirm new password", class: "input", style: "width:100%" %></td>
                 <td></td>
                 </tr>
 		
 
 		
                 <tr>
-                <td><h4>  Confirm Password: </h4> </td>
+                <td><h4>  First name: </h4> </td>
                 <td ><%= f.text_field :first_name, placeholder: "Enter your first name", class: "input", style: "width:100%" %></td>
                 <td></td>
                 </tr>
@@ -65,7 +65,7 @@
 <!-- 		<%= f.text_field :first_name, placeholder: "Enter your first name", style: "float:left;background-color: transparent;margin-top: 0.5em;" %> -->
 
                 <tr>
-                <td><h4>  Confirm Password: </h4> </td>
+                <td><h4>  Last name: </h4> </td>
                 <td ><%= f.text_field :last_name, placeholder: "Enter your last name", class: "input", style: "width:100%" %></td>
                 <td></td>
                 </tr>

@@ -248,31 +248,44 @@ skip_before_filter  :verify_authenticity_token
 
 # Updates the quest's current status and tracks the number of quests each gender completes
   def status
-    quest = Quest.find(params[:id])
-    quest.update(:status=> params[:string])
-    #update status in the db when it is done
-    if (params[:string] == "Done")
-      quest.is_completed=true
-      quest.completed_at = DateTime.now.utc
-      quest.save
-      user = User.find(@current_user.id)
-      user.points += 10
-      user.save
-      if @current_user.gender
-        gender = 'Male'
-      else
-        gender = 'Female'
+    respond_to do |format|
+      quest = Quest.find(params[:id])
+      quest.update(:status=> params[:string])
+      #update status in the db when it is done
+      if (params[:string] == "Done")
+        quest.is_completed=true
+        quest.completed_at = DateTime.now.utc
+        quest.save
+        user = User.find(@current_user.id)
+        user.points += 10
+        user.save
+        if @current_user.gender
+          gender = 'Male'
+        else
+          gender = 'Female'
+        end
+        User.publish_event :gender, ({:gender => gender})
+
+        userQuest = UsersQuest.find_by_quest_id(quest.id)
+        if @current_user.id==userQuest.assignor_id && @current_user.id==userQuest.assignee_id
+          User.publish_event :quest_type, ({:self_assigned => 'Self Assigned'})
+        else
+          User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
+        end
+
+        notif_user = User.find_by(:id => userQuest.assignor_id)
+        notif = Notification.create(:user_id => userQuest.assignor_id,
+          :title => "#{@current_user.first_name} #{@current_user.last_name} has completed your assigned quest: #{quest.title}",
+          :url => quest_path(userQuest.quest_id))
+        @options = {:channel => "/notifs/#{userQuest.assignor_id}",
+                    :message => notif.title,
+                    :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id]),
+                    :url => quest_path(userQuest.quest_id),
+                    :id => notif.id}
+
       end
-      User.publish_event :gender, ({:gender => gender})
-
-      userQuest=UsersQuest.find_by_quest_id(quest.id)
-      if @current_user.id==userQuest.assignor_id && @current_user.id==userQuest.assignee_id
-        User.publish_event :quest_type, ({:self_assigned => 'Self Assigned'})
-      else
-        User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
-      end   
-
+      format.html {redirect_to quest_path(params[:id])}
+      format.js
     end
-    redirect_to quest_path(params[:id])
   end
 end
