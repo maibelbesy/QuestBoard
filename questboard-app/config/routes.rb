@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get '/logout'  => 'sessions#destroy', as: :logout_user
   get '/send_verify' => 'sessions#send_verify'
   get '/verify_email' => 'sessions#verify_email'
-  get '/reset_password' => 'sessions#reset_password', as: :reset_password
+  get '/forgot_password' => 'sessions#reset_password', as: :reset_password
   post '/forgot_password' => 'sessions#forgot_password', as: :forgot_password
   get '/reset_password' => 'sessions#send_password', as: :send_password
   # Routes for Quests

@@ -6,7 +6,6 @@
         <!-- page content header -->
             <div class="row add-padding">
                 <% if flash[:success] && flash[:success].count > 0 %>
-                    <!-- <div class="warning"><%#= safe_join(flash[:warning], "<br>".html_safe) %></div> -->
                     <% flash[:success].each do |f| %>
                       <div class="alert alert-success alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
@@ -93,41 +92,13 @@
                 </div>
             </div>
 
-                <!-- Analytics -->
+            <!-- Analytics -->
             <br>
             <div id="count-pageviews-piechart"></div>
             <br>
             <div id="count1-pageviews-piechart"></div>
             <div id="count2-pageviews-metric" style="margin-top: 5em"></div>
-                <!-- Analytics -->
-            
-                <!-- <div class="col-md-8 no-padding">
-                    <div class="row">
-                        <div class="col-md-6 no-padding"></div>
-                        <div class="col-md-6 no-padding"></div>
-                    </div>
-                    <div class="row"></div>
-                </div>
-                <div class="row"></div> -->
-                <!-- / stats & Updates Col 1-->
-                <!-- Stats & Updates Col 2-->
-                <!-- <div class="col-md-4"> -->
-                    <!-- Calendar-->
-                    <!-- <div id="calendar">
-                        <div class="panel panel-med-gray-solid">
-                            <div class="panel-body no-padding add-radius">
-                                <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left:30%; margin-top:370px; width: 175px;">
-                                    <div class="arrow"></div>
-                                    <h3 class="popover-title" style="disadding: none;"></h3>
-                                    <div id="date-popover-content" class="popover-content"></div>
-                                </div>
-                                <div id="my-calendar"></div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- / calendar -->
-                <!-- </div> -->
-                <!-- / stats & Updates Col 2-->
+            <!-- /Analytics -->
         </div>
     </div>
 </div>
