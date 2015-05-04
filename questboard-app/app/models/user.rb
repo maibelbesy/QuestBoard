@@ -12,12 +12,15 @@ class User < ActiveRecord::Base
   validates :email, presence:   true,
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-
   validates :password, length: { minimum: 6 }, :on => :create
   validates_confirmation_of :password, length: { minimum: 6 }
   has_many :tasks, foreign_key: "user_id"
   has_many :notifications
   has_secure_password validations: false
+  
+  def self.search(query)
+    where("username like ?", "%#{query}%") 
+  end
   
   # returns the count of the user's unread notifications
   def self.unread_notifications_count(user)
@@ -25,8 +28,8 @@ class User < ActiveRecord::Base
   end
 
 # updates the user's data from the Google return response
-  def self.from_omniauth(auth, users)
-    user = self.find_by_id(users.id)
+  def self.from_omniauth(auth, user)
+    # user = self.find_by_id(users.id)
     user.provider = auth.provider
     user.guid = auth.uid
     user.oauth_token = auth.credentials.token
@@ -78,8 +81,8 @@ class User < ActiveRecord::Base
  # refresh the Google access token
   def to_params
     {'refresh_token' => oauth_refresh_token,
-    'client_id' => ENV['CLIENT_ID'],
-    'client_secret' => ENV['CLIENT_SECRET'],
+    'client_id' => "242940041414-3p5v3sl6hsbonl7b49af4agc0kbdg9rq.apps.googleusercontent.com",
+    'client_secret' => "45WS4-BvMJoo2Izjht6pn3uv",
     'grant_type' => 'refresh_token'}
   end
 
@@ -91,8 +94,8 @@ class User < ActiveRecord::Base
   def refresh!
     response = request_token_from_google
     data = JSON.parse(response.body)
-    update_attributes(
-    oauth_token: data['access_token'],
+    puts "DATA ------------ #{data}"
+    update_attributes(oauth_token: data['access_token'],
     oauth_expires_at: Time.now + (data['expires_in'].to_i).seconds)
   end
 
@@ -101,7 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def fresh_token
-    refresh! if expired?
+    refresh! if expired? || oauth_token.nil?
     oauth_token
   end
 

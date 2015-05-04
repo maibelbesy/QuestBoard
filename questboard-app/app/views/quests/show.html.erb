@@ -51,13 +51,14 @@
   <div class="panel-body">
     <%= @Quest.bounty%>
   </br>
-  Due Date:<%= @Quest.due_date%>
+  Due Date: <%= @Quest.due_date.strftime("%d-%m-%Y")%>
 </br>
-Assigned to:<%=@name.username%>
+<% if @assignor_id != @assignee_id %>
+Assigned to: <%="#{@name.first_name} #{@name.last_name}"%>
 </br>
+<% end %>
 <%if @Quest.is_completed%>
-
-<%= @Quest.completed_at%>
+  Completed at: <%= @Quest.completed_at.strftime("%d-%m-%Y %H:%M") %>
 <%end%>
 </div>
 </div>
@@ -79,7 +80,7 @@ Assigned to:<%=@name.username%>
   <%end%>
   <td><font  style="width:20%;">Images </font></td>
   <% @photos.each do |pic| %>
-  <%= link_to image_tag(pic.photo.url (:small)), pic.photo.url %>
+    <%= link_to image_tag(pic.photo.url (:small)), pic.photo.url %>
   <%end%>
 </div>
 </div>
@@ -89,17 +90,17 @@ Assigned to:<%=@name.username%>
   <div class="panel-heading brand-highlight task-list">
     <a data-toggle="collapse" data-parent="#accordionrnd_1" href="#project1f">
      <i class="icon-file-alt text-transparent"></i>
-     &nbsp;&nbsp;Task&nbsp;&nbsp;&nbsp;&nbsp;
+     &nbsp;&nbsp;Tasks&nbsp;&nbsp;&nbsp;&nbsp;
    </a>
  </div>
  <div id="project1f" class="accord-collapse panel-collapse collapse">
   <div class="panel-body">
     <% @tasks.each do |task| %>
     <tr style="padding-bottom: 1em">
-        <td><font  style="width:20%;">-<%= task.title%></font></td>
+        <td><font  style="width:20%;">- <%=task.title%></font></td>
         </p>
-        <%if task.user == @current_user.id%>
-        <td style=""><%= button_to "X", delete_task_path(task.id), method: :delete%></p></td>
+        <%if task.user == @current_user%>
+        <td style=""><%= button_to "Delete", delete_task_path(task.id), class: "btn btn-default", method: :delete %></p></td>
         <%end%>
     </tr>
     <%end%>
@@ -146,7 +147,7 @@ Assigned to:<%=@name.username%>
     <%= button_to "Reject", reject_quest_path(@Quest.id), method: :post, remote: true, class: "button", style: "margin-top: 0.5em;" %>
 
   <%end%>
-  <%if @Quest.is_completed == true%>
+  <% if @Quest.is_completed == true && @current_user.id == @assignor_id && @current_user.id != @assignee_id%>
   <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample" style="background-color: gray; color:white;">
             Add Review
             </button>
@@ -193,7 +194,7 @@ Assigned to:<%=@name.username%>
     <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/InProgress'" id = "2">
       in Progress
     </button>
-    <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/Done'" id = "3">
+    <button type="button" class="btn btn-default" onclick="window.location.href='/quests/<%= @Quest.id%>/Done'" id = "3" remote="true">
       Done
     </button>
     <%end%>

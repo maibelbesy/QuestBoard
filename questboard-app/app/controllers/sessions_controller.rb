@@ -1,8 +1,6 @@
 class SessionsController < ApplicationController
-
   require 'mandrill'
-  require 'pp'
-  before_action :redirect_user, except: [:destroy, :google_create, :verify_email]
+  before_action :redirect_user, except: [:destroy, :google_create, :google_delete, :verify_email, :send_verify]
 
 # login an existing user view
   def login
@@ -11,11 +9,11 @@ class SessionsController < ApplicationController
 # creates a new session and logs the user in
   def create
     @REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-    input = params[:sessions][:email_username]
+    input = params[:sessions][:email]
     if ((input =~ @REGEX) != nil) 
-       user = User.find_by(:email=> params[:sessions][:email_username].downcase)
+       user = User.find_by(:email=> params[:sessions][:email].downcase)
     else
-      user = User.find_by(:username => params[:sessions][:email_username])
+      user = User.find_by(:username => params[:sessions][:email])
     end
 
     if user && user.authenticate(params[:sessions][:password]) 
@@ -28,16 +26,16 @@ class SessionsController < ApplicationController
   end
 
 # signing using Google+
-
   def google_create
     auth = env["omniauth.auth"]
+    # User.from_omniauth(auth, @current_user)
     if(@current_user == nil)
       user = User.find_by(:guid => auth.uid)
       if (user == nil)
         email = auth.info.email
         first = auth.info.first_name
         last = auth.info.last_name
-        picture = auth.info.image
+        picture = auth.info.image.gsub(/sz=\d+/, "sz=150")
         token = auth.credentials.token
         id = auth.uid
         prov = auth.provider
@@ -49,18 +47,33 @@ class SessionsController < ApplicationController
         log_in user
       end
     else
-      user = User.from_omniauth(auth, @current_user)
-        if @current_user.guid.blank?
-          user = User.from_omniauth(auth, @current_user)
-          user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
-          quest = Quest.where(:id => user_quest, :gid => nil)
-          quest.each do |q|
-            Quest.add_calendar_event q, @current_user
+      if @current_user.guid.blank?
+        User.from_omniauth(auth, @current_user)
+        user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
+        quest = Quest.where(:id => user_quest, :gid => nil)
+        quest.each do |q|
+          Quest.add_calendar_event q, @current_user
         end
       end
     end
     current_user
     redirect_to root_path
+  end
+
+  def google_delete
+    user_quest = UsersQuest.where('assignor_id = ? OR assignee_id = ?', @current_user.id, @current_user.id).pluck(:quest_id)
+    quest = Quest.where(:id => user_quest).where.not(:gid => nil)
+    quest.each do |q|
+      Quest.delete_calendar_event q, @current_user
+    end
+    @current_user.oauth_token = params[:token]
+    @current_user.provider = params[:prov]
+    @current_user.guid =params[:id]
+    @current_user.oauth_refresh_token = params[:refresh]
+    @current_user.oauth_expires_at = Time.at(params[:expires].to_i)
+    @current_user.photo = params[:photo]
+    @current_user.save
+    redirect_to user_path(@current_user.id)
   end
 
 # register a new user view
@@ -88,7 +101,7 @@ class SessionsController < ApplicationController
       message = {
         :subject=> "[QuestBoard] Email Verification",
         :from_name=> "QuestBoard",
-        :text => "Hi #{@user.first_name},\r\n\r\nThank you for choosing QuestBoard. Please click on the link below to verify your email.\r\n\r\n#{domain}/users/verify_email?email=#{@user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
+        :text => "Hi #{@user.first_name},\r\n\r\nThank you for choosing QuestBoard. Please click on the link below to verify your email.\r\n\r\n#{domain}/verify_email?email=#{@user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
         :to=>[
           {
             :email=> "#{@user.email}",
@@ -99,11 +112,36 @@ class SessionsController < ApplicationController
         :from_email=>"team@questboard.com"
       }
       sending = m.messages.send message
-      puts sending
+      flash[:success] = []
+      flash[:success] << "Your account has been successfully created."
       redirect_to root_path
     else
       render 'register'
     end
+  end
+
+  def send_verify
+    token = Token.generate_random
+    Token.create(:key => token, :user_id => @current_user.id, :token_type => 'verify')
+    domain = 'http://localhost:3000'
+    m = Mandrill::API.new 'BCyRB5oNxOdZCcjMqpzpzA'
+    message = {
+      :subject=> "[QuestBoard] Email Verification",
+      :from_name=> "QuestBoard",
+      :text => "Hi #{@current_user.first_name},\r\n\r\nThank you for choosing QuestBoard. Please click on the link below to verify your email.\r\n\r\n#{domain}/verify_email?email=#{@current_user.email}&token=#{token}\r\n\r\nRegards,\r\nThe team",
+      :to=>[
+        {
+          :email=> "#{@current_user.email}",
+          :type=>"to",
+          :name=> "#{@current_user.first_name}"
+        }
+      ],
+      :from_email=>"team@questboard.com"
+    }
+    sending = m.messages.send message
+    flash[:success] = []
+    flash[:success] << "Verification email was sent."
+    redirect_to user_path(@current_user.id)
   end
 
   def verify_email
@@ -117,6 +155,10 @@ class SessionsController < ApplicationController
       user.save
       Token.delete(token.id)
     end
+    # flash[:success] = "Your email has been successfully verified."
+    flash[:success] = []
+    flash[:success] << "Your email has been successfully verified."
+    flash.keep
     redirect_to root_path
   end
 
@@ -141,7 +183,7 @@ class SessionsController < ApplicationController
     message = {
       :subject=> "[QuestBoard] Reset Password",
       :from_name=> "QuestBoard",
-      :text => "Hi,\r\n\r\nYou requested to reset your password. Click on the link below to receive your new password\r\n #{domain}/users/reset_password?email=#{user.email}&token=#{token}\r\n\r\nIf it wasn't you, please disregard this email.\r\n\r\nRegards,\r\nThe team",
+      :text => "Hi,\r\n\r\nYou requested to reset your password. Click on the link below to receive your new password\r\n #{domain}/reset_password?email=#{user.email}&token=#{token}\r\n\r\nIf it wasn't you, please disregard this email.\r\n\r\nRegards,\r\nThe team",
       :to=>[
         {
           :email=> "#{params[:sessions][:email]}",

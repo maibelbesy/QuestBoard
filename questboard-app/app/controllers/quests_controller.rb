@@ -11,7 +11,6 @@ skip_before_filter  :verify_authenticity_token
     @quests = Quest.where(:id => quests).order('due_date')
   end
 
-
   def new
   end
 
@@ -32,7 +31,7 @@ skip_before_filter  :verify_authenticity_token
       Task.delete_all(:quest_id => params[:id])
       Reminder.delete_all(:quest_id => params[:id])
     end
-    redirect_to quests_path
+    redirect_to :back
   end
 
   #get all quests which arent accepted yet
@@ -64,24 +63,22 @@ skip_before_filter  :verify_authenticity_token
 
   #Shows all information about a Quest.
   def show
-
-     @user_quest = UsersQuest.find(params[:id])
-    @assignor_id = UsersQuest.find(params[:id]).assignor_id
-    @assignee_id = UsersQuest.find(params[:id]).assignee_id
-    @is_accepted = UsersQuest.find(params[:id]).is_accepted
-    @is_rejected = UsersQuest.find(params[:id]).is_rejected
+    @user_quest = UsersQuest.find(params[:id])
+    @assignor_id = @user_quest.assignor_id
+    @assignee_id = @user_quest.assignee_id
+    @is_accepted = @user_quest.is_accepted
+    @is_rejected = @user_quest.is_rejected
     @name = User.find(@user_quest.assignee_id)
     @Quest = Quest.find(@user_quest)
     @photos = @Quest.quest_images
     if QuestVideo.find_by_quest_id(@Quest.id).url != ""
-    @video = QuestVideo.find_by_quest_id(@Quest.id).url.split('/').last
-  else
-    @video = ""
+      @video = QuestVideo.find_by_quest_id(@Quest.id).url.split('/').last
+    else
+      @video = ""
     end
     @tasks = @Quest.tasks
     @comments = @Quest.comments.all
     @comment = @Quest.comments.build
-
   end
 
   #Shows the Review related to certain Quest.
@@ -170,6 +167,7 @@ skip_before_filter  :verify_authenticity_token
     hash = params.require(:quest).permit(:title, :description, :due_date, :bounty)
     hash[:assign_to] = params[:quest][:assign_to]
     hash[:remind_to] = params[:quest][:remind_to]
+    # hash[:default_reminder] = params[:quest][:default_reminder]
     respond_to do |format|
       if not params[:quest][:assign_to].blank?
         if params[:quest][:assign_to] =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -237,44 +235,57 @@ skip_before_filter  :verify_authenticity_token
 # update the content of the specified quest
   def update
     hash = params[:quest]
-    flash[:warning] = []
-    flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
-    redirect_to edit_quest_path and return if flash[:warning].count > 0
+    # flash[:warning] = []
+    # flash[:warning] << "Title cannot be left blank" if hash[:title].blank?
+    # redirect_to edit_quest_path and return if flash[:warning].count > 0
     Quest.update(params[:id], params.require(:quest).permit(:title, :description, :due_date,:bounty, :assign_to))
     quest = Quest.find_by_id(params[:id])
     if not quest.gid.blank?
       Quest.update_calendar_event quest, @current_user
     end
-    redirect_to quests_path
+    redirect_to quest_path(params[:id])
   end
 
 # Updates the quest's current status and tracks the number of quests each gender completes
   def status
-    quest = Quest.find(params[:id])
-    quest.update(:status=> params[:string])
-    #update status in the db when it is done
-    if (params[:string] == "Done")
-      quest.is_completed=true
-      quest.completed_at = DateTime.now.utc
-      quest.save
-      user = User.find(@current_user.id)
-      user.points += 10
-      user.save
-      if @current_user.gender
-        gender = 'male'
-      else
-        gender = 'female'
+    respond_to do |format|
+      quest = Quest.find(params[:id])
+      quest.update(:status=> params[:string])
+      #update status in the db when it is done
+      if (params[:string] == "Done")
+        quest.is_completed=true
+        quest.completed_at = DateTime.now.utc
+        quest.save
+        user = User.find(@current_user.id)
+        user.points += 10
+        user.save
+        if @current_user.gender
+          gender = 'Male'
+        else
+          gender = 'Female'
+        end
+        User.publish_event :gender, ({:gender => gender})
+
+        userQuest = UsersQuest.find_by_quest_id(quest.id)
+        if @current_user.id==userQuest.assignor_id && @current_user.id==userQuest.assignee_id
+          User.publish_event :quest_type, ({:self_assigned => 'Self Assigned'})
+        else
+          User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
+        end
+
+        notif_user = User.find_by(:id => userQuest.assignor_id)
+        notif = Notification.create(:user_id => userQuest.assignor_id,
+          :title => "#{@current_user.first_name} #{@current_user.last_name} has completed your assigned quest: #{quest.title}",
+          :url => quest_path(userQuest.quest_id))
+        @options = {:channel => "/notifs/#{userQuest.assignor_id}",
+                    :message => notif.title,
+                    :count => "#{User.unread_notifications_count notif_user}", :redirect => quest_path(params[:id]),
+                    :url => quest_path(userQuest.quest_id),
+                    :id => notif.id}
+
       end
-      User.publish_event :gender, ({:gender => gender})
-
-      userQuest=UsersQuest.find_by_quest_id(quest.id)
-      if @current_user.id==userQuest.assignor_id && @current_user.id==userQuest.assignee_id
-        User.publish_event :quest_type, ({:self_assigned => 'Self Assigned'})
-      else
-        User.publish_event :quest_type, ({:self_assigned => 'Not Self Assigned'})
-      end   
-
+      format.html {redirect_to quest_path(params[:id])}
+      format.js
     end
-    redirect_to quest_path(params[:id])
   end
 end

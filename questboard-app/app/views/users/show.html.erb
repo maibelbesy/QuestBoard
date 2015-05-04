@@ -1,102 +1,108 @@
+<div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
+<!-- Col 1 -->
+  <div class="col-md-8 no-breadcrumb" style=" margin-left: 236px;">
+<!-- basic info -->
+<%# if logged_in? && @current_user.id == @member.id %>
+    <% if true %>
+      <div id="profile-main-widget" class="col-md-12 no-padding">
+        <% if @member.email_verified == false %>
+          <div class="alert alert-warning" role="alert">
+          Please verify your email.
+          <a href="/send_verify" class="alert-link">Click here to resend the verification email.</a>
+          </div>
+        <% end %>
+        <% if flash[:success] && flash[:success].count > 0 %>
+          <% flash[:success].each do |f| %>
+            <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-right: 1em;"><span aria-hidden="true">&times;</span></button>
+            <%= f %>
+            </div>
+            <% end %>
+            <br>
+        <% end %>
+        <div class="panel text-center">
+          <div class="panel-body bgimg-clouds">
+            <div class="col-sm-12  no-padding text-center">
+              <div class="tools pull-right icons-medium text-transparent">
+                <a href="#"><i class="icon-camera text-transparent"></i></a>
+                <a href="#"><i class="icon-cog text-transparent"></i></a>
+                <a href="#"><i class="icon-pencil text-transparent"></i></a>
+              </div>
+              <div class="clearfix"></div>
+              <!-- user -->
+              <ul class="list-inline list-unstyled">
+                <li>
+                  <div class="avatar text-center avatar-lg animated flipInX">
+                    <%= image_tag("avatar.png", :alt => "avatar feed", class: "img-circle") if @member.photo.blank? %>
+                    <%= image_tag("#{@member.photo}", :alt => "avatar feed", class: "img-circle") if not @member.photo.blank? %>
+                  </div>
+                </li>
+                <li class="align-center-vert">
+                  <div class="leftarrowdiv-white">
+                    <div class="well-lg transparent">
+                      <ul class="list-unstyled">
+                        <li class="no-padding-left"><h2><%= "#{@member.first_name} #{@member.last_name}" %></h2></li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+  <!-- </li> -->
+              </ul>
+            </div>
+            <br><br>
+            <div class="col-sm-3 col-xs-6">
+              <div class="text-inverse">
+                <span class="number"><i class="glyphicon glyphicon-usd"></i>&nbsp; <%=@member.points%></span>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>  <!-- / basic info -->
+  <!-- Edit personal info -->
+  <!-- Nav tabs -->
+      <ul class="nav nav-tabs">
+        <li><a href="#user" data-toggle="tab"><i class="icon-user"></i>&nbsp;&nbsp;&nbsp;About me</a>
+        <li><a href="#education" data-toggle="tab"><i class="icon-book"></i>&nbsp;&nbsp;&nbsp;Connections</a></li>
+        <li><a href="#resume" data-toggle="tab"><i class="icon-file-text"></i>&nbsp;&nbsp;&nbsp;Reviews</a></li>
+      </ul>
+  <!-- Tab panes -->
+      <div class="tab-content add-shadow">
+        <div class="tab-pane active" id="user">
+          <h3>Basic Info</h3>
+          <p><a href="#" id="info" data-type="text" data-pk="1" data-title="Enter Info"><p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p>
+          <p class="setting"><span>Full Name: </span><%= "#{@member.first_name} #{@member.last_name}" %></p>
 
-              <div id="page-content-wrapper" class="stretch-full-height animated-med-delay fadeInRight">
-                
-                <!-- Col 1 -->
-                 <div class="col-md-8 no-breadcrumb" style=" margin-left: 236px;">
-              <!-- basic info -->
-                <% if logged_in? && @current_user.id == @member.id %>                   
-                                      <div id="profile-main-widget" class="col-md-12 no-padding">
-                                        <div class="panel text-center">
-                                            <div class="panel-body bgimg-clouds">
-                                              <div class="col-sm-12  no-padding text-center">
-                                                   <div class="tools pull-right icons-medium text-transparent">
-                                              <a href="#"><i class="icon-camera text-transparent"></i></a>
-                                              <a href="#"><i class="icon-cog text-transparent"></i></a>
-                                                    <a href="#"><i class="icon-pencil text-transparent"></i></a>
-                                                </div>
-                                                  <div class="clearfix"></div>
-                                                <!-- user -->
-                                                      <ul class="list-inline list-unstyled">
-                                                          <li>
-                                                              <div class="avatar text-center avatar-lg animated flipInX">
-                                                                  <!-- <img src="" alt="" class="img-circle" width="135"> -->
-                                                                  <%= image_tag("avatar.png", :alt => "avatar feed", class: "img-circle") if @member.photo.nil? %>
-                                                                  <%= image_tag("#{@member.photo}", :alt => "avatar feed", class: "img-circle") if not @member.photo.nil? %>
-                                                               </div>
-                                                           </li>
-                                                           <li class="align-center-vert">
-                                                               <div class="leftarrowdiv-white">
-                                                                   <div class="well-lg transparent">
-                                                                       <ul class="list-unstyled">
-                                                                         <li class="no-padding-left"><h2><%= "#{@member.first_name} #{@member.last_name}" %></h2></li>
-                                                                        
-                                                                       </ul>
-                                                                   </div>
-                                                                </div>
-                                                           </li>
-                                                        </li> 
-                                                        </ul>  
-                                                </div>
-                                                <br><br>
-                                                    <div class="col-sm-3 col-xs-6">
-                                                                 <div class="text-inverse">
-                                                                    <span class="number"><i class="glyphicon glyphicon-usd"></i>&nbsp; <%=@member.points%></span>
-                                                                 </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                   </div>
-                                        </div>
-                                    </div>  <!-- / basic info -->
-                            <!-- Edit personal info -->
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                              <li><a href="#user" data-toggle="tab"><i class="icon-user"></i>&nbsp;&nbsp;&nbsp;About me</a>
-                              <li><a href="#education" data-toggle="tab"><i class="icon-book"></i>&nbsp;&nbsp;&nbsp;Connections</a></li>
-                              <li><a href="#resume" data-toggle="tab"><i class="icon-file-text"></i>&nbsp;&nbsp;&nbsp;Reviews</a></li>
-                            </ul>
-                            
-                            <!-- Tab panes -->
-                            <div class="tab-content add-shadow">
-                              <div class="tab-pane active" id="user">
-                                          <h3>Basic Info</h3>
-                                          <p><a href="#" id="info" data-type="text" data-pk="1" data-title="Enter Info"><p class="setting"><span>E-mail Address: </span>  <%=@member.email%> </p> 
+          <p class="setting"><span>Username: </span><%=@member.username%></p>
 
-      <p class="setting"><span>Full Name: </span><%= "#{@member.first_name} #{@member.last_name}" %></p>
-      
-      <p class="setting"><span>Username: </span><%=@member.username%></p> 
+          <% if @member.gender %>
+            <p class="setting"><span>Gender: </span><%= "Male" %></p>
+          <% else %>
+            <p class="setting"><span>Gender: </span><%= "Female" %></p>
+          <%end %></a>
+          </p><br>
+          <% if @member.id == params[:id].to_i %>
+            <%= link_to "Connect to Google+" , "/auth/google_oauth2", id: "sign_in" if @member.guid.blank? %><br>
+            <%= link_to "Disconnect from Google+" , google_delete_path, id: "sign_in" if not @member.guid.blank? %><br>
+            <div class="alert alert-warning" role="alert">
+              Disconnecting from Google will remove all your calendar events created by QuestBoard.
+            </div>
+          <% end %>
+        </div>
+        <div class="tab-pane" id="education">
+          <h3>Connections</h3>
+          <% @connections.each do |connection| %>
+            <p class="setting"><%="#{connection.first_name} #{connection.last_name}: #{connection.username}"%> </p>
+          <% end %>
+        </div>
+        <div class="tab-pane" id="resume">
+          <h3>Reviews</h3>
+          <% @reviews.each do |review| %>
+            <p class="setting"><%=review.review%> </p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div><!-- /container for chat panel push-->
 
-      <% if @member.gender %>
-        <p class="setting"><span>Gender: </span><%= "male" %></p>
-      <% else %>
-        <p class="setting"><span>Gender: </span><%= "female" %></p>
-               
-      <%end %></a>
-                                            </p><br>
-       <!--                                     <p><strong>Find me:</strong></p>
-                                            <button class="btn btn-default"><i class="icon-flickr"></i></button>
-                      <button class="btn btn-default"><i class="icon-tumblr"></i></button>
-                                            <button class="btn btn-default"><i class="icon-android"></i></button> -->
-                                      </div>
-                                      <div class="tab-pane" id="education">
-                                          <h3>Connections</h3>
-                                          <% @connections.each do |connection| %>
-                                          <p class="setting"><%=connection.username%> </p>
-                                          <% end %>
-                                      </div>
-                                      <div class="tab-pane" id="resume">
-                                          <h3>Reviews</h3>
-                                          
-                                      </div>
-                                      
-                            </div>
-                 </div><!--/ Col 1 -->
-                 <!-- Col 2-->
-                 
-                 
-                <%end%>
-
-                </div><!--/ page-content-wrapper-->
-
-      </div><!-- / wrapper for content below nav bar -->
-        </div><!-- /container for chat panel push--> 
-        

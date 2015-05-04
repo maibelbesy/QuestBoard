@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+
+  get 'errors/internal_server_error'
+
 # The priority is based upon order of creation: first created -> highest priority.
 # See how all your routes lay out with "rake routes".
 
@@ -13,10 +17,11 @@ Rails.application.routes.draw do
   get '/signup' => 'sessions#register', as: :register
   post '/signup' => 'sessions#register_user', as: :register_user
   get '/logout'  => 'sessions#destroy', as: :logout_user
-  get '/users/verify_email' => 'sessions#verify_email'
-  get '/reset_password' => 'sessions#reset_password', as: :reset_password
+  get '/send_verify' => 'sessions#send_verify'
+  get '/verify_email' => 'sessions#verify_email'
+  get '/forgot_password' => 'sessions#reset_password', as: :reset_password
   post '/forgot_password' => 'sessions#forgot_password', as: :forgot_password
-  get '/users/reset_password' => 'sessions#send_password', as: :send_password
+  get '/reset_password' => 'sessions#send_password', as: :send_password
   # Routes for Quests
 
   get '/' => 'quests#index', as: :quests
@@ -37,8 +42,7 @@ Rails.application.routes.draw do
   
   get '/quests/review/:id' => 'quests#review', as: :review_quest
   post '/quests/review/:id' => 'quests#add_review', as: :add_review_quest
-
-      resources :comments
+  resources :comments
 
   # Routes for Notifications
   get '/notifications' => 'notifications#index', as: :notifications
@@ -62,7 +66,13 @@ Rails.application.routes.draw do
 
   get 'auth/:provider/callback' => 'sessions#google_create', as: :google_signin
   # get 'auth/:provider/callback', to: redirect('http://www.google.com'), as: :google_signin
-  get 'auth/failure', to: redirect('http://www.google.com')
+  get '/disconnect_google' => 'sessions#google_delete', as: :google_delete
+  get 'auth/failure', to: redirect('/')
+  
+  %w( 404 500 errorX ).each do |code|
+  get code, :to => "errors#show", :code => code
+end
+
 # You can have the root of your site routed with "root"
 # root 'welcome#index'
 

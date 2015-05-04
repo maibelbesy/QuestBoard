@@ -20,6 +20,7 @@ module QuestboardApp
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.exceptions_app = self.routes  
     config.active_record.raise_in_transactional_callbacks = true
     config.middleware.delete Rack::Lock
     config.middleware.use FayeRails::Middleware, mount: '/faye', :timeout => 25
